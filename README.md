@@ -15,7 +15,7 @@
 - Laravel 5.6
 - Nuxt 1.4
 - VueI18n
-- SSR or SPA 
+- SSR or SPA
 - Authentication with JWT
 - Socialite integration
 - Bootstrap 4 + Font Awesome 5
@@ -28,6 +28,14 @@
 - (When installed via git clone or download, run `php artisan key:generate` and `php artisan jwt:secret`)
 - `php artisan migrate`
 - `yarn` / `npm install`
+- sudo -i -u postgres
+
+```
+createuser lndebate
+createdb lndebate --owner=lndebate
+psql
+alter user lndebate with encrypted password 'lndebate';
+```
 
 ## Usage
 
@@ -87,15 +95,15 @@ pm2 l
 After each deploy you'll need to restart the process:
 
 ```bash
-pm2 restart laravel-nuxt 
+pm2 restart laravel-nuxt
 ```
 
 ### Production without SSR
 
 If you don't want server side rendering you can use the [mode](https://nuxtjs.org/api/configuration-mode#the-mode-property) option:
 
-- Uncomment `mode: 'spa'` and `'~plugins/nuxt-client-init'` in `client/nuxt.config.js` 
-- Uncomment `// ->prefix('api')` in `app/Providers/RouteServiceProvider.php` 
+- Uncomment `mode: 'spa'` and `'~plugins/nuxt-client-init'` in `client/nuxt.config.js`
+- Uncomment `// ->prefix('api')` in `app/Providers/RouteServiceProvider.php`
 - Set `APP_URL=http://example.com/api` and `CLIENT_URL=http://example.com` in your `.env`
 - Run `npm run build`
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div dusk="welcome_page">
     <div class="top-right links">
       <template v-if="authenticated">
         <router-link :to="{ name: 'home' }">

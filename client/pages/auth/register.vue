@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row" dusk="register_page">
     <div class="col-lg-8 m-auto">
       <card :title="$t('register')">
         <form @submit.prevent="register" @keydown="form.onKeydown($event)">
@@ -46,7 +46,7 @@
           <div class="form-group row">
             <div class="col-md-7 offset-md-3 d-flex">
               <!-- Submit Button -->
-              <v-button :loading="form.busy">
+              <v-button name="register" :loading="form.busy">
                 {{ $t('register') }}
               </v-button>
 
