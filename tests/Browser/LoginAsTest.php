@@ -8,6 +8,7 @@ use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\Browser\Components\Navbar;
 use Tests\Browser\Pages\HomePage;
+use Tests\Browser\Pages\LoginPage;
 use Tests\Browser\Pages\RegisterPage;
 
 class LoginAsTest extends DuskTestCase
@@ -29,33 +30,24 @@ class LoginAsTest extends DuskTestCase
      */
     public function testAcceptance()
     {
-        // $this->assertEquals(0, User::query()
-        //         ->where('email', $this->user->email)
-        //         ->count());
-
-        // $this->browse(function (Browser $browser) {
-        //     $browser->loginAs($this->user)
-        //         ->visit(new HomePage)
-        //         ->with(new Navbar(), function ($navbar) {
-        //             $navbar->open();
-        //             $navbar->assertIsUser($this->user);
-        //             $navbar->signout();
-        //             $navbar->assertIsSignedOut();
-        //             $navbar->close();
-        //         });
-
-        //     $browser
-        //         ->visit(new HomePage)
-        //         ->with(new Navbar(), function ($navbar) {
-        //             $navbar->open();
-        //             $navbar->assertIsSignedOut();
-        //             $navbar->close();
-        //         })
-
-        //     // @todo logout
-            // $browser->pause(250);
-            // dump($browser->script('return window.location.toString()'));
-            // $this->assertTrue(false);
-        // });
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs($this->user);
+                $browser->visit(new HomePage)
+                ->with(new Navbar(), function ($navbar) {
+                    $navbar->open();
+                    $navbar->assertIsUser($this->user);
+                    $navbar->signout();
+                    $navbar->assertIsSignedOut();
+                    $navbar->close();
+                })
+                ->logout()
+                ->on(new LoginPage)
+                ->with(new Navbar(), function ($navbar) {
+                    $navbar->open();
+                    $navbar->assertIsSignedOut();
+                    $navbar->close();
+                })
+                ;
+        });
     }
 }

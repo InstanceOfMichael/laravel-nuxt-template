@@ -22,6 +22,12 @@ abstract class DuskTestCase extends BaseTestCase
         static::startChromeDriver();
     }
 
+    public function setUp() {
+        parent::setUp();
+
+        DuskBrowser::$apiBaseUrl = $this->apiUrl();
+    }
+
     /**
      * Create the RemoteWebDriver instance.
      *
