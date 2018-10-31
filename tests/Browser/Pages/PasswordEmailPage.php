@@ -4,8 +4,9 @@ namespace Tests\Browser\Pages;
 
 use App\User;
 use Laravel\Dusk\Browser;
+use Tests\Browser\Components\Alert;
 
-class LoginPage extends Page
+class PasswordEmailPage extends Page
 {
     /**
      * Get the URL for the page.
@@ -14,7 +15,7 @@ class LoginPage extends Page
      */
     public function url()
     {
-        return '/login';
+        return '/password/reset';
     }
 
     /**
@@ -36,13 +37,18 @@ class LoginPage extends Page
      * @param  Browser  $browser
      * @return void
      */
-    public function signInAccount(Browser $browser, User $user, string $password = null)
+    public function submitPasswordReset(Browser $browser, User $user)
     {
-        $browser->waitForLocation($this->url());
         $browser->type('@input_email', $user->email);
-        $browser->type('@input_password', $password ?? 'secret');
-        $browser->click('@button_sign_in');
+        $browser->click('@button_submit');
         $browser->waitUntilLoaded();
+        $browser->whenAvailable(new Alert(), function (Browser $alert) {
+            $alert->assertSuccess();
+        });
+        // $browser->waitForLocation($this->url());
+        // $browser->type('@input_email', $user->email);
+        // $browser->type('@input_password', 'secret');
+        // $browser->click('@button_sign_in');
     }
 
     /**
@@ -53,11 +59,9 @@ class LoginPage extends Page
     public function elements()
     {
         return [
-            '@element' => '[dusk="login_page"]',
+            '@element' => '[dusk="password_email_page"]',
             '@input_email' => 'input[name=email]',
-            '@input_password' => 'input[name=password]',
-            '@button_sign_in' => 'button[name="sign_in"]',
-            '@forgot_password' => 'a[dusk="forgot_password"]',
+            '@button_submit' => 'button[name="reset_pw"]',
         ];
     }
 }

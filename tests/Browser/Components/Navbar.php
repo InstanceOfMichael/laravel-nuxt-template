@@ -55,6 +55,10 @@ class Navbar extends BaseComponent
         $browser->click('@nav-link-login');
     }
 
+    public function clickSettings (Browser $browser) {
+        $browser->click('@nav-link-settings');
+    }
+
     public function openUserMenu (Browser $browser) {
         if (!($btn = $browser->element('@opened-user-menu'))) {
             $browser->click('@toggle-dropdown-menu');
@@ -96,6 +100,7 @@ class Navbar extends BaseComponent
             '@opened-hamburger' => '.navbar-collapse.collapse.show',
             '@nav-link-login' => '.nav-link.nav-link-login',
             '@nav-link-register' => '.nav-link.nav-link-register',
+            '@nav-link-settings' => '.dropdown-item.dropdown-link-settings',
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\User;
+use Facebook\WebDriver\WebDriverKeys;
 use Illuminate\Support\Str;
 use Laravel\Dusk\Browser as BaseBrowser;
 use Tests\Browser\Pages\HomePage;
@@ -19,11 +20,20 @@ class DuskBrowser extends BaseBrowser
 
     public function waitUntilLoaded () {
         $this->waitUntilMissing('i.fa.fa-spinner.fa-spin, .btn-loading');
+        return $this;
+    }
+
+    public function clearWithBackspace ($key) {
+        $inputValue = $this->value($key);
+        $backspaces = array_fill(0, strlen($inputValue ?: '') + 1, WebDriverKeys::BACKSPACE);
+        $this->keys($key, $backspaces);
+        return $this;
     }
 
     public function assertNotPresent (string $selector) {
         // @todo implement not present
         $this->assertMissing($selector);
+        return $this;
     }
 
     /**

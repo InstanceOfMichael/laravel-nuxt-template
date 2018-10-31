@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Browser;
+namespace Tests\Browser\Spec;
 
 use App\User;
 use Tests\DuskTestCase;
@@ -32,22 +32,22 @@ class LoginAsTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user);
-                $browser->visit(new HomePage)
-                ->with(new Navbar(), function ($navbar) {
-                    $navbar->open();
-                    $navbar->assertIsUser($this->user);
-                    $navbar->signout();
-                    $navbar->assertIsSignedOut();
-                    $navbar->close();
-                })
-                ->logout()
-                ->on(new LoginPage)
-                ->with(new Navbar(), function ($navbar) {
-                    $navbar->open();
-                    $navbar->assertIsSignedOut();
-                    $navbar->close();
-                })
-                ;
+            $browser->visit(new HomePage)
+            ->with(new Navbar(), function ($navbar) {
+                $navbar->open();
+                $navbar->assertIsUser($this->user);
+                $navbar->signout();
+                $navbar->assertIsSignedOut();
+                $navbar->close();
+            })
+            ->logout()
+            ->on(new LoginPage)
+            ->with(new Navbar(), function ($navbar) {
+                $navbar->open();
+                $navbar->assertIsSignedOut();
+                $navbar->close();
+            })
+            ;
         });
     }
 }

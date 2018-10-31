@@ -1,27 +1,26 @@
 <?php
 
-namespace Tests\Browser;
+namespace Tests\Browser\Spec;
 
+use Tests\Browser\Pages\WelcomePage;
+use Tests\Browser\Components\Navbar;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class ExampleTest extends DuskTestCase
+class WelcomePageTest extends DuskTestCase
 {
     /**
      * A basic browser test example.
      *
      * @return void
      */
-    public function testBasicExample()
+    public function testAcceptance()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/');
+            $browser->visit(new WelcomePage);
             $browser->assertSee('lndebate');
-
-            // $browser->pause(250);
-            // dump($browser->script('return window.location.toString()'));
-            // $this->assertTrue(false);
+            $browser->assertNotPresent((new Navbar)->selector());
         });
     }
 }
