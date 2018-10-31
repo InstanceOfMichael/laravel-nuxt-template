@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row" dusk="password_reset_page">
     <div class="col-lg-8 m-auto">
       <card :title="$t('reset_password')">
         <form @submit.prevent="reset" @keydown="form.onKeydown($event)">
@@ -38,7 +38,7 @@
           <!-- Submit Button -->
           <div class="form-group row">
             <div class="col-md-9 ml-md-auto">
-              <v-button :loading="form.busy">{{ $t('reset_password') }}</v-button>
+              <v-button name="set_password" :loading="form.busy">{{ $t('reset_password') }}</v-button>
             </div>
           </div>
         </form>

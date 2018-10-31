@@ -31,7 +31,7 @@
                 {{ $t('remember_me') }}
               </checkbox>
 
-              <router-link :to="{ name: 'password.request' }" class="small ml-auto my-auto">
+              <router-link :to="{ name: 'password.request' }" class="small ml-auto my-auto" dusk="forgot_password">
                 {{ $t('forgot_password') }}
               </router-link>
             </div>

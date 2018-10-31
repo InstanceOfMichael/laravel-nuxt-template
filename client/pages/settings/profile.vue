@@ -1,5 +1,5 @@
 <template>
-  <card :title="$t('your_info')">
+  <card :title="$t('your_info')" dusk="settings_profile_page">
     <form @submit.prevent="update" @keydown="form.onKeydown($event)">
       <alert-success :form="form" :message="$t('info_updated')"/>
 
@@ -26,7 +26,7 @@
       <!-- Submit Button -->
       <div class="form-group row">
         <div class="col-md-9 ml-md-auto">
-          <v-button :loading="form.busy" type="success">{{ $t('update') }}</v-button>
+          <v-button :loading="form.busy" name="update_profile" type="success">{{ $t('update') }}</v-button>
         </div>
       </div>
     </form>

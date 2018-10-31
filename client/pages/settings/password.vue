@@ -1,5 +1,5 @@
 <template>
-  <card :title="$t('your_password')">
+  <card :title="$t('your_password')" dusk="settings_password_page">
     <form @submit.prevent="update" @keydown="form.onKeydown($event)">
       <alert-success :form="form" :message="$t('password_updated')"/>
 
@@ -26,7 +26,7 @@
       <!-- Submit Button -->
       <div class="form-group row">
         <div class="col-md-9 ml-md-auto">
-          <v-button :loading="form.busy" type="success">{{ $t('update') }}</v-button>
+          <v-button :loading="form.busy" name="set_password" type="success">{{ $t('update') }}</v-button>
         </div>
       </div>
     </form>
