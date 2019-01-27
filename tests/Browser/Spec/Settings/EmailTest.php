@@ -4,13 +4,16 @@ namespace Tests\Browser\Spec\Settings;
 
 use App\User;
 use Tests\Browser\Components\Navbar;
+use Tests\Browser\Components\ResendEmailVerifyAlert;
+use Tests\Browser\Components\SettingsCard;
 use Tests\Browser\Pages\HomePage;
+use Tests\Browser\Pages\Settings\EmailPage;
 use Tests\Browser\Pages\Settings\ProfilePage;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class ProfileTest extends DuskTestCase
+class EmailTest extends DuskTestCase
 {
     /**
      * @var $user User
@@ -40,18 +43,27 @@ class ProfileTest extends DuskTestCase
                     $navbar->clickSettings();
                 })
                 ->on(new ProfilePage)
+                ->with(new SettingsCard, function (Browser $card) {
+                    $card->clickEmailTab();
+                })
+                ->on(new EmailPage)
                 ->assertProfileInformation($this->user)
+                ->with(new ResendEmailVerifyAlert, function (Browser $alert) {
+                    $alert->assertVerifyEmailWasNotResent();
+                    $alert->clickResendVerificationEmail();
+                    $alert->assertVerifyEmailWasResent();
+                })
+                ->on(new EmailPage)
                 ->updateProfileInformation([
-                    'name' => $this->user->name.'0',
+                    'email' => $this->user->email.'0',
                 ])
                 ->refresh()
-                // ->visit(new ProfilePage)
-                ->on(new ProfilePage)
-                ->assertValue('@input_name', $this->user->name.'0');
+                ->on(new EmailPage)
+                ->assertValue('@input_email', $this->user->email.'0');
 
             $freshUser = $this->user->fresh();
 
-            $this->assertEquals($freshUser->name, $this->user->name.'0');
+            $this->assertEquals($freshUser->email, $this->user->email.'0');
 
             $browser->assertProfileInformation($freshUser);
         });

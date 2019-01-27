@@ -4,17 +4,19 @@ import { scrollBehavior } from '~/utils'
 
 Vue.use(Router)
 
-const Home = () => import('~/pages/home').then(m => m.default || m)
-const Welcome = () => import('~/pages/welcome').then(m => m.default || m)
+const Home = () => import('~/pages/home').then(defaultOrModule)
+const Welcome = () => import('~/pages/welcome').then(defaultOrModule)
 
-const Login = () => import('~/pages/auth/login').then(m => m.default || m)
-const Register = () => import('~/pages/auth/register').then(m => m.default || m)
-const PasswordReset = () => import('~/pages/auth/password/reset').then(m => m.default || m)
-const PasswordRequest = () => import('~/pages/auth/password/email').then(m => m.default || m)
+const Login = () => import('~/pages/auth/login').then(defaultOrModule)
+const Register = () => import('~/pages/auth/register').then(defaultOrModule)
+const PasswordReset = () => import('~/pages/auth/password/reset').then(defaultOrModule)
+const PasswordRequest = () => import('~/pages/auth/password/email').then(defaultOrModule)
+const Verify = () => import('~/pages/auth/verify').then(defaultOrModule)
 
-const Settings = () => import('~/pages/settings/index').then(m => m.default || m)
-const SettingsProfile = () => import('~/pages/settings/profile').then(m => m.default || m)
-const SettingsPassword = () => import('~/pages/settings/password').then(m => m.default || m)
+const Settings = () => import('~/pages/settings/index').then(defaultOrModule)
+const SettingsProfile = () => import('~/pages/settings/profile').then(defaultOrModule)
+const SettingsPassword = () => import('~/pages/settings/password').then(defaultOrModule)
+const SettingsEmail = () => import('~/pages/settings/email').then(defaultOrModule)
 
 const routes = [
   { path: '/', name: 'welcome', component: Welcome },
@@ -30,8 +32,10 @@ const routes = [
     children: [
       { path: '', redirect: { name: 'settings.profile' } },
       { path: 'profile', name: 'settings.profile', component: SettingsProfile },
-      { path: 'password', name: 'settings.password', component: SettingsPassword }
-    ] }
+      { path: 'password', name: 'settings.password', component: SettingsPassword },
+      { path: 'email', name: 'settings.email', component: SettingsEmail }
+    ] },
+  { path: '/verify', name: 'verify', component: Verify }
 ]
 
 export function createRouter () {
@@ -40,4 +44,8 @@ export function createRouter () {
     scrollBehavior,
     mode: 'history'
   })
+}
+
+function defaultOrModule (m) {
+  return m.default || m
 }

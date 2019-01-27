@@ -7,7 +7,7 @@ use Laravel\Dusk\Browser;
 use Tests\Browser\Components\Alert;
 use Tests\Browser\Pages\Page;
 
-class ProfilePage extends Page
+class EmailPage extends Page
 {
     /**
      * Get the URL for the page.
@@ -16,7 +16,7 @@ class ProfilePage extends Page
      */
     public function url()
     {
-        return "/settings/profile";
+        return "/settings/email";
     }
 
     /**
@@ -40,7 +40,7 @@ class ProfilePage extends Page
      */
     public function assertProfileInformation(Browser $browser, User $user)
     {
-        $keys = [ 'name' ];
+        $keys = [ 'email' ];
         foreach($keys as $key) {
             $browser->assertValue('@input_'.$key, $user->$key);
         }
@@ -54,7 +54,7 @@ class ProfilePage extends Page
      */
     public function updateProfileInformation(Browser $browser, array $newInformation)
     {
-        $keys = [ 'name' ];
+        $keys = [ 'email' ];
         foreach ($keys as $key) {
             if (array_key_exists($key, $newInformation)) {
                 $browser->clearWithBackspace('@input_'.$key);
@@ -79,8 +79,8 @@ class ProfilePage extends Page
     public function elements()
     {
         return [
-            '@element' => '[dusk="settings_profile_page"]',
-            '@input_name' => 'input[name=name]',
+            '@element' => '[dusk="settings_email_page"]',
+            '@input_email' => 'input[name=email]',
             '@button_submit' => 'button[name="update_profile"]',
         ];
     }

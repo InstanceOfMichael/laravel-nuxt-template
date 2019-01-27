@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         return $request->user();
     });
 
+    Route::patch('settings/email', 'Settings\EmailController@update');
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
 });
@@ -33,4 +34,10 @@ Route::group(['middleware' => 'guest:api'], function () {
 
     Route::post('oauth/{provider}', 'Auth\OAuthController@redirectToProvider');
     Route::get('oauth/{provider}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
+});
+
+Route::group(['middleware' => 'auth:api'], function () {
+    // Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice');
+    Route::post('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
+    Route::post('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 });

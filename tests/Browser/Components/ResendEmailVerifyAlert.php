@@ -5,7 +5,7 @@ namespace Tests\Browser\Components;
 use Laravel\Dusk\Browser;
 use Laravel\Dusk\Component as BaseComponent;
 
-class SettingsCard extends BaseComponent
+class ResendEmailVerifyAlert extends BaseComponent
 {
     /**
      * Get the root selector for the component.
@@ -14,7 +14,7 @@ class SettingsCard extends BaseComponent
      */
     public function selector()
     {
-        return '@element';
+        return '[dusk="resent_email_verify_alert"]';
     }
 
     /**
@@ -29,39 +29,33 @@ class SettingsCard extends BaseComponent
     }
 
     /**
-     * Assert that the browser is on the page.
-     *
      * @param  Browser  $browser
      * @return void
      */
-    public function clickProfileTab(Browser $browser)
+    public function assertVerifyEmailWasResent(Browser $browser)
     {
-        $browser->click('@profile_link');
-        $browser->waitUntilLoaded();
+        $browser->assertVisible('.alert-is-resent');
+        $browser->assertMissing('@prompt_verify_email_resend');
     }
 
     /**
-     * Assert that the browser is on the page.
-     *
      * @param  Browser  $browser
      * @return void
      */
-    public function clickPasswordTab(Browser $browser)
+    public function assertVerifyEmailWasNotResent(Browser $browser)
     {
-        $browser->click('@password_link');
-        $browser->waitUntilLoaded();
+        $browser->assertMissing('.alert-is-resent');
+        $browser->assertVisible('@prompt_verify_email_resend');
     }
 
     /**
-     * Assert that the browser is on the page.
-     *
      * @param  Browser  $browser
      * @return void
      */
-    public function clickEmailTab(Browser $browser)
+    public function clickResendVerificationEmail(Browser $browser)
     {
-        $browser->click('@email_link');
-        $browser->waitUntilLoaded();
+        $browser->click('[dusk=prompt_verify_email_resend] [dusk=resend]');
+        $browser->waitUntilMissing('[dusk=prompt_verify_email_resend] .busy');
     }
 
     /**
@@ -72,10 +66,7 @@ class SettingsCard extends BaseComponent
     public function elements()
     {
         return [
-            '@element' => '[dusk="settings_frame"] .card.settings-card',
-            '@email_link' => '[dusk="settings_email_link"]',
-            '@password_link' => '[dusk="settings_password_link"]',
-            '@profile_link' => '[dusk="settings_profile_link"]',
+            '@element' => '#selector',
         ];
     }
 }
