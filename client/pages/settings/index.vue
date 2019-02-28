@@ -4,7 +4,7 @@
       <card :title="$t('settings')" class="settings-card">
         <ul class="nav flex-column nav-pills">
           <li v-for="tab in tabs" :key="tab.route" class="nav-item">
-            <router-link :to="{ name: tab.route }" class="nav-link" :dusk="tab.dusk" active-class="active">
+            <router-link :to="{ name: tab.route }" :dusk="tab.dusk" class="nav-link" active-class="active">
               <fa :icon="tab.icon" fixed-width/>
               {{ tab.name }}
             </router-link>
@@ -32,17 +32,17 @@ export default {
           icon: 'user',
           name: this.$t('profile'),
           route: 'settings.profile',
-          dusk: 'settings_profile_link',
+          dusk: 'settings_profile_link'
         }, {
           icon: 'lock',
           name: this.$t('password'),
           route: 'settings.password',
-          dusk: 'settings_password_link',
+          dusk: 'settings_password_link'
         }, {
           icon: 'envelope',
           name: this.$t('email'),
           route: 'settings.email',
-          dusk: 'settings_email_link',
+          dusk: 'settings_email_link'
         }
       ]
     }

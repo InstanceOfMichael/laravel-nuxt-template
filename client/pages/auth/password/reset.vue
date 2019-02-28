@@ -38,7 +38,7 @@
           <!-- Submit Button -->
           <div class="form-group row">
             <div class="col-md-9 ml-md-auto">
-              <v-button name="set_password" :loading="form.busy">{{ $t('reset_password') }}</v-button>
+              <v-button :loading="form.busy" name="set_password">{{ $t('reset_password') }}</v-button>
             </div>
           </div>
         </form>

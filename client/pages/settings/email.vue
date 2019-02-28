@@ -20,7 +20,7 @@
         </div>
       </div>
 
-      <div class="alert alert-info" v-if="isEmailVerified">
+      <div v-if="isEmailVerified" class="alert alert-info">
         sssss
       </div>
       <ResendEmailVerifyAlert v-else/>
@@ -44,7 +44,7 @@ export default {
   },
 
   components: {
-    ResendEmailVerifyAlert,
+    ResendEmailVerifyAlert
   },
 
   data: () => ({
@@ -59,8 +59,8 @@ export default {
       user: 'auth/user'
     }),
     isEmailVerified () {
-      return !!get(this.user, 'email_verified_at');
-    },
+      return !!get(this.user, 'email_verified_at')
+    }
   },
 
   created () {

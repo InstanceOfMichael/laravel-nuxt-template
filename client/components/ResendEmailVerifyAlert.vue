@@ -1,14 +1,14 @@
 <template>
   <div dusk="resent_email_verify_alert">
-    <div class="alert alert-success alert-is-resent" role="alert" v-if="isResent">
+    <div v-if="isResent" class="alert alert-success alert-is-resent" role="alert">
       {{ $t('a_fresh_verification_link_has_been_sent_to_your_email_address') }}
     </div>
 
     <div class="alert alert-info alert-please-verify" role="alert">
       {{ $t('verify_before_proceeding_please_check_email_for_verification_link') }}
-      <div dusk="prompt_verify_email_resend" v-if="!isResent">
+      <div v-if="!isResent" dusk="prompt_verify_email_resend">
         {{ $t('if_you_did_not_receive_the_email') }},
-        <a href="#" dusk="resend" :class="{ busy }" @click.prevent.stop="resend">
+        <a :class="{ busy }" href="#" dusk="resend" @click.prevent.stop="resend">
           {{ $t('click_here_to_request_another') }}
         </a>.
       </div>
@@ -25,7 +25,7 @@ export default {
 
   data: () => ({
     isResent: false,
-    busy: false,
+    busy: false
   }),
 
   computed: mapGetters({
@@ -35,11 +35,11 @@ export default {
   methods: {
     async resend () {
       try {
-        this.busy = true;
+        this.busy = true
         await axios.post('email/resend')
         this.isResent = true
       } finally {
-        this.busy = false;
+        this.busy = false
       }
     }
   }

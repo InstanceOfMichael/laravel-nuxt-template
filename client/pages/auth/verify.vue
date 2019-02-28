@@ -17,11 +17,11 @@
 </template>
 
 <script>
-import ResendEmailVerifyAlert from '~/components/ResendEmailVerifyAlert';
+import ResendEmailVerifyAlert from '~/components/ResendEmailVerifyAlert'
 
 export default {
   components: {
-    ResendEmailVerifyAlert,
+    ResendEmailVerifyAlert
   },
 
   head () {
