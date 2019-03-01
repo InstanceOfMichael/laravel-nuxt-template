@@ -33,6 +33,7 @@
 ```
 createuser lndebate
 createdb lndebate --owner=lndebate
+createdb test_lndebate --owner=lndebate
 psql
 alter user lndebate with encrypted password 'lndebate';
 ```

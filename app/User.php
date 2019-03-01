@@ -85,4 +85,12 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     {
         return [];
     }
+
+    /**
+     * @param string email
+     * @return void
+     **/
+    public function setEmailAttribute(string $email) {
+        $this->attributes['email'] = strtolower($email);
+    }
 }

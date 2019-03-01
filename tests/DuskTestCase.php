@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use DB;
 use Laravel\Dusk\TestCase as BaseTestCase;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
@@ -10,6 +11,8 @@ use Facebook\WebDriver\Remote\DesiredCapabilities;
 abstract class DuskTestCase extends BaseTestCase
 {
     use CreatesApplication;
+
+    protected $faker;
 
     /**
      * Prepare for Dusk test execution.
@@ -26,6 +29,9 @@ abstract class DuskTestCase extends BaseTestCase
         parent::setUp();
 
         DuskBrowser::$apiBaseUrl = $this->apiUrl();
+
+        DB::statement('TRUNCATE users, password_resets, oauth_providers CASCADE;');
+        $this->faker = app(\Faker\Generator::class)->seed(get_class($this));
     }
 
     /**
