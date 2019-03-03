@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth')->except(['show']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -73,6 +76,7 @@ class UserController extends Controller
     public function update(UpdateUser $request, User $user)
     {
         $user->update($request->all());
+        return $user;
     }
 
     /**

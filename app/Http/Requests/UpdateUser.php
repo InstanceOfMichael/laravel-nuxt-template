@@ -15,7 +15,9 @@ class UpdateUser extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('update', $this->user());
+        // note that ->user() (invoked) is the requesting user
+        // and that ->user (attribute) is the route model bound user (api resource)
+        return Gate::forUser($this->user())->allows('update', $this->user);
     }
 
     /**
