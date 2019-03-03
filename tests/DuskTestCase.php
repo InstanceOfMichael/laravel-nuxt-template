@@ -31,7 +31,8 @@ abstract class DuskTestCase extends BaseTestCase
         DuskBrowser::$apiBaseUrl = $this->apiUrl();
 
         DB::statement('TRUNCATE users, password_resets, oauth_providers CASCADE;');
-        $this->faker = app(\Faker\Generator::class)->seed(get_class($this));
+        $this->faker = app(\Faker\Generator::class);
+        $this->faker->seed(get_class($this));
     }
 
     /**

@@ -39,6 +39,7 @@ class RegisterPage extends Page
     public function registerAccount(Browser $browser, User $user)
     {
         $browser->waitForLocation($this->url());
+        $browser->type('@input_handle', $user->handle);
         $browser->type('@input_name', $user->name);
         $browser->type('@input_email', $user->email);
         $browser->type('@input_password', $pw = 'secret');
@@ -56,6 +57,7 @@ class RegisterPage extends Page
     {
         return [
             '@element' => '[dusk="register_page"]',
+            '@input_handle' => 'input[name=handle]',
             '@input_name' => 'input[name=name]',
             '@input_email' => 'input[name=email]',
             '@input_password' => 'input[name=password]',

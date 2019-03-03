@@ -16,19 +16,19 @@ class UserEmailLowerCaseTest extends TestCase
     public function testModelAutoconverts()
     {
         $mixedEmail = 'MixedEmail@example.com';
-        $user = new User([
+        $user = factory(User::class)->make([
             'email' => $mixedEmail,
         ]);
         $this->assertEquals(strtolower($mixedEmail), $user->email);
 
         $mixedEmail = 'MixedEmail@example.com';
-        $user = new User([
+        $user = factory(User::class)->make([
             'email' => strtoupper($mixedEmail),
         ]);
         $this->assertEquals(strtolower($mixedEmail), $user->email);
 
         $mixedEmail = 'MixedEmail@example.com';
-        $user = new User([
+        $user = factory(User::class)->make([
             'email' => strtolower($mixedEmail),
         ]);
         $this->assertEquals(strtolower($mixedEmail), $user->email);
@@ -41,9 +41,13 @@ class UserEmailLowerCaseTest extends TestCase
      */
     public function testDatabaseRejects() {
         $mixedEmail = 'MixedEmail@example.com';
-        DB::table('users')->insert([
-            'name' => '',
+
+        $attr = factory(User::class)->make([
             'email' => strtoupper($mixedEmail),
-        ]);
+        ])->getAttributes();
+
+        $attr['email'] = strtoupper($mixedEmail);
+
+        DB::table('users')->insert($attr);
     }
 }

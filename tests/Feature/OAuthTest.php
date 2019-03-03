@@ -44,6 +44,7 @@ class OAuthTest extends TestCase
     {
         $this->mockSocialite('github', [
             'id' => '123',
+            'handle' => factory(User::class)->make()->handle,
             'name' => 'Test User',
             'email' => 'test@example.com',
             'token' => 'access-token',

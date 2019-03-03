@@ -16,7 +16,8 @@ abstract class TestCase extends BaseTestCase
     public function setUp() {
         parent::setUp();
 
-        $this->faker = app(\Faker\Generator::class)->seed(get_class($this));
+        $this->faker = app(\Faker\Generator::class);
+        $this->faker->seed(get_class($this));
         DB::statement('TRUNCATE users, password_resets, oauth_providers CASCADE;');
     }
 }

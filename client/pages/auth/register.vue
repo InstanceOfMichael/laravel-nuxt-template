@@ -3,6 +3,16 @@
     <div class="col-lg-8 m-auto">
       <card :title="$t('register')">
         <form @submit.prevent="register" @keydown="form.onKeydown($event)">
+          <!-- Handle -->
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label text-md-right">{{ $t('handle') }}</label>
+            <div class="col-md-7">
+              <input v-model="form.handle" :class="{ 'is-invalid': form.errors.has('handle') }" type="text" name="handle"
+                     class="form-control">
+              <has-error :form="form" field="handle"/>
+            </div>
+          </div>
+
           <!-- Name -->
           <div class="form-group row">
             <label class="col-md-3 col-form-label text-md-right">{{ $t('name') }}</label>
@@ -70,6 +80,7 @@ export default {
 
   data: () => ({
     form: new Form({
+      handle: '',
       name: '',
       email: '',
       password: '',

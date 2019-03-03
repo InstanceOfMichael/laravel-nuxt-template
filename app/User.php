@@ -10,7 +10,8 @@ use App\Notifications\ResetPassword as ResetPasswordNotification;
 
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable,
+        SerializesDates;
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +19,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'handle',
     ];
 
     /**
@@ -27,7 +28,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'email', 'email_verified_at',
     ];
 
     /**
@@ -93,4 +94,37 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function setEmailAttribute(string $email) {
         $this->attributes['email'] = strtolower($email);
     }
+
+    /**
+     * Get the answers associated with the user.
+     */
+    public function answers()
+    {
+        return $this->hasMany(Answer::class, 'op_id');
+    }
+
+    /**
+     * Get the questions associated with the user.
+     */
+    public function questions()
+    {
+        return $this->hasMany(Question::class, 'op_id');
+    }
+
+    /**
+     * Get the questions associated with the user.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'op_id');
+    }
+
+    /**
+     * Get the questions associated with the user.
+     */
+    public function claims()
+    {
+        return $this->hasMany(Claim::class, 'op_id');
+    }
+
 }

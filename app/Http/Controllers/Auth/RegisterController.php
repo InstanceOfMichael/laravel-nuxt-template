@@ -31,7 +31,7 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
-        return $user;
+        return $user->makeVisible('email', 'email_verified_at');
     }
 
     /**
@@ -58,6 +58,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
+            'handle' => $data['handle'],
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
