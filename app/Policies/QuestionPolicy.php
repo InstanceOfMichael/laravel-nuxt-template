@@ -54,7 +54,7 @@ class QuestionPolicy
      */
     public function delete(User $user, Question $question)
     {
-        //
+        return false;
     }
 
     /**
@@ -66,7 +66,7 @@ class QuestionPolicy
      */
     public function restore(User $user, Question $question)
     {
-        //
+        return false;
     }
 
     /**
@@ -78,6 +78,6 @@ class QuestionPolicy
      */
     public function forceDelete(User $user, Question $question)
     {
-        //
+        return false;
     }
 }

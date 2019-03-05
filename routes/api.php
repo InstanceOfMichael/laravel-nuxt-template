@@ -49,9 +49,24 @@ Route::group([], function () {
         Route::resource('comments', 'Claim\CommentController');
     });
 
+    Route::resource('claimrelations', 'ClaimrelationController');
+    Route::group([ 'prefix' => 'claimrelations/{claimrelation}' ], function () {
+        Route::resource('comments', 'Claimrelation\CommentController');
+    });
+
     Route::resource('questions', 'QuestionController');
     Route::group([ 'prefix' => 'questions/{question}' ], function () {
         Route::resource('comments', 'Question\CommentController');
+    });
+
+    Route::resource('links', 'LinkController');
+    Route::group([ 'prefix' => 'links/{link}' ], function () {
+        Route::resource('comments', 'Link\CommentController');
+    });
+
+    Route::resource('linkdomains', 'LinkdomainController');
+    Route::group([ 'prefix' => 'linkdomains/{linkdomain}' ], function () {
+        Route::resource('comments', 'Linkdomain\CommentController');
     });
 
     Route::resource('users', 'UserController');

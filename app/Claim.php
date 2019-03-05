@@ -37,4 +37,19 @@ class Claim extends Model implements Commentable
     {
         return $this->hasMany(Answer::class);
     }
-}
+
+    /**
+     * Get the question associated with this answer
+     */
+    public function replyclaims()
+    {
+        return $this->belongsTo(Claim::class);
+    }
+
+    /**
+     * Get the claim associated with this answer
+     */
+    public function parentclaims()
+    {
+        return $this->belongsTo(Claim::class);
+    }}

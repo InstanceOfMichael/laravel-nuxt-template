@@ -127,4 +127,20 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return $this->hasMany(Claim::class, 'op_id');
     }
 
+    /**
+     * Get the claimrelations associated with the user.
+     */
+    public function claimrelations()
+    {
+        return $this->hasMany(Claimrelation::class, 'op_id');
+    }
+
+    /**
+     * Get the links associated with the user.
+     */
+    public function links()
+    {
+        return $this->hasMany(Link::class, 'op_id');
+    }
+
 }

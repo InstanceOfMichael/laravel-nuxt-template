@@ -23,9 +23,10 @@ RUN_TESTS () {
     php artisan config:clear
     php artisan cache:clear
     php artisan migrate:fresh
+
     ./vendor/bin/phpunit tests/Unit/ --stop-on-error --stop-on-failure
     ./vendor/bin/phpunit tests/Feature/ --stop-on-error --stop-on-failure
-    # php artisan dusk --stop-on-error --stop-on-failure
+    php artisan dusk --stop-on-error --stop-on-failure
 }
 
 RUN_TESTS || echo 'failed tests!';

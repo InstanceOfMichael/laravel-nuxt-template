@@ -38,8 +38,7 @@ class ShowTest extends TestCase
                     'handle' => $this->claim->op->handle,
                 ],
             ])
-            ->assertDontSeeText($this->user->email)
-            ->assertJsonMissing(['email']);
+            ->assertDontExposeUserEmails($this->user->email);
     }
 
     public function testShowClaimAsGuest()
@@ -55,7 +54,6 @@ class ShowTest extends TestCase
                     'handle' => $this->claim->op->handle,
                 ],
             ])
-            ->assertDontSeeText($this->user->email)
-            ->assertJsonMissing(['email']);
+            ->assertDontExposeUserEmails($this->user->email);
     }
 }
