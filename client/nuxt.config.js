@@ -61,8 +61,8 @@ module.exports = {
   ],
 
   modules: [
-    '@nuxtjs/router',
-    '~/modules/spa'
+    // '@nuxtjs/router',
+    // '~/modules/spa'
   ],
 
   build: {

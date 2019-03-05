@@ -26,9 +26,9 @@ class PasswordEmailPage extends Page
      */
     public function assert(Browser $browser)
     {
-        $browser->waitFor('@element');
+        $browser->waitFor('[dusk="password_email_page"]');
         $browser->assertPathIs($this->url());
-        $browser->assertVisible('@element');
+        $browser->assertVisible('[dusk="password_email_page"]');
     }
 
     /**

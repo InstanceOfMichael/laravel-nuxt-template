@@ -1,9 +1,9 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container">
-      <router-link :to="{ name: user ? 'home' : 'welcome' }" class="navbar-brand">
+      <nuxt-link :to="{ name: user ? 'home' : 'index' }" class="navbar-brand">
         {{ appName }}
-      </router-link>
+      </nuxt-link>
 
       <button :aria-label="$t('toggle_navigation')" class="navbar-toggler" type="button"
               data-toggle="collapse" data-target="#navbarToggler"
@@ -29,7 +29,7 @@
               {{ user.name }}
             </a>
             <div class="dropdown-menu">
-              <router-link :to="{ name: 'settings.profile' }" class="dropdown-item pl-3 dropdown-link-settings">
+              <router-link :to="{ name: 'settings-profile' }" class="dropdown-item pl-3 dropdown-link-settings">
                 <fa icon="cog" fixed-width/>
                 {{ $t('settings') }}
               </router-link>

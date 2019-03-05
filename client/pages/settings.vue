@@ -15,7 +15,7 @@
 
     <div class="col-md-9">
       <transition name="fade" mode="out-in">
-        <router-view/>
+        <nuxt-child/>
       </transition>
     </div>
   </div>
@@ -31,17 +31,17 @@ export default {
         {
           icon: 'user',
           name: this.$t('profile'),
-          route: 'settings.profile',
+          route: 'settings-profile',
           dusk: 'settings_profile_link'
         }, {
           icon: 'lock',
           name: this.$t('password'),
-          route: 'settings.password',
+          route: 'settings-password',
           dusk: 'settings_password_link'
         }, {
           icon: 'envelope',
           name: this.$t('email'),
-          route: 'settings.email',
+          route: 'settings-email',
           dusk: 'settings_email_link'
         }
       ]
