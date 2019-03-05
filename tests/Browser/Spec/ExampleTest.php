@@ -17,6 +17,7 @@ class ExampleTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/');
+            $browser->pause(60000);
             $browser->assertSee('lndebate');
 
             // $browser->pause(250);

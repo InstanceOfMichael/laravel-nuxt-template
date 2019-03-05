@@ -1,4 +1,6 @@
-require('dotenv').config()
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const polyfills = [
   'Promise',
@@ -61,8 +63,7 @@ module.exports = {
   ],
 
   modules: [
-    // '@nuxtjs/router',
-    // '~/modules/spa'
+    // '@nuxtjs/pwa'
   ],
 
   build: {
