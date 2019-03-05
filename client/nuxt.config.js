@@ -63,8 +63,14 @@ module.exports = {
   ],
 
   modules: [
-    // '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/sentry'
   ],
+
+  sentry: {
+    dsn: 'https://ca5f7225c31f44ba844281149475c5af@sentry.io/1407940',
+    config: {} // Additional config
+  },
 
   build: {
     extractCSS: true

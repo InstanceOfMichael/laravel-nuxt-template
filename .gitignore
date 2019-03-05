@@ -13,3 +13,4 @@ yarn-error.log
 .nuxt
 /dist
 /public/_nuxt
+client/static/sw.js

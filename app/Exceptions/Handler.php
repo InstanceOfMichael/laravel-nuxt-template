@@ -13,7 +13,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        \App\Exceptions\EmailTakenException::class,
     ];
 
     /**
@@ -36,6 +36,11 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
+        if (app()->bound('sentry') && $this->shouldReport($exception)) {
+            if (!app()->runningUnitTests()) {
+                app('sentry')->captureException($exception);
+            }
+        }
         parent::report($exception);
     }
 
