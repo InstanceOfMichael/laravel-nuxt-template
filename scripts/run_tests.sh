@@ -22,11 +22,11 @@ RUN_TESTS () {
 
     php artisan config:clear
     php artisan cache:clear
-    php artisan migrate:fresh
+    php artisan migrate:fresh --seed
 
     ./vendor/bin/phpunit tests/Unit/ --stop-on-error --stop-on-failure
     ./vendor/bin/phpunit tests/Feature/ --stop-on-error --stop-on-failure
-    php artisan dusk
+    # php artisan dusk
     # php artisan dusk --stop-on-error --stop-on-failure
 }
 

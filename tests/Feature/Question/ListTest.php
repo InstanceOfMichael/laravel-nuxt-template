@@ -37,6 +37,7 @@ class ListTest extends TestCase
                         'id'    => $q->id,
                         'title'  => $q->title,
                         'text'  => $q->text,
+                        'sides_type'  => $q->sides_type,
                         'op_id' => $q->op_id,
                         'op' => [
                             'id'     => $q->op->id,
@@ -59,6 +60,7 @@ class ListTest extends TestCase
                         'id'    => $q->id,
                         'title'  => $q->title,
                         'text'  => $q->text,
+                        'sides_type'  => $q->sides_type,
                         'op_id' => $q->op_id,
                         'op' => [
                             'id'     => $q->op->id,

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Answer;
 
-use App\Comment;
 use App\Answer;
+use App\Comment;
 use App\Http\Requests\StoreComment;
 use App\Http\Requests\UpdateComment;
 use App\Http\Controllers\Controller;

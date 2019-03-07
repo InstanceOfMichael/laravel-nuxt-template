@@ -32,6 +32,7 @@ class UpdateTest extends TestCase
         return [
             'title' => $this->updatedQuestion->title,
             'text'  => $this->updatedQuestion->text,
+            'sides_type'  => $this->updatedQuestion->sides_type,
         ];
     }
 
@@ -43,6 +44,7 @@ class UpdateTest extends TestCase
             ->assertJson([
                 'title' => $this->updatedQuestion->title,
                 'text'  => $this->updatedQuestion->text,
+                'sides_type'  => $this->updatedQuestion->sides_type,
                 'op_id' => $this->question->op->id,
                 'op' => [
                     'id'     => $this->question->op->id,
@@ -73,6 +75,7 @@ class UpdateTest extends TestCase
             ->assertJson([
                 'title' => $this->question->title,
                 'text'  => $this->question->text,
+                'sides_type'  => $this->question->sides_type,
                 'op_id' => $this->question->op->id,
                 'op' => [
                     'id'     => $this->question->op->id,
@@ -88,12 +91,14 @@ class UpdateTest extends TestCase
             ->patchJson('/questions/'.$this->question->id, [
                 'title' => null,
                 'text' => null,
+                'sides_type' => null,
             ])
             ->assertStatus(422)
             ->assertExactJson([
                 "errors" => [
                     "text" => ["The text must be a string."],
-                    "title" => ["The title must be a string."]
+                    "title" => ["The title must be a string."],
+                    "sides_type" => ["The selected sides type is invalid."],
                 ],
                 "message" => "The given data was invalid.",
             ])

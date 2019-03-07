@@ -28,6 +28,7 @@ class StoreQuestion extends FormRequest
         return [
             'title' => 'required|string',
             'text' => 'string',
+            'sides_type' => 'required|in:0,1,2',
         ];
     }
 }

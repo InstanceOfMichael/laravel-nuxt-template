@@ -32,6 +32,7 @@ class ShowTest extends TestCase
             ->assertJson([
                 'title' => $this->question->title,
                 'text'  => $this->question->text,
+                'sides_type'  => $this->question->sides_type,
                 'op_id' => $this->question->op_id,
                 'op' => [
                     'id'     => $this->question->op->id,
@@ -49,6 +50,7 @@ class ShowTest extends TestCase
             ->assertJson([
                 'title' => $this->question->title,
                 'text'  => $this->question->text,
+                'sides_type'  => $this->question->sides_type,
                 'op_id' => $this->question->op_id,
                 'op' => [
                     'id'     => $this->question->op->id,

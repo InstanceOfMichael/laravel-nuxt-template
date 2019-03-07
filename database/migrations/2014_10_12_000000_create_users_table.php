@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('handle', 32);
+            $table->string('handle', 32); // we index later
             $table->string('name');
             $table->string('email'); // we index later
             $table->string('password')->nullable();
@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration
         // DB::statement('ALTER TABLE users ADD CONSTRAINT clc_handle CHECK (handle = unaccent(lower(handle)));');
         // DB::statement('CREATE UNIQUE INDEX uilc_handle ON users (unaccent(lower(handle)));');
         DB::statement('ALTER TABLE users ADD CONSTRAINT clength_handle CHECK (char_length(handle) > 2);');
+        DB::statement('ALTER TABLE users ADD CONSTRAINT clength_name CHECK (char_length(name) > 2);');
 
         // user handle must match a regex of only azAZ09-_ after all else
         DB::statement('ALTER TABLE users ADD CONSTRAINT cre_handle CHECK (handle ~ \'^[a-zA-Z0-9_\-]+$\');');

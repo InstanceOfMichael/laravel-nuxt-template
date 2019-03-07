@@ -2,15 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Question;
-use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateQuestion extends FormRequest
+class UpdateClaimside extends FormRequest
 {
-    // public function __construct (\App\Question $question) {
-    // }
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -18,7 +13,7 @@ class UpdateQuestion extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('update', $this->question);
+        return false;
     }
 
     /**
@@ -29,9 +24,7 @@ class UpdateQuestion extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'string',
-            'text' => 'string',
-            'sides_type' => 'sometimes|in:0,1,2',
+            //
         ];
     }
 }

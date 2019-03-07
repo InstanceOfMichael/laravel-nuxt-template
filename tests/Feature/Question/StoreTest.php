@@ -29,6 +29,7 @@ class StoreTest extends TestCase
         return [
             'title' => $this->question->title,
             'text'  => $this->question->text,
+            'sides_type' => $this->question->sides_type,
         ];
     }
 
@@ -40,6 +41,7 @@ class StoreTest extends TestCase
             ->assertJson([
                 'title' => $this->question->title,
                 'text'  => $this->question->text,
+                'sides_type' => $this->question->sides_type,
                 'op_id' => $this->question->op->id,
                 'op' => [
                     'id'     => $this->question->op->id,
@@ -62,8 +64,9 @@ class StoreTest extends TestCase
             ->assertStatus(422)
             ->assertExactJson([
                 "errors" => [
+                    "sides_type" => ["The sides type field is required."],
                     // "text" => ["The text field is required."],
-                    "title" => ["The title field is required."]
+                    "title" => ["The title field is required."],
                 ],
                 "message" => "The given data was invalid.",
             ])
@@ -80,6 +83,7 @@ class StoreTest extends TestCase
             ->assertStatus(422)
             ->assertExactJson([
                 "errors" => [
+                    "sides_type" => ["The sides type field is required."],
                     "text" => ["The text must be a string."],
                     "title" => ["The title field is required."]
                 ],

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateQuestionsTable extends Migration
+class CreateSidesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,19 @@ class CreateQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('questions', function (Blueprint $table) {
+        Schema::create('sides', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('op_id')->index();
-            $table->unsignedTinyInteger('sides_type')->index();
-            $table->string('title');
-            $table->text('text');
+            $table->string('name', 128);
+            $table->text('text')->default('');
+            $table->unsignedBigInteger('op_id')->index()->nullable();
             $table->timestamps();
 
             $table->foreign('op_id')
                 ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+                ->on('users');
         });
+
+        DB::statement('CREATE UNIQUE INDEX uilc_name ON sides (lower(name));');
     }
 
     /**
@@ -35,6 +35,6 @@ class CreateQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists('sides');
     }
 }
