@@ -19,7 +19,7 @@ class SidePolicy
      */
     public function view(User $user, Side $side)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class SidePolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -42,7 +42,7 @@ class SidePolicy
      */
     public function update(User $user, Side $side)
     {
-        //
+        return $side->op_id === $user->id;
     }
 
     /**
@@ -54,7 +54,7 @@ class SidePolicy
      */
     public function delete(User $user, Side $side)
     {
-        //
+        return false;
     }
 
     /**
@@ -66,7 +66,7 @@ class SidePolicy
      */
     public function restore(User $user, Side $side)
     {
-        //
+        return false;
     }
 
     /**
@@ -78,6 +78,6 @@ class SidePolicy
      */
     public function forceDelete(User $user, Side $side)
     {
-        //
+        return false;
     }
 }

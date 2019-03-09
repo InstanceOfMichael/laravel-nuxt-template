@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Side;
 
-use App\Http\Requests\StoreSide;
-use App\Http\Requests\UpdateSide;
+use App\Comment;
 use App\Side;
+use App\Http\Requests\StoreComment;
+use App\Http\Requests\UpdateComment;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class SideController extends Controller
+class CommentController extends Controller
 {
     public function __construct() {
         $this->middleware('auth')->except(['index', 'show']);
@@ -17,11 +19,11 @@ class SideController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $reqest, Side $side)
     {
-        return Side::query()
+        return $side->comments()
             ->with('op')
-            ->orderBy('sides.id', 'DESC')
+            ->orderBy('comments.id', 'desc')
             ->paginate();
     }
 
@@ -41,35 +43,35 @@ class SideController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSide $request)
+    public function store(StoreComment $request, Side $side)
     {
-        return $request->user()
-            ->sides()
-            ->create($request->all())
+        return $side->comments()
+            ->create([
+                'op_id' => $request->user()->id,
+            ] + $request->all())
             ->load('op');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Side  $side
      * @return \Illuminate\Http\Response
      */
-    public function show(Side $side)
+    public function show()
     {
-        return $side->load('op');
+        abort(405, 'Use without commentable context: GET /comments/:id');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Side  $side
+     * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Side $side)
+    public function edit(Side $side, Comment $comment)
     {
         return [
-            'side' => $side,
+            'comment' => $comment,
         ];
     }
 
@@ -77,25 +79,22 @@ class SideController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Side  $side
+     * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSide $request, Side $side)
+    public function update(UpdateComment $request, Side $side, Comment $comment)
     {
-        $side->update($request->all());
-        return $side->load('op');
+        abort(405, 'Use without commentable context: PATCH /comments/:id');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Side  $side
+     * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Side $side)
+    public function destroy(Side $side, Comment $comment)
     {
-        $this->authorize($side);
-        $side->delete();
-        return $side;
+        abort(405, 'Use without commentable context: DELETE /comments/:id');
     }
 }

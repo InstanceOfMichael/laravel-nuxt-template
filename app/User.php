@@ -143,4 +143,12 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return $this->hasMany(Link::class, 'op_id');
     }
 
+    /**
+     * Get the links associated with the user.
+     */
+    public function sides()
+    {
+        return $this->hasMany(Side::class, 'op_id');
+    }
+
 }

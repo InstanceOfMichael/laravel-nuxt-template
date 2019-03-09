@@ -2,17 +2,17 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const polyfills = [
-  'Promise',
-  'Object.assign',
-  'Object.values',
-  'Array.prototype.find',
-  'Array.prototype.findIndex',
-  'Array.prototype.includes',
-  'String.prototype.includes',
-  'String.prototype.startsWith',
-  'String.prototype.endsWith'
-]
+// const polyfills = [
+//   'Promise',
+//   'Object.assign',
+//   'Object.values',
+//   'Array.prototype.find',
+//   'Array.prototype.findIndex',
+//   'Array.prototype.includes',
+//   'String.prototype.includes',
+//   'String.prototype.startsWith',
+//   'String.prototype.endsWith'
+// ]
 
 module.exports = {
   // mode: 'spa',
@@ -38,7 +38,7 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
     script: [
-      { src: `https://cdn.polyfill.io/v2/polyfill.min.js?features=${polyfills.join(',')}` }
+      // { src: `https://cdn.polyfill.io/v2/polyfill.min.js?features=${polyfills.join(',')}` }
     ]
   },
 

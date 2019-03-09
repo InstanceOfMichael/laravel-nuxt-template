@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Claimside;
+use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateClaimside extends FormRequest
@@ -13,7 +15,7 @@ class UpdateClaimside extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Gate::allows('update', $this->claimside);
     }
 
     /**

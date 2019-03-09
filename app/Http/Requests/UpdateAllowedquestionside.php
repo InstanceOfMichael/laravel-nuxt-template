@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Allowedquestionside;
+use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateAllowedquestionside extends FormRequest
@@ -13,7 +15,7 @@ class UpdateAllowedquestionside extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Gate::allows('update', $this->allowedquestionside);
     }
 
     /**

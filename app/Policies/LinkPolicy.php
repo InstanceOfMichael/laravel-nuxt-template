@@ -19,7 +19,7 @@ class LinkPolicy
      */
     public function view(User $user, Link $link)
     {
-        //
+        return true;
     }
 
     /**

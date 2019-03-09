@@ -14,7 +14,7 @@ class AllowedquestionsideController extends Controller
      */
     public function index()
     {
-        //
+        abort(405, 'Use context /questions/:question');
     }
 
     /**
@@ -24,7 +24,7 @@ class AllowedquestionsideController extends Controller
      */
     public function create()
     {
-        //
+        abort(405, 'Use context /questions/:question');
     }
 
     /**
@@ -35,7 +35,7 @@ class AllowedquestionsideController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        abort(405, 'Use context /questions/:question');
     }
 
     /**
@@ -46,7 +46,7 @@ class AllowedquestionsideController extends Controller
      */
     public function show(Allowedquestionsides $allowedquestionsides)
     {
-        //
+        abort(405, 'Use context /questions/:question');
     }
 
     /**
@@ -57,7 +57,7 @@ class AllowedquestionsideController extends Controller
      */
     public function edit(Allowedquestionsides $allowedquestionsides)
     {
-        //
+        abort(405, 'Use context /questions/:question');
     }
 
     /**
@@ -69,7 +69,7 @@ class AllowedquestionsideController extends Controller
      */
     public function update(Request $request, Allowedquestionsides $allowedquestionsides)
     {
-        //
+        abort(405, 'Use context /questions/:question');
     }
 
     /**
@@ -80,6 +80,6 @@ class AllowedquestionsideController extends Controller
      */
     public function destroy(Allowedquestionsides $allowedquestionsides)
     {
-        //
+        abort(405, 'Use context /questions/:question');
     }
 }

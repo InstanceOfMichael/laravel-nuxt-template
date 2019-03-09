@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Side extends Model
+class Side extends Model implements Commentable
 {
     // question->side_type options:
     public const TYPE_NONE  = 0; // no sides, do not display anything

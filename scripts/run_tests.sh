@@ -1,11 +1,26 @@
 #!/bin/bash
 
 STARTTIME=$(date +%s)
+APP_ENV=testing
+DB_CONNECTION=test_pgsql
 DB_DATABASE=test_lndebate
+DB_USERNAME=test_lndebate
+DB_PASSWORD=test_lndebate
+APP_DEBUG=true
+APP_LOG_LEVEL=debug
 
 set -euo pipefail
 
 CHROMEDRIVER_PORT=9515
+# NPM_RUN_DEV_PORT=3000
+
+DEL_CONFIG_CACHE () {
+    php artisan config:clear
+    php artisan cache:clear
+    composer dump-autoload
+    [ -f boostrap/cache/config.php ] && rm boostrap/cache/config.php;
+    return 0;
+}
 
 RUN_TESTS () {
     set -euo pipefail
@@ -15,18 +30,28 @@ RUN_TESTS () {
 
     npm run lint
 
+    # if ! lsof -i:$NPM_RUN_DEV_PORT | grep LISTEN > /dev/null
+    # then
+    #     npm run dev &
+    # fi
     if ! lsof -i:$CHROMEDRIVER_PORT | grep LISTEN > /dev/null
     then
         ./vendor/laravel/dusk/bin/chromedriver-linux &
     fi
 
-    php artisan config:clear
-    php artisan cache:clear
+    DEL_CONFIG_CACHE;
     php artisan migrate:fresh --seed
 
-    ./vendor/bin/phpunit tests/Unit/ --stop-on-error --stop-on-failure
-    ./vendor/bin/phpunit tests/Feature/ --stop-on-error --stop-on-failure
-    # php artisan dusk
+    DEL_CONFIG_CACHE;
+    ./vendor/bin/phpunit tests/Unit/
+    # ./vendor/bin/phpunit tests/Unit/ --stop-on-error --stop-on-failure
+
+    DEL_CONFIG_CACHE;
+    ./vendor/bin/phpunit tests/Feature/
+    # ./vendor/bin/phpunit tests/Feature/ --stop-on-error --stop-on-failure
+
+    DEL_CONFIG_CACHE;
+    php artisan dusk
     # php artisan dusk --stop-on-error --stop-on-failure
 }
 

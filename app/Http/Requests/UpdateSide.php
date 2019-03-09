@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Side;
+use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateSide extends FormRequest
@@ -13,7 +15,7 @@ class UpdateSide extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Gate::allows('update', $this->side);
     }
 
     /**
@@ -24,7 +26,14 @@ class UpdateSide extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => [
+                'sometimes',
+                'string',
+                'min:1',
+                new \App\Rules\UniqueLowerCase('sides', 'name', $this->side),
+                new \App\Rules\OnlyCaseChange($this->side),
+            ],
+            'text' => 'sometimes|string',
         ];
     }
 }

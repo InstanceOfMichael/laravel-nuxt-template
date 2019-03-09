@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Claimsides;
+use App\Claimside;
 use Illuminate\Http\Request;
 
-class ClaimsidesController extends Controller
+class ClaimsideController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ClaimsidesController extends Controller
      */
     public function index()
     {
-        //
+        abort(405, 'Use context /claims/:claim');
     }
 
     /**
@@ -24,7 +24,7 @@ class ClaimsidesController extends Controller
      */
     public function create()
     {
-        //
+        abort(405, 'Use context /claims/:claim');
     }
 
     /**
@@ -35,51 +35,51 @@ class ClaimsidesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        abort(405, 'Use context /claims/:claim');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Claimsides  $claimsides
+     * @param  \App\Claimside  $claimsides
      * @return \Illuminate\Http\Response
      */
-    public function show(Claimsides $claimsides)
+    public function show(Claimside $claimsides)
     {
-        //
+        abort(405, 'Use context /claims/:claim');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Claimsides  $claimsides
+     * @param  \App\Claimside  $claimsides
      * @return \Illuminate\Http\Response
      */
-    public function edit(Claimsides $claimsides)
+    public function edit(Claimside $claimsides)
     {
-        //
+        abort(405, 'Use context /claims/:claim');
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Claimsides  $claimsides
+     * @param  \App\Claimside  $claimsides
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Claimsides $claimsides)
+    public function update(Request $request, Claimside $claimsides)
     {
-        //
+        abort(405, 'Use context /claims/:claim');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Claimsides  $claimsides
+     * @param  \App\Claimside  $claimsides
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Claimsides $claimsides)
+    public function destroy(Claimside $claimsides)
     {
-        //
+        abort(405, 'Use context /claims/:claim');
     }
 }

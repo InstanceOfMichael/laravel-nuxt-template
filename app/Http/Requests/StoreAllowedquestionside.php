@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Allowedquestionside;
+use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreAllowedquestionside extends FormRequest
@@ -13,7 +15,7 @@ class StoreAllowedquestionside extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Gate::allows('create', Allowedquestionside::class);
     }
 
     /**
@@ -24,7 +26,8 @@ class StoreAllowedquestionside extends FormRequest
     public function rules()
     {
         return [
-            //
+            'side_id' => 'required_without:side_id_list',
+            'side_id_list' => 'required_without:side_id|array',
         ];
     }
 }

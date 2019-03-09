@@ -19,7 +19,7 @@ class AllowedquestionsidePolicy
      */
     public function view(User $user, Allowedquestionside $allowedquestionside)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class AllowedquestionsidePolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -42,7 +42,7 @@ class AllowedquestionsidePolicy
      */
     public function update(User $user, Allowedquestionside $allowedquestionside)
     {
-        //
+        return $allowedquestionside->op_id === $user->id;
     }
 
     /**
@@ -54,7 +54,7 @@ class AllowedquestionsidePolicy
      */
     public function delete(User $user, Allowedquestionside $allowedquestionside)
     {
-        //
+        return false;
     }
 
     /**
@@ -66,7 +66,7 @@ class AllowedquestionsidePolicy
      */
     public function restore(User $user, Allowedquestionside $allowedquestionside)
     {
-        //
+        return false;
     }
 
     /**
@@ -78,6 +78,6 @@ class AllowedquestionsidePolicy
      */
     public function forceDelete(User $user, Allowedquestionside $allowedquestionside)
     {
-        //
+        return false;
     }
 }

@@ -3,21 +3,19 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use App\Commentable;
 
-class ExistingParentCommentId implements Rule
+class OnlyCaseChange implements Rule
 {
-    /** @var \App\Commentable */
-    protected $topic;
+    protected $model;
 
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct(Commentable $topic)
+    public function __construct($model = null)
     {
-        $this->topic = $topic;
+        $this->model = $model;
     }
 
     /**
@@ -29,12 +27,10 @@ class ExistingParentCommentId implements Rule
      */
     public function passes($attribute, $value)
     {
-        if ($value == 0) {
-            // zero does not exist, but is a valid parent,
-            // because it indicates no parent
+        if (strtolower($this->model->{$attribute}) === strtolower($value)) {
             return true;
         }
-        return $this->topic->comments()->where('comments.id', $value)->take(1)->get()->count() > 0;
+        return false;
     }
 
     /**
@@ -44,6 +40,6 @@ class ExistingParentCommentId implements Rule
      */
     public function message()
     {
-        return 'Replying to comment that does not exist.';
+        return 'The value must be the same (case insensitive).';
     }
 }

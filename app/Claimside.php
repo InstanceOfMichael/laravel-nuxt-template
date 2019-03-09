@@ -4,15 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Allowedquestionside extends Model
+class Claimside extends Model
 {
+    use SerializesDates;
+
     protected $fillable = [
+        'question_id',
         'side_id',
         'op_id',
-        'question_id',
     ];
+
     /**
-     * Get the original poster (User) associated with the allowedquestionside.
+     * Get the original poster (User) associated with the claim.
      */
     public function op()
     {
@@ -20,15 +23,15 @@ class Allowedquestionside extends Model
     }
 
     /**
-     * Get the question associated with the allowedquestionside.
+     * Get the claim associated with the claimside.
      */
-    public function question()
+    public function claim()
     {
-        return $this->belongsTo(Question::class);
+        return $this->belongsTo(Claim::class);
     }
 
     /**
-     * Get the side associated with the allowedquestionside.
+     * Get the side associated with the claimside.
      */
     public function side()
     {

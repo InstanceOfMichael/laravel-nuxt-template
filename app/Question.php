@@ -38,4 +38,12 @@ class Question extends Model implements Commentable
     {
         return $this->hasMany(Answer::class);
     }
+
+    /**
+     * Get the allowedsides associated with the question.
+     */
+    public function allowedsides()
+    {
+        return $this->hasMany(Allowedquestionside::class);
+    }
 }

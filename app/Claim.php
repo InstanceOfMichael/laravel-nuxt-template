@@ -52,4 +52,13 @@ class Claim extends Model implements Commentable
     public function parentclaims()
     {
         return $this->belongsTo(Claim::class);
-    }}
+    }
+
+    /**
+     * Get the allowedsides associated with the question.
+     */
+    public function claimsides()
+    {
+        return $this->hasMany(Claimside::class);
+    }
+}

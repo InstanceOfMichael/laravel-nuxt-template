@@ -46,6 +46,7 @@ Route::group([], function () {
 
     Route::resource('claims', 'ClaimController');
     Route::group([ 'prefix' => 'claims/{claim}' ], function () {
+        Route::resource('claimsides', 'Claim\ClaimsideController');
         Route::resource('comments', 'Claim\CommentController');
     });
 
@@ -56,6 +57,7 @@ Route::group([], function () {
 
     Route::resource('questions', 'QuestionController');
     Route::group([ 'prefix' => 'questions/{question}' ], function () {
+        Route::resource('allowedquestionsides', 'Question\AllowedquestionsideController');
         Route::resource('comments', 'Question\CommentController');
     });
 
@@ -67,6 +69,11 @@ Route::group([], function () {
     Route::resource('linkdomains', 'LinkdomainController');
     Route::group([ 'prefix' => 'linkdomains/{linkdomain}' ], function () {
         Route::resource('comments', 'Linkdomain\CommentController');
+    });
+
+    Route::resource('sides', 'SideController');
+    Route::group([ 'prefix' => 'sides/{side}' ], function () {
+        Route::resource('comments', 'Side\CommentController');
     });
 
     Route::resource('users', 'UserController');

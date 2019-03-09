@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Side;
+use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreSide extends FormRequest
@@ -13,7 +15,7 @@ class StoreSide extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Gate::allows('create', Side::class);
     }
 
     /**
@@ -24,7 +26,13 @@ class StoreSide extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => [
+                'required',
+                'string',
+                'min:1',
+                new \App\Rules\UniqueLowerCase('sides', 'name', $this->side),
+            ],
+            'text' => 'sometimes|string',
         ];
     }
 }

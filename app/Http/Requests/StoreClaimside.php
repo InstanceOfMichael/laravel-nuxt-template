@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Claimside;
+use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreClaimside extends FormRequest
@@ -13,7 +15,7 @@ class StoreClaimside extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Gate::allows('create', Claimside::class);
     }
 
     /**
@@ -24,7 +26,7 @@ class StoreClaimside extends FormRequest
     public function rules()
     {
         return [
-            //
+            'side_id' => 'required|exists:sides,id',
         ];
     }
 }

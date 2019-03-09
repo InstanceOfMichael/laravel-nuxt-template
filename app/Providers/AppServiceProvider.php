@@ -29,6 +29,9 @@ class AppServiceProvider extends ServiceProvider
             7 => \App\Claimrelation::class,
             8 => \App\Link::class,
             9 => \App\Linkdomain::class,
+            10 => \App\Side::class,
+            11 => \App\Allowedquestionside::class,
+            12 => \App\Claimside::class,
         ]);
         Carbon::serializeUsing(function ($carbon) {
             return $carbon->format('U');
