@@ -4,9 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Claimrelation extends Model implements Commentable
+class Claimrelation extends Model
+    implements
+        Contracts\Commentable,
+        Contracts\HasOp
 {
-    use SerializesDates;
+    use Traits\SerializesDates,
+        Traits\HasComments,
+        Traits\HasOpId;
 
     public const REBUTE = 50;
     public const COLLABORATE = 51;
@@ -24,15 +29,6 @@ class Claimrelation extends Model implements Commentable
     ];
 
     /**
-     * Get the original poster (User) who associated the claim to the question.
-     * This user could be different from the one who created the claim
-     */
-    public function op()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    /**
      * Get the question associated with this answer
      */
     public function replyclaim()
@@ -46,13 +42,5 @@ class Claimrelation extends Model implements Commentable
     public function parentclaim()
     {
         return $this->belongsTo(Claim::class, 'pc_id');
-    }
-
-    /**
-     * Get the comments associated with the question.
-     */
-    public function comments()
-    {
-        return $this->morphMany(Comment::class, 'topic');
     }
 }

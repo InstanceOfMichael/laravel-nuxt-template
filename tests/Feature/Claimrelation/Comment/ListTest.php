@@ -62,6 +62,9 @@ class ListTest extends TestCase
         $this->assertEquals(9, Comment::query()->count());
     }
 
+    /**
+     * @group comment
+     */
     public function testListClaimrelationCommentsAsUser()
     {
         $comments = $this->comments
@@ -90,6 +93,9 @@ class ListTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
+    /**
+     * @group comment
+     */
     public function testListClaimrelationCommentsAsGuest()
     {
         $comments = $this->comments

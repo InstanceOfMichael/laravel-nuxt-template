@@ -3,7 +3,7 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use App\Commentable;
+use App\Contracts\Commentable;
 
 class ExistingParentCommentId implements Rule
 {

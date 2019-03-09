@@ -53,6 +53,9 @@ class ListTest extends TestCase
         $this->assertEquals(9, Comment::query()->count());
     }
 
+    /**
+     * @group comment
+     */
     public function testListClaimCommentsAsUser()
     {
         $comments = $this->comments
@@ -80,6 +83,9 @@ class ListTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
+    /**
+     * @group comment
+     */
     public function testListClaimCommentsAsOtherUser()
     {
         $comments = $this->comments
@@ -109,7 +115,9 @@ class ListTest extends TestCase
 
     /**
      * You have to be logged in to read a user's history
-     **/
+     *
+     * @group comment
+     */
     public function testListClaimCommentsAsGuest()
     {
         $this->getJson('/users/'.$this->users[1]->id.'/comments')

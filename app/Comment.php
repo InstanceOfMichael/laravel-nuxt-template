@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class Comment extends Model
+    implements
+        Contracts\HasOp
 {
-    use SerializesDates;
+    use Traits\SerializesDates,
+        Traits\HasOpId;
 
     protected $attributes = [
         'pc_id' => 0, // using 0 as null to not bloat column definition
@@ -20,14 +23,6 @@ class Comment extends Model
         'topic_id',
         'topic_type',
     ];
-
-    /**
-     * Get the original poster (User) associated with the question.
-     */
-    public function op()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     /**
      * Get the original poster (User) associated with the question.

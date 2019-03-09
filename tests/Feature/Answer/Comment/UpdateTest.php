@@ -63,6 +63,9 @@ class UpdateTest extends TestCase
         ];
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateAnswerCommentAsUser()
     {
         $this->actingAs($this->users[0])
@@ -79,6 +82,9 @@ class UpdateTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateAnswerCommentAsUserWhoIsNotOp()
     {
         $this->actingAs($this->users[3])
@@ -86,6 +92,9 @@ class UpdateTest extends TestCase
             ->assertStatus(403);
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateQuestionCommentAsUserWithCommentableEndpoint()
     {
         $this->actingAs($this->users[0])

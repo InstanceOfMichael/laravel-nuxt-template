@@ -47,6 +47,9 @@ class UpdateTest extends TestCase
         ];
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateLinkCommentAsUser()
     {
         $this->actingAs($this->users[0])
@@ -64,6 +67,9 @@ class UpdateTest extends TestCase
             ->assertJsonMissing(['email']);
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateLinkCommentAsUserWhoIsNotOp()
     {
         $this->actingAs($this->users[3])
@@ -71,6 +77,9 @@ class UpdateTest extends TestCase
             ->assertStatus(403);
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateLinkCommentAsUserWithCommentableEndpoint()
     {
         $this->actingAs($this->users[0])
@@ -78,6 +87,9 @@ class UpdateTest extends TestCase
             ->assertStatus(405);
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateLinkCommentAsGuest()
     {
         $this->patchJson('/comments/'.$this->link->linkdomain->comments[0]->id, $this->getPayload())

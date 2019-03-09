@@ -5,8 +5,15 @@ namespace App;
 use App\Observers\LinkObserver;
 use Illuminate\Database\Eloquent\Model;
 
-class Link extends Model implements Commentable
+class Link extends Model
+    implements
+        Contracts\Commentable,
+        Contracts\HasOp
 {
+    use Traits\SerializesDates,
+        Traits\HasComments,
+        Traits\HasOpId;
+
     protected $fillable = [
         'title',
         'url',
@@ -28,22 +35,6 @@ class Link extends Model implements Commentable
     public function linkdomain()
     {
         return $this->belongsTo(Linkdomain::class, 'ld_id');
-    }
-
-    /**
-     * Get the comments associated with the link.
-     */
-    public function comments()
-    {
-        return $this->morphMany(Comment::class, 'topic');
-    }
-
-    /**
-     * Get the original poster (User) associated with the link.
-     */
-    public function op()
-    {
-        return $this->belongsTo(User::class);
     }
 
 }

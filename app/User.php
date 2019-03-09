@@ -8,10 +8,14 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
 
-class User extends Authenticatable implements JWTSubject, MustVerifyEmail
+class User extends Authenticatable
+    implements
+        JWTSubject,
+        MustVerifyEmail
 {
     use Notifiable,
-        SerializesDates;
+        Traits\SerializesDates,
+        Traits\HasComments;
 
     /**
      * The attributes that are mass assignable.

@@ -1,11 +1,12 @@
 <?php
 
-namespace Tests\Feature\Question\Comment;
+namespace Tests\Feature\Claimside\Comment;
 
+use App\Claimside;
 use App\User;
-use App\Comment;
-use App\Question;
 use App\Claim;
+use App\Comment;
+use App\Side;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,10 +16,12 @@ class ListTest extends TestCase
     protected $users;
     /** @var \App\CommentTopic[] */
     protected $commentables;
-    /** @var \App\Question */
+    /** @var \App\Side */
     protected $question;
     /** @var \App\Claim */
     protected $claim;
+    /** @var \App\Claimside */
+    protected $claimside;
 
     public function setUp()
     {
@@ -27,9 +30,13 @@ class ListTest extends TestCase
         $this->users = factory(User::class, 9)->create();
 
         $this->commentables = collect([
-            $this->question = factory(Question::class)->create([ 'op_id' => factory(User::class)->create()->id ]),
+            $this->question = factory(Side::class)->create([ 'op_id' => factory(User::class)->create()->id ]),
             $this->claim = factory(Claim::class)->create([ 'op_id' => factory(User::class)->create()->id ]),
-            factory(Question::class)->create([ 'op_id' => factory(User::class)->create()->id ]),
+            $this->claimside = factory(Claimside::class)->create([
+                'op_id' => factory(User::class)->create()->id,
+                'claim_id' => $this->claim->id,
+                'side_id' => $this->question->id,
+            ]),
         ]);
 
         $this->commentables->each(function ($commentable) {
@@ -56,15 +63,15 @@ class ListTest extends TestCase
     /**
      * @group comment
      */
-    public function testListQuestionCommentsAsUser()
+    public function testListClaimsideCommentsAsUser()
     {
         $comments = $this->comments
-            ->where('topic_type', $this->question->getMorphClass())
-            ->where('topic_id', $this->question->id)
+            ->where('topic_type', $this->claimside->getMorphClass())
+            ->where('topic_id', $this->claimside->id)
             ->sortByDesc('id')
             ->values();
         $this->actingAs($this->users[0])
-            ->getJson('/questions/'.$this->question->id.'/comments')
+            ->getJson('/claimsides/'.$this->claimside->id.'/comments')
             ->assertSuccessful()
             ->assertJson([
                 'data' => $comments->map(function (Comment $c):array {
@@ -87,14 +94,14 @@ class ListTest extends TestCase
     /**
      * @group comment
      */
-    public function testListQuestionCommentsAsGuest()
+    public function testListClaimsideCommentsAsGuest()
     {
         $comments = $this->comments
-            ->where('topic_type', $this->question->getMorphClass())
-            ->where('topic_id', $this->question->id)
+            ->where('topic_type', $this->claimside->getMorphClass())
+            ->where('topic_id', $this->claimside->id)
             ->sortByDesc('id')
             ->values();
-        $this->getJson('/questions/'.$this->question->id.'/comments')
+        $this->getJson('/claimsides/'.$this->claimside->id.'/comments')
             ->assertSuccessful()
             ->assertJson([
                 'data' => $comments->map(function (Comment $c):array {

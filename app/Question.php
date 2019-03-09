@@ -4,9 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Question extends Model implements Commentable
+class Question extends Model
+    implements
+        Contracts\Commentable,
+        Contracts\HasOp
 {
-    use SerializesDates;
+    use Traits\SerializesDates,
+        Traits\HasComments,
+        Traits\HasOpId;
 
     protected $fillable = [
         'title',
@@ -14,22 +19,6 @@ class Question extends Model implements Commentable
         'sides_type',
         'op_id',
     ];
-
-    /**
-     * Get the original poster (User) associated with the question.
-     */
-    public function op()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Get the comments associated with the question.
-     */
-    public function comments()
-    {
-        return $this->morphMany(Comment::class, 'topic');
-    }
 
     /**
      * Get the answers associated with the question.

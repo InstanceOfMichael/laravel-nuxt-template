@@ -41,6 +41,9 @@ class ShowTest extends TestCase
         ]);
     }
 
+    /**
+     * @group comment
+     */
     public function testShowLinkCommentAsUser()
     {
         foreach ($this->comments as $comment) {
@@ -50,6 +53,9 @@ class ShowTest extends TestCase
         }
     }
 
+    /**
+     * @group comment
+     */
     public function testShowLinkCommentAsGuest()
     {
         foreach ($this->comments as $comment) {

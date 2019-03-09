@@ -13,6 +13,8 @@ class CommentTopicMorphMapTest extends TestCase
     /**
      * A basic test example.
      *
+     * @group comment
+     *
      * @return void
      */
     public function testBasicTest()

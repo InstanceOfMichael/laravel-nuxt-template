@@ -47,6 +47,9 @@ class UpdateTest extends TestCase
         ];
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateClaimCommentAsUser()
     {
         $this->actingAs($this->users[0])
@@ -64,6 +67,9 @@ class UpdateTest extends TestCase
             ->assertJsonMissing(['email']);
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateClaimCommentAsUserWhoIsNotOp()
     {
         $this->actingAs($this->users[3])
@@ -71,6 +77,9 @@ class UpdateTest extends TestCase
             ->assertStatus(403);
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateQuestionCommentAsUserWithCommentableEndpoint()
     {
         $this->actingAs($this->users[0])

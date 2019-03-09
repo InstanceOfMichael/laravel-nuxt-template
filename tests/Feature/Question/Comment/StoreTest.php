@@ -44,6 +44,9 @@ class StoreTest extends TestCase
         ]);
     }
 
+    /**
+     * @group comment
+     */
     public function testStoreQuestionCommentAsUserAndReplyAsOtherUser()
     {
         $r = $this->actingAs($this->users[0])
@@ -83,6 +86,9 @@ class StoreTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
+    /**
+     * @group comment
+     */
     public function testStoreQuestionCommentAsUserAndReplyAsOtherUserWithInvalidParentCommentId()
     {
         $r = $this->actingAs($this->users[0])
@@ -119,12 +125,18 @@ class StoreTest extends TestCase
             ]);
     }
 
+    /**
+     * @group comment
+     */
     public function testStoreQuestionCommentAsGuest()
     {
         $this->postJson('/questions/'.$this->question->id.'/comments', $this->getPayload())
             ->assertStatus(401);
     }
 
+    /**
+     * @group comment
+     */
     public function testStoreCommentEmptyPayload()
     {
         $this->actingAs($this->users[0])

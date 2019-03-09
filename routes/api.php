@@ -50,6 +50,11 @@ Route::group([], function () {
         Route::resource('comments', 'Claim\CommentController');
     });
 
+    Route::resource('claimsides', 'ClaimsideController');
+    Route::group([ 'prefix' => 'claimsides/{claimside}' ], function () {
+        Route::resource('comments', 'Claimside\CommentController');
+    });
+
     Route::resource('claimrelations', 'ClaimrelationController');
     Route::group([ 'prefix' => 'claimrelations/{claimrelation}' ], function () {
         Route::resource('comments', 'Claimrelation\CommentController');

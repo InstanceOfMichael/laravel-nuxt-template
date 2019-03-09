@@ -47,6 +47,9 @@ class UpdateTest extends TestCase
         ];
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateQuestionCommentAsUserWithCommentableEndpoint()
     {
         $this->actingAs($this->users[0])

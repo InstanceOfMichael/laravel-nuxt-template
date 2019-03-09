@@ -44,6 +44,9 @@ class StoreTest extends TestCase
         ]);
     }
 
+    /**
+     * @group comment
+     */
     public function testStoreClaimCommentAsUserAndReplyAsOtherUserWithInvalidParentCommentId()
     {
         $r = $this->actingAs($this->users[0])
@@ -80,6 +83,9 @@ class StoreTest extends TestCase
             ]);
     }
 
+    /**
+     * @group comment
+     */
     public function testStoreClaimCommentAsUserAndReplyAsOtherUser()
     {
         $r = $this->actingAs($this->users[0])
@@ -119,12 +125,18 @@ class StoreTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
+    /**
+     * @group comment
+     */
     public function testStoreClaimCommentAsGuest()
     {
         $this->postJson('/claims/'.$this->claim->id.'/comments', $this->getPayload())
             ->assertStatus(401);
     }
 
+    /**
+     * @group comment
+     */
     public function testStoreCommentEmptyPayload()
     {
         $this->actingAs($this->users[0])

@@ -5,22 +5,19 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Claimside extends Model
+    implements
+        Contracts\Commentable,
+        Contracts\HasOp
 {
-    use SerializesDates;
+    use Traits\SerializesDates,
+        Traits\HasComments,
+        Traits\HasOpId;
 
     protected $fillable = [
         'question_id',
         'side_id',
         'op_id',
     ];
-
-    /**
-     * Get the original poster (User) associated with the claim.
-     */
-    public function op()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     /**
      * Get the claim associated with the claimside.

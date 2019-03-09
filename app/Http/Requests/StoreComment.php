@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Comment;
-use App\Commentable;
+use App\Contracts\Commentable;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\ExistingParentCommentId;
@@ -33,8 +33,20 @@ class StoreComment extends FormRequest
         ];
     }
 
-    public function commentable() {
-        if ($this->question instanceof Commentable) return $this->question;
-        if ($this->claim instanceof Commentable) return $this->claim;
+    public function commentable(): Commentable {
+        foreach([
+            'question',
+            'claim',
+            'claimside',
+            'answer',
+            'side',
+            'claimrelation',
+            'link',
+            'linkdomain',
+        ] as $key) {
+            if ($this->{$key} instanceof Commentable) {
+                return $this->{$key};
+            }
+        }
     }
 }

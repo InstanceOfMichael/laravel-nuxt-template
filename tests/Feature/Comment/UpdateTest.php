@@ -47,6 +47,9 @@ class UpdateTest extends TestCase
         ];
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateQuestionCommentAsUser()
     {
         $this->actingAs($this->users[0])
@@ -63,6 +66,9 @@ class UpdateTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateClaimCommentAsUser()
     {
         $this->actingAs($this->users[0])
@@ -79,6 +85,9 @@ class UpdateTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateQuestionCommentAsUserWhoIsNotOp()
     {
         $this->actingAs($this->users[3])
@@ -86,6 +95,9 @@ class UpdateTest extends TestCase
             ->assertStatus(403);
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateClaimCommentAsUserWhoIsNotOp()
     {
         $this->actingAs($this->users[3])
@@ -93,24 +105,36 @@ class UpdateTest extends TestCase
             ->assertStatus(403);
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateCommentPatchWithoutId()
     {
         $this->patchJson('/comments', $this->getPayload())
             ->assertStatus(405);
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateClaimCommentAsGuest()
     {
         $this->patchJson('/comments/'.$this->claim->comments[0]->id, $this->getPayload())
             ->assertStatus(401);
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateQuestionCommentAsGuest()
     {
         $this->patchJson('/comments/'.$this->question->comments[0]->id, $this->getPayload())
             ->assertStatus(401);
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateCommentEmptyPayload()
     {
         $this->actingAs($this->users[0])
@@ -127,6 +151,9 @@ class UpdateTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
+    /**
+     * @group comment
+     */
     public function testUpdateCommentEmptyNullPayload()
     {
         $this->actingAs($this->users[0])

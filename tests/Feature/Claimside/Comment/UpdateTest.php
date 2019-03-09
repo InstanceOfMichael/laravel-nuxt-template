@@ -1,20 +1,25 @@
 <?php
 
-namespace Tests\Feature\Question\Comment;
+namespace Tests\Feature\Claimside\Comment;
 
+use App\Claimside;
 use App\User;
-use App\Comment;
 use App\Claim;
-use App\Question;
+use App\Comment;
+use App\Side;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 
 class UpdateTest extends TestCase
 {
-    /** @var \App\User */
-    protected $user;
+    /** @var \App\User[] */
+    protected $users;
     /** @var \App\Comment */
     protected $comment;
+    /** @var \App\Side */
+    protected $question;
+    /** @var \App\Claimside */
+    protected $claimside;
     /** @var \App\Comment */
     protected $updatedComment;
 
@@ -23,7 +28,7 @@ class UpdateTest extends TestCase
         parent::setUp();
 
         $this->users = factory(User::class, 4)->create();
-        $this->question = factory(Question::class)->create([
+        $this->question = factory(Side::class)->create([
             'op_id' => $this->users[1]->id,
         ]);
         $this->claim = factory(Claim::class)->create([
@@ -37,6 +42,17 @@ class UpdateTest extends TestCase
         ]));
         $this->question->comments[0]->setRelation('op', $this->users[0]);
         $this->claim->comments[0]->setRelation('op', $this->users[0]);
+
+        $this->claimside = factory(Claimside::class)->create([
+            'op_id' => $this->users[0]->id,
+            'claim_id' => $this->claim->id,
+            'side_id' => $this->question->id,
+        ]);
+        $this->claimside->comments()->create(factory(Comment::class)->raw([
+            'op_id' => $this->users[0]->id,
+        ]));
+        $this->claimside->comments[0]->setRelation('op', $this->users[0]);
+
         $this->updatedComment = factory(Comment::class)->make();
     }
 
@@ -50,49 +66,39 @@ class UpdateTest extends TestCase
     /**
      * @group comment
      */
-    public function testUpdateQuestionCommentAsUser()
+    public function testUpdateClaimsideCommentAsUser()
     {
         $this->actingAs($this->users[0])
-            ->patchJson('/comments/'.$this->question->comments[0]->id, $this->getPayload())
+            ->patchJson('/comments/'.$this->claimside->comments[0]->id, $this->getPayload())
             ->assertStatus(200)
             ->assertJson([
                 'text'  => $this->updatedComment->text,
-                'op_id' => $this->question->comments[0]->op->id,
+                'op_id' => $this->claimside->comments[0]->op->id,
                 'op' => [
-                    'id'     => $this->question->comments[0]->op->id,
-                    'handle' => $this->question->comments[0]->op->handle,
+                    'id'     => $this->claimside->comments[0]->op->id,
+                    'handle' => $this->claimside->comments[0]->op->handle,
                 ],
             ])
-            ->assertDontSeeText($this->users[0]->email)
-            ->assertJsonMissing(['email']);
+            ->assertDontExposeUserEmails($this->users);
     }
 
     /**
      * @group comment
      */
-    public function testUpdateQuestionCommentAsUserWhoIsNotOp()
+    public function testUpdateClaimsideCommentAsUserWhoIsNotOp()
     {
         $this->actingAs($this->users[3])
-            ->patchJson('/questions/'.$this->question->id.'/comments/'.$this->question->comments[0]->id, $this->getPayload())
+            ->patchJson('/comments/'.$this->claimside->comments[0]->id, $this->getPayload())
             ->assertStatus(403);
     }
 
     /**
      * @group comment
      */
-    public function testUpdateQuestionCommentAsUserWithCommentableEndpoint()
+    public function testUpdateSideCommentAsUserWithCommentableEndpoint()
     {
         $this->actingAs($this->users[0])
-            ->patchJson('/claims/'.$this->question->id.'/comments/'.$this->question->comments[0]->id, $this->getPayload())
-            ->assertStatus(404);
-    }
-
-    /**
-     * @group comment
-     */
-    public function testUpdateQuestionCommentAsGuest()
-    {
-        $this->patchJson('/comments/'.$this->question->comments[0]->id, $this->getPayload())
-            ->assertStatus(401);
+            ->patchJson('/claimsides/'.$this->claimside->id.'/comments/'.$this->question->comments[0]->id, $this->getPayload())
+            ->assertStatus(405);
     }
 }

@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Claimside;
 
+use App\Claimside;
 use App\Comment;
 use App\Http\Requests\StoreComment;
 use App\Http\Requests\UpdateComment;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -17,9 +19,9 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $reqest, Claimside $claimside)
     {
-        return Comment::query()
+        return $claimside->comments()
             ->with('op')
             ->orderBy('comments.id', 'desc')
             ->paginate();
@@ -32,7 +34,7 @@ class CommentController extends Controller
      */
     public function create()
     {
-        abort(405, 'Use with commentable content: GET /:commentable/:id/comments/create');
+        //
     }
 
     /**
@@ -41,21 +43,23 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(/*StoreComment $request*/)
+    public function store(StoreComment $request, Claimside $claimside)
     {
-        abort(405, 'Use with commentable content: POST /:commentable/:id/comments');
+        return $claimside->comments()
+            ->create([
+                'op_id' => $request->user()->id,
+            ] + $request->all())
+            ->load('op');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comment)
+    public function show()
     {
-        $comment->load('op', 'topic');
-        return $comment;
+        abort(405, 'Use without commentable context: GET /comments/:id');
     }
 
     /**
@@ -64,9 +68,11 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Comment $comment)
+    public function edit(Claimside $claimside, Comment $comment)
     {
-        abort(405, 'Use with commentable content: GET /:commentable/:id/comments/edit');
+        return [
+            'comment' => $comment,
+        ];
     }
 
     /**
@@ -76,11 +82,9 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateComment $request, Comment $comment)
+    public function update(UpdateComment $request, Claimside $claimside, Comment $comment)
     {
-        $comment->update($request->all());
-        $comment->load('op');
-        return $comment;
+        abort(405, 'Use without commentable context: PATCH /comments/:id');
     }
 
     /**
@@ -89,10 +93,8 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy(Claimside $claimside, Comment $comment)
     {
-        $this->authorize($comment);
-        $comment->delete();
-        return $comment;
+        abort(405, 'Use without commentable context: DELETE /comments/:id');
     }
 }

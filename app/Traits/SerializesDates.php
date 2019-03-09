@@ -1,6 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Traits;
+
+use DateTimeInterface;
 
 trait SerializesDates
 {
@@ -12,7 +14,7 @@ trait SerializesDates
      * @param  \DateTimeInterface  $date
      * @return string
      */
-    protected function serializeDate(\DateTimeInterface $date)
+    protected function serializeDate(DateTimeInterface $date)
     {
         return intval($date->jsonSerialize());
     }
