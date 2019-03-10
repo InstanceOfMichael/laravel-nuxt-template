@@ -45,7 +45,7 @@ module.exports = {
   loading: { color: '#007bff' },
 
   router: {
-    middleware: ['locale', 'check-auth']
+    middleware: ['redirects', 'locale', 'check-auth', 'history']
   },
 
   css: [
@@ -63,6 +63,9 @@ module.exports = {
   ],
 
   modules: [
+    ['@nuxtjs/google-analytics', {
+      id: 'UA-130086131-3'
+    }],
     '@nuxtjs/pwa',
     '@nuxtjs/sentry'
   ],
