@@ -121,4 +121,5 @@ class StoreTest extends TestCase
             ])
             ->assertDontExposeUserEmails($this->users);
     }
+
 }

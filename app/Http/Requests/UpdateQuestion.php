@@ -29,8 +29,13 @@ class UpdateQuestion extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'string',
-            'text' => 'string',
+            'title' => [
+                'sometimes',
+                'string',
+                'min:9',
+                new \App\Rules\EndsWith('?'),
+            ],
+            'text' => 'sometimes|string',
             'sides_type' => 'sometimes|in:0,1,2',
         ];
     }

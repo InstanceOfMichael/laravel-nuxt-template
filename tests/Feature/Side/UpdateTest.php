@@ -95,7 +95,7 @@ class UpdateTest extends TestCase
                     "name" => [
                         "The name must be a string.",
                         "The name must be at least 1 characters.",
-                        "The value must be the same (case insensitive).",
+                        "The name must be the same (case insensitive).",
                     ],
                     "text" => ["The text must be a string."],
                 ],
@@ -116,7 +116,7 @@ class UpdateTest extends TestCase
                     "name" => [
                         "The name must be a string.",
                         "The name must be at least 1 characters.",
-                        "The value must be the same (case insensitive).",
+                        "The name must be the same (case insensitive).",
                     ],
                 ],
                 "message" => "The given data was invalid.",
@@ -134,7 +134,7 @@ class UpdateTest extends TestCase
             ->assertExactJson([
                 "errors" => [
                     "name" => [
-                        "The value must be the same (case insensitive).",
+                        "The name must be the same (case insensitive).",
                     ],
                 ],
                 "message" => "The given data was invalid.",

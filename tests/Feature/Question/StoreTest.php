@@ -91,4 +91,22 @@ class StoreTest extends TestCase
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }
+
+    public function testStoreQuestionTitleRequiresQuestionMark()
+    {
+        $this->actingAs($this->user)
+            ->postJson('/questions', [
+                'title' => 'string without question mark',
+            ]+$this->getPayload())
+            ->assertStatus(422)
+            ->assertExactJson([
+                "errors" => [
+                    "title" => [
+                        "The title has to end with: ?",
+                    ],
+                ],
+                "message" => "The given data was invalid.",
+            ])
+            ->assertDontExposeUserEmails($this->user->email);
+    }
 }

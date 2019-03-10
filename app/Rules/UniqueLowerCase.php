@@ -50,6 +50,6 @@ class UniqueLowerCase implements Rule
      */
     public function message()
     {
-        return 'The value must be unique (case insensitive).';
+        return 'The :attribute must be unique (case insensitive).';
     }
 }

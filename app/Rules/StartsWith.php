@@ -4,18 +4,22 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class OnlyCaseChange implements Rule
+class StartsWith implements Rule
 {
-    protected $model;
+    /**
+     * @var  array|string  $needle
+     */
+    protected $needle;
 
     /**
      * Create a new rule instance.
      *
+     * @param  array|string  $needle
      * @return void
      */
-    public function __construct($model = null)
+    public function __construct($needle)
     {
-        $this->model = $model;
+        $this->needle = $needle;
     }
 
     /**
@@ -27,10 +31,7 @@ class OnlyCaseChange implements Rule
      */
     public function passes($attribute, $value)
     {
-        if (strtolower($this->model->{$attribute}) === strtolower($value)) {
-            return true;
-        }
-        return false;
+        return starts_with($value, $this->needle);
     }
 
     /**
@@ -40,6 +41,9 @@ class OnlyCaseChange implements Rule
      */
     public function message()
     {
-        return 'The :attribute must be the same (case insensitive).';
+        if (is_string($this->needle)) {
+            return 'The :attribute has to start with: '.$this->needle;
+        }
+        return 'The :attribute has to start with one of: '.implode(', ', $this->needle);
     }
 }

@@ -97,8 +97,30 @@ class UpdateTest extends TestCase
             ->assertExactJson([
                 "errors" => [
                     "text" => ["The text must be a string."],
-                    "title" => ["The title must be a string."],
+                    "title" => [
+                        "The title must be a string.",
+                        "The title has to end with: ?",
+                        "The title must be at least 9 characters.",
+                    ],
                     "sides_type" => ["The selected sides type is invalid."],
+                ],
+                "message" => "The given data was invalid.",
+            ])
+            ->assertDontExposeUserEmails($this->user->email);
+    }
+
+    public function testUpdateQuestionTitleRequiresQuestionMark()
+    {
+        $this->actingAs($this->user)
+            ->patchJson('/questions/'.$this->question->id, [
+                'title' => 'string without question mark',
+            ])
+            ->assertStatus(422)
+            ->assertExactJson([
+                "errors" => [
+                    "title" => [
+                        "The title has to end with: ?",
+                    ],
                 ],
                 "message" => "The given data was invalid.",
             ])

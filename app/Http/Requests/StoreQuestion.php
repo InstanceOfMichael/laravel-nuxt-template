@@ -26,7 +26,12 @@ class StoreQuestion extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string',
+            'title' => [
+                'required',
+                'string',
+                'min:10',
+                new \App\Rules\EndsWith('?'),
+            ],
             'text' => 'string',
             'sides_type' => 'required|in:0,1,2',
         ];
