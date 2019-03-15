@@ -5,6 +5,7 @@ namespace Tests\Feature\Claim\Comment;
 use App\User;
 use App\Claim;
 use App\Comment;
+use App\Http\Middleware\Idempotency;
 use App\Question;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;

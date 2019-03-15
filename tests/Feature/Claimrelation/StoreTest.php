@@ -5,6 +5,7 @@ namespace Tests\Feature\Claimrelation;
 use App\Claimrelation;
 use App\User;
 use App\Claim;
+use App\Http\Middleware\Idempotency;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 

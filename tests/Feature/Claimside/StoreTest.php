@@ -6,6 +6,7 @@ use App\Claimside;
 use App\User;
 use App\Side;
 use App\Claim;
+use App\Http\Middleware\Idempotency;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 

@@ -2,10 +2,11 @@
 
 namespace Tests\Feature\Side\Comment;
 
-use App\User;
 use App\Claim;
 use App\Comment;
+use App\Http\Middleware\Idempotency;
 use App\Side;
+use App\User;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 

@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Question;
 
+use App\Http\Middleware\Idempotency;
 use App\User;
 use App\Question;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Middleware\Idempotency;
 
 /**
  * @group store

@@ -3,6 +3,7 @@
 namespace Tests\Feature\Claim\Claimside;
 
 use App\Claimside;
+use App\Http\Middleware\Idempotency;
 use App\User;
 use App\Side;
 use App\Claim;

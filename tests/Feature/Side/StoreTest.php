@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Side;
 
+use App\Http\Middleware\Idempotency;
 use App\User;
 use App\Side;
 use App\Sidedomain;

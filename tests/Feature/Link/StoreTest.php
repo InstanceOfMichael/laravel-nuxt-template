@@ -3,6 +3,7 @@
 namespace Tests\Feature\Link;
 
 use App\User;
+use App\Http\Middleware\Idempotency;
 use App\Link;
 use App\Linkdomain;
 use Tests\TestCase;

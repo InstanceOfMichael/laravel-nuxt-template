@@ -3,6 +3,7 @@
 namespace Tests\Feature\Question\Allowedquestionside;
 
 use App\Allowedquestionside;
+use App\Http\Middleware\Idempotency;
 use App\User;
 use App\Side;
 use App\Question;

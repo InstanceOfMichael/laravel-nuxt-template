@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Linkdomain;
 
+use App\Http\Middleware\Idempotency;
 use App\User;
 use App\Link;
 use App\Linkdomain;

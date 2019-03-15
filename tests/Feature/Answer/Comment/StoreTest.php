@@ -3,6 +3,7 @@
 namespace Tests\Feature\Answer\Comment;
 
 use App\Answer;
+use App\Http\Middleware\Idempotency;
 use App\User;
 use App\Claim;
 use App\Comment;

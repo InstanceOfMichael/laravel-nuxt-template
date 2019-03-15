@@ -4,6 +4,7 @@ namespace Tests\Feature\Claim;
 
 use App\User;
 use App\Claim;
+use App\Http\Middleware\Idempotency;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 
