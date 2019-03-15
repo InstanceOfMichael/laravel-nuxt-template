@@ -8,6 +8,9 @@ use App\Claim;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * @group list
+ */
 class ListTest extends TestCase
 {
     /** @var \App\User[] */

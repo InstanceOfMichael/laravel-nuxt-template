@@ -9,6 +9,9 @@ use App\Claim;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * @group show
+ */
 class ShowTest extends TestCase
 {
     /** @var \App\User[] */

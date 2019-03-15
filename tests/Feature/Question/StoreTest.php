@@ -11,9 +11,6 @@ use App\Http\Middleware\Idempotency;
 /**
  * @group store
  */
-/**
- * @group store
- */
 class StoreTest extends TestCase
 {
     /** @var \App\User */
