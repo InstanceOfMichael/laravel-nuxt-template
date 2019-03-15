@@ -45,8 +45,7 @@ class LinkController extends Controller
     {
         return $request->user()
             ->links()
-            ->create($request->all())
-            ->load('op', 'linkdomain');
+            ->create($request->all());
     }
 
     /**

@@ -47,12 +47,7 @@ class StoreTest extends TestCase
                 'title'  => $link->title,
                 'url'  => $link->url,
                 'op_id' => $link->op_id,
-                'op' => [
-                    'id'     => $link->op->id,
-                    'handle' => $link->op->handle,
-                ],
-                // 'ld_id' => $link->ld_id,
-                'linkdomain' => Linkdomain::first()->toArray(),
+                'ld_id' => Linkdomain::first()->id,
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }
@@ -73,16 +68,7 @@ class StoreTest extends TestCase
                 'title'  => $link->title,
                 'url'  => $link->url,
                 'op_id' => $link->op_id,
-                'op' => [
-                    'id'     => $link->op->id,
-                    'handle' => $link->op->handle,
-                ],
                 'ld_id' => $preexistingLink->ld_id,
-                'linkdomain' => [
-                    'id'     => $preexistingLink->linkdomain->id,
-                    'domain' => $preexistingLink->linkdomain->domain,
-                    'text' => $preexistingLink->linkdomain->text,
-                ],
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }

@@ -44,10 +44,6 @@ class StoreTest extends TestCase
                 'title' => $this->claim->title,
                 'text'  => $this->claim->text,
                 'op_id' => $this->claim->op->id,
-                'op' => [
-                    'id'     => $this->claim->op->id,
-                    'handle' => $this->claim->op->handle,
-                ],
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }

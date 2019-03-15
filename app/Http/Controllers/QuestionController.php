@@ -44,8 +44,7 @@ class QuestionController extends Controller
     {
         return $request->user()
             ->questions()
-            ->create($request->all())
-            ->load('op');
+            ->create($request->all());
     }
 
     /**

@@ -48,8 +48,7 @@ class CommentController extends Controller
         return $linkdomain->comments()
             ->create([
                 'op_id' => $request->user()->id,
-            ] + $request->all())
-            ->load('op');
+            ] + $request->all());
     }
 
     /**

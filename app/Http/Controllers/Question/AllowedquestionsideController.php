@@ -48,21 +48,21 @@ class AllowedquestionsideController extends Controller
     public function store(StoreAllowedquestionside $request, Question $question)
     {
         if (is_array($request->side_id_list)) {
-            $sides = Side::findOrFail($request->side_id_list)->load('op');
+            $sides = Side::findOrFail($request->side_id_list);
             $aqs = [];
             foreach ($sides as $side) {
                 $aqs[] = $question->allowedsides()->create([
                     'side_id' => $side->id,
                     'op_id' => $request->user()->id,
-                ])->setRelation('side', $side);
+                ]);
             }
             return response()->json($aqs, 201);
         } else {
-            $side = Side::findOrFail($request->side_id)->load('op');
+            $side = Side::findOrFail($request->side_id);
             return $question->allowedsides()->create([
                 'side_id' => $side->id,
                 'op_id' => $request->user()->id,
-            ])->setRelation('side', $side);
+            ]);
         }
     }
 

@@ -47,10 +47,6 @@ class StoreTest extends TestCase
                 'name'  => $side->name,
                 'text'  => $side->text,
                 'op_id' => $side->op_id,
-                'op' => [
-                    'id'     => $side->op->id,
-                    'handle' => $side->op->handle,
-                ],
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }
@@ -71,10 +67,6 @@ class StoreTest extends TestCase
                 'name'  => $side->name,
                 'text'  => $side->text,
                 'op_id' => $side->op_id,
-                'op' => [
-                    'id'     => $side->op->id,
-                    'handle' => $side->op->handle,
-                ],
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }

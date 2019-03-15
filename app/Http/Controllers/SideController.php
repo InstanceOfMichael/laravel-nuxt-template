@@ -45,8 +45,7 @@ class SideController extends Controller
     {
         return $request->user()
             ->sides()
-            ->create($request->all())
-            ->load('op');
+            ->create($request->all());
     }
 
     /**

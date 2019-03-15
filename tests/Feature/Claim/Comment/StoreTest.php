@@ -59,10 +59,6 @@ class StoreTest extends TestCase
                 'text'  => $this->comment->text,
                 'pc_id' => $this->comment->pc_id,
                 'op_id' => $this->comment->op->id,
-                'op' => [
-                    'id'     => $this->comment->op->id,
-                    'handle' => $this->comment->op->handle,
-                ],
             ])
             ->assertDontExposeUserEmails($this->users);
 
@@ -98,10 +94,6 @@ class StoreTest extends TestCase
                 'text'  => $this->comment->text,
                 'pc_id' => $this->comment->pc_id,
                 'op_id' => $this->comment->op->id,
-                'op' => [
-                    'id'     => $this->comment->op->id,
-                    'handle' => $this->comment->op->handle,
-                ],
             ])
             ->assertDontExposeUserEmails($this->users);
 
@@ -120,10 +112,6 @@ class StoreTest extends TestCase
                 'text'  => $nextComment->text,
                 'pc_id' => $nextComment->pc_id,
                 'op_id' => $nextComment->op->id,
-                'op' => [
-                    'id'     => $nextComment->op->id,
-                    'handle' => $nextComment->op->handle,
-                ],
             ])
             ->assertDontExposeUserEmails($this->users);
     }

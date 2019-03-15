@@ -49,7 +49,7 @@ class ClaimsideController extends Controller
     {
         return $claim->claimsides()->create([
             'op_id' => $request->user()->id,
-        ]+$request->all())->load('side', 'op', 'side.op', 'claim', 'claim.op');
+        ]+$request->all());
     }
 
     /**

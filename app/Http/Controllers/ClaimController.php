@@ -45,8 +45,7 @@ class ClaimController extends Controller
     {
         return $request->user()
             ->claims()
-            ->create($request->all())
-            ->load('op');
+            ->create($request->all());
     }
 
     /**
