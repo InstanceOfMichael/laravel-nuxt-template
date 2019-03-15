@@ -21,7 +21,7 @@ module.exports = {
 
   env: {
     apiUrl: process.env.APP_URL || 'http://api.lndebate.test',
-    appName: process.env.APP_NAME || 'Laravel-Nuxt',
+    appName: process.env.APP_NAME || 'lndebate',
     appLocale: process.env.APP_LOCALE || 'en',
     githubAuth: !!process.env.GITHUB_CLIENT_ID
   },
@@ -35,7 +35,10 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'Nuxt.js project' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      // { rel: 'stylesheet', href: '/css/bootstrap-darkly.min.css' },
+      // { rel: 'stylesheet', href: '/css/font-awesome-4.7.0/css/font-awesome.min.css' },
+      // { rel: 'stylesheet', href: '/css/more_dark.css' },
     ],
     script: [
       // { src: `https://cdn.polyfill.io/v2/polyfill.min.js?features=${polyfills.join(',')}` }
@@ -45,7 +48,7 @@ module.exports = {
   loading: { color: '#007bff' },
 
   router: {
-    middleware: ['redirects', 'locale', 'check-auth', 'history']
+    middleware: ['redirects', 'locale', 'check-auth']
   },
 
   css: [
@@ -58,8 +61,11 @@ module.exports = {
     '~plugins/vform',
     '~plugins/axios',
     '~plugins/fontawesome',
-    // '~plugins/nuxt-client-init',
-    { src: '~plugins/bootstrap', ssr: false }
+    '~plugins/nuxt-client-init',
+    { src: '~plugins/bootstrap', ssr: false },
+    { src: '~plugins/breaks_ssr', ssr: false },
+    '~plugins/directives',
+    '~plugins/slug'
   ],
 
   modules: [
@@ -67,7 +73,9 @@ module.exports = {
       id: 'UA-130086131-3'
     }],
     '@nuxtjs/pwa',
-    '@nuxtjs/sentry'
+    '@nuxtjs/sentry',
+    // '@nuxtjs/proxy',
+    // '@nuxtjs/separate-env',
   ],
 
   sentry: {
@@ -77,5 +85,14 @@ module.exports = {
 
   build: {
     extractCSS: true
-  }
+  },
+
+  // proxy: {
+  //   '/api': {
+  //     pathRewrite: { '^/api' : '' },
+  //     target: process.env.APP_URL || 'http://api.lndebate.test',
+  //     ws: false,
+  //   },
+  // },
+
 }

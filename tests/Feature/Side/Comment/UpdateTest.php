@@ -9,6 +9,9 @@ use App\Side;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * @group update
+ */
 class UpdateTest extends TestCase
 {
     /** @var \App\User */

@@ -14,7 +14,7 @@ class Claimside extends Model
         Traits\HasOpId;
 
     protected $fillable = [
-        'question_id',
+        'claim_id',
         'side_id',
         'op_id',
     ];

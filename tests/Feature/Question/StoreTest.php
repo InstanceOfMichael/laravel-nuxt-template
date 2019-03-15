@@ -6,7 +6,14 @@ use App\User;
 use App\Question;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Middleware\Idempotency;
 
+/**
+ * @group store
+ */
+/**
+ * @group store
+ */
 class StoreTest extends TestCase
 {
     /** @var \App\User */
@@ -43,12 +50,51 @@ class StoreTest extends TestCase
                 'text'  => $this->question->text,
                 'sides_type' => $this->question->sides_type,
                 'op_id' => $this->question->op->id,
-                'op' => [
-                    'id'     => $this->question->op->id,
-                    'handle' => $this->question->op->handle,
-                ],
             ])
             ->assertDontExposeUserEmails($this->user->email);
+    }
+
+    /**
+     * @group idempotency
+     */
+    public function testStoreQuestionAsUserIdempotent()
+    {
+        $r1 = $this->actingAs($this->user)
+            ->postJson('/questions', $this->getPayload(), [
+                Idempotency::HEADER => base64_encode(__CLASS__),
+            ])
+            ->assertStatus(201)
+            ->assertJson([
+                'title' => $this->question->title,
+                'text'  => $this->question->text,
+                'sides_type' => $this->question->sides_type,
+                'op_id' => $this->question->op->id,
+            ])
+            ->assertDontExposeUserEmails($this->user->email);
+        $r2 = $this->actingAs($this->user)
+            ->postJson('/questions', $this->getPayload(), [
+                Idempotency::HEADER => base64_encode(__CLASS__),
+            ])
+            ->assertStatus(201)
+            ->assertJson([
+                'title' => $this->question->title,
+                'text'  => $this->question->text,
+                'sides_type' => $this->question->sides_type,
+                'op_id' => $this->question->op->id,
+            ])
+            ->assertDontExposeUserEmails($this->user->email);
+        $r3 = $this->actingAs($this->user)
+            ->postJson('/questions', $this->getPayload())
+            ->assertStatus(201)
+            ->assertJson([
+                'title' => $this->question->title,
+                'text'  => $this->question->text,
+                'sides_type' => $this->question->sides_type,
+                'op_id' => $this->question->op->id,
+            ])
+            ->assertDontExposeUserEmails($this->user->email);
+        $this->assertEquals($r1->json('id'), $r2->json('id'));
+        $this->assertNotEquals($r1->json('id'), $r3->json('id'));
     }
 
     public function testStoreQuestionAsGuest()

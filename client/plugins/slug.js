@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import slugify from 'slugify'
 
 const RADIX = 36
@@ -20,6 +21,16 @@ export default (ctx) => {
     if (value && value.lastIndexOf) {
       value = value.slice(value.lastIndexOf('-') + 1)
       return parseInt(value, RADIX)
+    }
+  }
+}
+
+Vue.prototype.$mergeRouteQuery = function (object) {
+  return {
+    ...this.$route,
+    query: {
+      ...this.$route.query,
+      ...object
     }
   }
 }

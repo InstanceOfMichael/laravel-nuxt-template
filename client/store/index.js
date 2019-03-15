@@ -1,5 +1,16 @@
 import Cookies from 'js-cookie'
 import { cookieFromRequest } from '~/utils'
+import get from 'lodash/get'
+
+export const state = () => ({
+  windowActive: process.server || !!get(document, 'hidden')
+})
+
+export const mutations = {
+  windowActive (state, value) {
+    state.windowActive = !!value
+  }
+}
 
 export const actions = {
   nuxtServerInit ({ commit }, { req }) {
@@ -26,3 +37,5 @@ export const actions = {
     }
   }
 }
+
+// export const strict = false;

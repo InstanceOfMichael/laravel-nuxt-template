@@ -22,11 +22,11 @@
       </div>
 
       <div class="links">
-        <a href="https://laravel.com/docs">Documentation</a>
-        <a href="https://laracasts.com">Laracasts</a>
-        <a href="https://laravel-news.com">News</a>
-        <a href="https://forge.laravel.com">Forge</a>
-        <a href="https://github.com/laravel/laravel">GitHub</a>
+        <nuxt-link :to="{ name: 'questions' }">Questions</nuxt-link>
+        <nuxt-link :to="{ name: 'questions' }">Claims</nuxt-link>
+        <nuxt-link :to="{ name: 'questions' }">Comments</nuxt-link>
+        <nuxt-link :to="{ name: 'questions' }">Answers</nuxt-link>
+        <nuxt-link :to="{ name: 'questions' }">Sides</nuxt-link>
       </div>
     </div>
   </div>

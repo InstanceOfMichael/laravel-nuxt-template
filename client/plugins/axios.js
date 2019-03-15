@@ -3,8 +3,14 @@ import swal from 'sweetalert2'
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
-export default ({ app, store, redirect }) => {
-  axios.defaults.baseURL = process.env.apiUrl
+export default (ctx) => {
+  const { app, store, redirect } = ctx
+  ctx.api = axios.create({
+    baseURL: process.env.apiUrl,
+  })
+
+  console.log('axios.defaults.baseURL:', axios.defaults.baseURL)
+  console.log('api.defaults.baseURL:', ctx.api.defaults.baseURL)
 
   if (process.server) {
     return

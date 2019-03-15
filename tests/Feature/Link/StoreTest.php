@@ -8,6 +8,9 @@ use App\Linkdomain;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * @group store
+ */
 class StoreTest extends TestCase
 {
     /** @var \App\User */

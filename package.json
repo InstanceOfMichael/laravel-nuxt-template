@@ -19,14 +19,20 @@
     "@nuxtjs/sentry": "^2.3.1",
     "axios": "^0.18.0",
     "bootstrap": "^4.1.1",
+    "coffee-loader": "^0.9.0",
+    "coffeescript": "^2.3.2",
+    "date-fns": "^1.30.1",
     "dotenv": "^5.0.1",
     "jquery": "^3.3.1",
     "js-cookie": "^2.2.0",
     "nuxt": "^2.0.0",
     "popper.js": "^1.14.3",
+    "pug": "2.0.3",
+    "pug-plain-loader": "^1.0.0",
     "slugify": "^1.3.4",
     "sweetalert2": "^7.19.3",
     "vform": "^1.0.0",
+    "vue-backtotop": "^1.6.1",
     "vue-i18n": "^7.6.0",
     "vue-template-compiler": "^2.5.22"
   },
@@ -35,7 +41,7 @@
     "@vue/cli-service": "^3.0.0-beta.9",
     "@vue/eslint-config-standard": "^3.0.0-beta.9",
     "netlify": "^2.4.1",
-    "node-sass": "^4.9.0",
-    "sass-loader": "^7.0.1"
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0"
   }
 }
