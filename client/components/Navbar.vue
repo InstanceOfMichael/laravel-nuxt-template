@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-white">
+  <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
       <nuxt-link :to="{ name: user ? 'home' : 'index' }" class="navbar-brand">
         {{ appName }}
@@ -89,10 +89,9 @@ export default {
 }
 </script>
 
-<style scoped>
-.profile-photo {
-  width: 2rem;
-  height: 2rem;
-  margin: -.375rem 0;
-}
+<style lang="sass" scoped>
+.profile-photo
+  width: 2rem
+  height: 2rem
+  margin: -.375rem 0
 </style>

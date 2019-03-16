@@ -36,7 +36,8 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      // { rel: 'stylesheet', href: '/css/bootstrap-darkly.min.css' },
+      // { rel: 'stylesheet', id: 'bs4', href: '/css/darkly/bootstrap.min.css' },
+      // { rel: 'stylesheet', id: 'bs4', href: '/css/cerulean/bootstrap.min.css' },
       // { rel: 'stylesheet', href: '/css/font-awesome-4.7.0/css/font-awesome.min.css' },
       // { rel: 'stylesheet', href: '/css/more_dark.css' },
     ],

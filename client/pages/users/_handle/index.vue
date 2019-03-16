@@ -1,8 +1,8 @@
 <template lang="pug">
   .users-show
     img.rounded(
-      width="100"
-      height="100"
+      width="160"
+      height="160"
       v-if="user.photo_url"
       :src="user && user.photo_url"
     )

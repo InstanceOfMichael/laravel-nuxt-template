@@ -14,6 +14,9 @@ export default (ctx) => {
       } else if (value.name) {
         output = slugify(value.name)
       }
+      if (output && output.toLowerCase) {
+        output = output.toLowerCase()
+      }
       return `${output}-${value.id.toString(RADIX)}`
     }
   }

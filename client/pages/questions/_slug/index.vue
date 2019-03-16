@@ -1,17 +1,21 @@
 <template lang="pug">
-  .question-show
-    | @TODO
-    pre: tt {{ {question} }}
+  div
+    | default question show
 </template>
 
 <script>
 import axios from 'axios'
+import QuestionCardRow from '~/components/Question/CardRow'
 
 export default {
-  async asyncData ({ api, route, deslug }) {
-    return {
-      user: (await api.get(`/questions/${deslug(route.params.slug)}`)).data,
-    }
+  componenets: {
+    QuestionCardRow,
+  },
+  props: {
+    question: {
+      type: Object,
+      required: true,
+    },
   },
 }
 </script>
