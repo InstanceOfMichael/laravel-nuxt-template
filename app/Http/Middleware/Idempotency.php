@@ -41,6 +41,7 @@ class Idempotency
             : 15 /* minutes */;
 
         $response = $next($request);
+
         $response->header(self::HEADER, $key);
         Cache::put($requestId, $response, $expiration);
         return $response;

@@ -51,7 +51,10 @@ class User extends Authenticatable
      */
     public function getPhotoUrlAttribute()
     {
-        return 'https://www.gravatar.com/avatar/'.md5(strtolower($this->email)).'.jpg?s=200&d=mm';
+        // return 'https://www.gravatar.com/avatar/'.md5(strtolower($this->email)).'.jpg?s=200&d=mm';
+        // lock must be int
+        $keyword = ['kitten', 'dog', 'guinea pig', 'cockatoo'][$this->id % 4];
+        return 'https://loremflickr.com/200/200/'.$keyword.'?lock='.hexdec(substr(md5(strtolower($this->email)), 0, 6));
     }
 
     /**

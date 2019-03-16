@@ -65,7 +65,7 @@ module.exports = {
     { src: '~plugins/bootstrap', ssr: false },
     { src: '~plugins/breaks_ssr', ssr: false },
     '~plugins/directives',
-    '~plugins/slug'
+    '~plugins/slug',
   ],
 
   modules: [
