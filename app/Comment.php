@@ -5,7 +5,7 @@ namespace App;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
-
+use App\Observers\CommentObserver;
 class Comment extends Model
     implements
         Contracts\HasOp
@@ -23,6 +23,11 @@ class Comment extends Model
         'topic_id',
         'topic_type',
     ];
+
+    public static function boot() {
+        parent::boot();
+        static::observe(new CommentObserver());
+    }
 
     /**
      * Get the original poster (User) associated with the question.

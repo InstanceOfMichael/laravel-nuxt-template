@@ -20,6 +20,9 @@ class CreateQuestionsTable extends Migration
             $table->string('title');
             $table->text('text');
             $table->timestamps();
+            $table->unsignedSmallInteger('comments_count')->index()->default(0);
+            $table->unsignedSmallInteger('answers_count')->index()->default(0);
+            $table->unsignedSmallInteger('sides_count')->index()->default(0);
 
             $table->foreign('op_id')
                 ->references('id')

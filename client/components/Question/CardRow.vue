@@ -12,8 +12,22 @@
       | asked&#32;
       TimeAgo(:value="item.created_at")
     | &#32;
+    | &#32;|&#32;
+    nuxt-link(
+      :to="{ name: 'questions-slug-answers', params: { slug: $slug(item) } }"
+    ) {{ item.answers_count }} Answers
+    | &#32;|&#32;
+    nuxt-link(
+      :to="{ name: 'questions-slug-comments', params: { slug: $slug(item) } }"
+    ) {{ item.comments_count }} Comments
+    template(v-if="item.sides_type !== 0")
+      | &#32;|&#32;
+      nuxt-link(
+        :to="{ name: 'questions-slug-sides', params: { slug: $slug(item) } }"
+      ) {{ item.answers_count }} Sides
+    | &#32;|&#32;
     QuestionSidesFlair(:item="item")
-  .card-body.small: tt: pre {{ {item} }}
+  //- .card-body.small: tt: pre {{ {item} }}
 </template>
 
 <script>
@@ -31,6 +45,10 @@ export default {
     item: {
       type: Object,
       required: true,
+    },
+    expanded: {
+      type: Boolean,
+      default: false,
     },
   },
 }

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Observers\QuestionObserver;
 
 class Question extends Model
     implements
@@ -19,6 +20,17 @@ class Question extends Model
         'sides_type',
         'op_id',
     ];
+
+    protected $attributes = [
+        'comments_count' => 0,
+        'answers_count' => 0,
+        'sides_count' => 0,
+    ];
+
+    public static function boot() {
+        parent::boot();
+        static::observe(new QuestionObserver());
+    }
 
     /**
      * Get the answers associated with the question.

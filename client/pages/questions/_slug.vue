@@ -6,23 +6,30 @@
     )
     b-nav(tabs)
       b-nav-item(
-        :to='`/r/${$route.params.slug}/sides`'
+        :to="{ name: 'questions-slug', params: { slug: $slug(question) } }"
       )
         fa(icon="list" fixed-width)
         | &#32;
-        | Sides
+        | Index
       b-nav-item(
-        :to='`/r/${$route.params.slug}/answers`'
+        :to="{ name: 'questions-slug-answers', params: { slug: $slug(question) } }"
       )
         fa(icon="list" fixed-width)
         | &#32;
-        | Answers
+        | {{ question.answers_count }} Answers
       b-nav-item(
-        :to='`/r/${$route.params.slug}/comments`'
+        :to="{ name: 'questions-slug-comments', params: { slug: $slug(question) } }"
       )
         fa(icon="list" fixed-width)
         | &#32;
-        | Comments
+        | {{ question.comments_count }} Comments
+      b-nav-item(
+        v-if="question.sides_type !== 0"
+        :to="{ name: 'questions-slug-sides', params: { slug: $slug(question) } }"
+      )
+        fa(icon="list" fixed-width)
+        | &#32;
+        | {{ question.sides_count }} Sides
     nuxt-child(:question="question")
 </template>
 

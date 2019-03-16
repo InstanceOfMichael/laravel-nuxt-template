@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Observers\AnswerObserver;
 
 class Answer extends Model
     implements
@@ -18,6 +19,11 @@ class Answer extends Model
         'claim_id',
         'op_id',
     ];
+
+    public static function boot() {
+        parent::boot();
+        static::observe(new AnswerObserver());
+    }
 
     /**
      * Get the question associated with this answer

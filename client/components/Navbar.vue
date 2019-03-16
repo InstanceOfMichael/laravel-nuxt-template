@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light">
+  <nav class="navbar navbar-expand-lg">
     <div class="container">
       <nuxt-link :to="{ name: user ? 'home' : 'index' }" class="navbar-brand">
         {{ appName }}
