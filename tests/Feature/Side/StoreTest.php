@@ -52,6 +52,52 @@ class StoreTest extends TestCase
             ->assertDontExposeUserEmails($this->user->email);
     }
 
+    /**
+     * @group idempotency
+     */
+    public function testStoreSideAsUserIdempotent()
+    {
+        $side = $this->side;
+        $r1 = $this->actingAs($this->user)
+            ->postJson('/sides', $this->getPayload(), [
+                Idempotency::HEADER => base64_encode(__CLASS__),
+            ])
+            ->assertStatus(201)
+            ->assertJson([
+                // 'id'    => $side->id,
+                'name'  => $side->name,
+                'text'  => $side->text,
+                'op_id' => $side->op_id,
+            ])
+            ->assertDontExposeUserEmails($this->user->email);
+        $r2 = $this->actingAs($this->user)
+            ->postJson('/sides', $this->getPayload(), [
+                Idempotency::HEADER => base64_encode(__CLASS__),
+            ])
+            ->assertStatus(201)
+            ->assertJson([
+                // 'id'    => $side->id,
+                'name'  => $side->name,
+                'text'  => $side->text,
+                'op_id' => $side->op_id,
+            ])
+            ->assertDontExposeUserEmails($this->user->email);
+        $r3 = $this->actingAs($this->user)
+            ->postJson('/sides', $this->getPayload())
+            ->assertStatus(422)
+            ->assertExactJson([
+                "errors" => [
+                    "name" => ["The name must be unique (case insensitive)."],
+                    // "text" => ["The text field is required."],
+                ],
+                "message" => "The given data was invalid.",
+            ])
+            ->assertDontExposeUserEmails($this->user->email);
+        $this->assertEquals($r1->json('id'), $r2->json('id'));
+        $this->assertNotEquals($r1->json('id'), $r3->json('id'));
+        $this->assertNull($r3->json('id'));
+    }
+
     public function testStoreSideIfSideDomainAlreadyExistsAsUser()
     {
         $side = $this->side;

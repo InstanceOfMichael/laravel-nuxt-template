@@ -44,9 +44,6 @@ class ShowTest extends TestCase
         ]);
     }
 
-    /**
-     * @group comment
-     */
     public function testShowClaimCommentAsUser()
     {
         foreach ($this->comments as $comment) {
@@ -66,9 +63,6 @@ class ShowTest extends TestCase
         }
     }
 
-    /**
-     * @group comment
-     */
     public function testShowCommentAsGuest()
     {
         foreach ($this->comments as $comment) {

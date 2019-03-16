@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 
 /**
  * @group store
+ * @group comments
  */
 class StoreTest extends TestCase
 {
@@ -48,9 +49,6 @@ class StoreTest extends TestCase
         ]);
     }
 
-    /**
-     * @group comment
-     */
     public function testStoreClaimCommentAsUserAndReplyAsOtherUser()
     {
         $r = $this->actingAs($this->users[0])
@@ -59,18 +57,12 @@ class StoreTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
-    /**
-     * @group comment
-     */
     public function testStoreClaimCommentAsGuest()
     {
         $this->postJson('/users/'.$this->users[0]->id.'/comments', $this->getPayload())
             ->assertStatus(405);
     }
 
-    /**
-     * @group comment
-     */
     public function testStoreCommentEmptyPayload()
     {
         $this->actingAs($this->users[0])

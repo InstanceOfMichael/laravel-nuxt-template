@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Claimrelation;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreClaimrelation extends FormRequest
 {
@@ -27,7 +28,21 @@ class StoreClaimrelation extends FormRequest
     {
         return [
             'pc_id' => 'required|exists:claims,id',
-            'rc_id' => 'required|exists:claims,id',
+            'rc_id' => [
+                'required',
+                'exists:claims,id',
+                Rule::unique('claimrelations')->where(function ($query) {
+                    return $query
+                        ->where('claimrelations.pc_id', $this->pc_id)
+                        ->where('claimrelations.rc_id', $this->rc_id);
+                }),
+            ],
+        ];
+    }
+
+    public function messages () {
+        return [
+            'rc_id.unique' => 'These claims are already associated.',
         ];
     }
 }

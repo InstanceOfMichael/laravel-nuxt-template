@@ -69,6 +69,51 @@ class StoreTest extends TestCase
             ->assertDontExposeUserEmails($this->users[0]->email);
     }
 
+    /**
+     * @group idempotency
+     */
+    public function testStoreClaimrelationAsUserIdempotent()
+    {
+        $claimrelation = $this->claimrelation;
+        $r1 = $this->actingAs($this->users[0])
+            ->postJson('/claimrelations', $this->getPayload(), [
+                Idempotency::HEADER => base64_encode(__CLASS__),
+            ])
+            ->assertStatus(201)
+            ->assertJson([
+                // 'id' => $claimrelation->id,
+                'op_id' => $claimrelation->op->id,
+                'rc_id' => $claimrelation->rc_id,
+                'pc_id' => $claimrelation->pc_id,
+            ])
+            ->assertDontExposeUserEmails($this->users[0]->email);
+        $r2 = $this->actingAs($this->users[0])
+            ->postJson('/claimrelations', $this->getPayload(), [
+                Idempotency::HEADER => base64_encode(__CLASS__),
+            ])
+            ->assertStatus(201)
+            ->assertJson([
+                // 'id' => $claimrelation->id,
+                'op_id' => $claimrelation->op->id,
+                'rc_id' => $claimrelation->rc_id,
+                'pc_id' => $claimrelation->pc_id,
+            ])
+            ->assertDontExposeUserEmails($this->users[0]->email);
+        $r3 = $this->actingAs($this->users[0])
+            ->postJson('/claimrelations', $this->getPayload())
+            ->assertStatus(422)
+            ->assertExactJson([
+                "errors" => [
+                    "rc_id" => ["These claims are already associated."],
+                ],
+                "message" => "The given data was invalid.",
+            ])
+            ->assertDontExposeUserEmails($this->users);
+        $this->assertEquals($r1->json('id'), $r2->json('id'));
+        $this->assertNotEquals($r1->json('id'), $r3->json('id'));
+        $this->assertNull($r3->json('id'));
+    }
+
     public function testStoreClaimrelationAsGuest()
     {
         $this->postJson('/claimrelations', $this->getPayload())

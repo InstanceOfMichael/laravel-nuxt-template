@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 /**
  * @group update
+ * @group comments
  */
 class UpdateTest extends TestCase
 {
@@ -50,9 +51,6 @@ class UpdateTest extends TestCase
         ];
     }
 
-    /**
-     * @group comment
-     */
     public function testUpdateQuestionCommentAsUser()
     {
         $this->actingAs($this->users[0])
@@ -70,9 +68,6 @@ class UpdateTest extends TestCase
             ->assertJsonMissing(['email']);
     }
 
-    /**
-     * @group comment
-     */
     public function testUpdateQuestionCommentAsUserWhoIsNotOp()
     {
         $this->actingAs($this->users[3])
@@ -80,9 +75,6 @@ class UpdateTest extends TestCase
             ->assertStatus(403);
     }
 
-    /**
-     * @group comment
-     */
     public function testUpdateQuestionCommentAsUserWithCommentableEndpoint()
     {
         $this->actingAs($this->users[0])
@@ -90,9 +82,6 @@ class UpdateTest extends TestCase
             ->assertStatus(404);
     }
 
-    /**
-     * @group comment
-     */
     public function testUpdateQuestionCommentAsGuest()
     {
         $this->patchJson('/comments/'.$this->question->comments[0]->id, $this->getPayload())

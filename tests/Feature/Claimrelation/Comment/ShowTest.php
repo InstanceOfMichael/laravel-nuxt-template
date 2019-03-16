@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 /**
  * @group show
+ * @group comments
  */
 class ShowTest extends TestCase
 {
@@ -52,9 +53,6 @@ class ShowTest extends TestCase
         ]);
     }
 
-    /**
-     * @group comment
-     */
     public function testShowClaimCommentAsUser()
     {
         foreach ($this->comments as $comment) {
@@ -64,9 +62,6 @@ class ShowTest extends TestCase
         }
     }
 
-    /**
-     * @group comment
-     */
     public function testShowClaimCommentAsGuest()
     {
         foreach ($this->comments as $comment) {

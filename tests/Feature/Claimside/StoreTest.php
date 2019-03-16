@@ -73,6 +73,50 @@ class StoreTest extends TestCase
             ->assertDontExposeUserEmails($this->users[0]->email);
     }
 
+    /**
+     * @group idempotency
+     */
+    public function testStoreAllowedquestionsideAsUserIdempotent()
+    {
+        $claimside = $this->claimsides[0];
+        $r1 = $this->actingAs($this->users[0])
+            ->postJson('/claims/'.$this->claim->id.'/claimsides', $this->getPayload(), [
+                Idempotency::HEADER => base64_encode(__CLASS__),
+            ])
+            ->assertStatus(201)
+            ->assertJson([
+                // 'id' => $claimside->id,
+                'op_id' => $claimside->op->id,
+                'side_id' => $claimside->side_id,
+                'claim_id' => $claimside->claim_id,
+            ])
+            ->assertDontExposeUserEmails($this->users[0]->email);
+        $r2 = $this->actingAs($this->users[0])
+            ->postJson('/claims/'.$this->claim->id.'/claimsides', $this->getPayload(), [
+                Idempotency::HEADER => base64_encode(__CLASS__),
+            ])
+            ->assertStatus(201)
+            ->assertJson([
+                // 'id' => $claimside->id,
+                'op_id' => $claimside->op->id,
+                'side_id' => $claimside->side_id,
+                'claim_id' => $claimside->claim_id,
+            ])
+            ->assertDontExposeUserEmails($this->users[0]->email);
+        $r3 = $this->actingAs($this->users[0])
+            ->postJson('/claims/'.$this->claim->id.'/claimsides', $this->getPayload())
+            ->assertStatus(422)
+            ->assertExactJson([
+                "errors" => [
+                    "side_id" => ["This claim is already associated with this side."],
+                ],
+                "message" => "The given data was invalid.",
+            ])
+            ->assertDontExposeUserEmails($this->users);
+        $this->assertEquals($r1->json('id'), $r2->json('id'));
+        $this->assertNotEquals($r1->json('id'), $r3->json('id'));
+    }
+
     public function testStoreAllowedquestionsideAsGuest()
     {
         $this->postJson('/claims/'.$this->claim->id.'/claimsides', $this->getPayload())

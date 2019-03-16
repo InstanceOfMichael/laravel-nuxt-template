@@ -49,6 +49,46 @@ class StoreTest extends TestCase
             ->assertDontExposeUserEmails($this->user->email);
     }
 
+    /**
+     * @group idempotency
+     */
+    public function testStoreClaimAsUserIdempotent()
+    {
+        $r1 = $this->actingAs($this->user)
+            ->postJson('/claims', $this->getPayload(), [
+                Idempotency::HEADER => base64_encode(__CLASS__),
+            ])
+            ->assertStatus(201)
+            ->assertJson([
+                'title' => $this->claim->title,
+                'text'  => $this->claim->text,
+                'op_id' => $this->claim->op->id,
+            ])
+            ->assertDontExposeUserEmails($this->user->email);
+        $r2 = $this->actingAs($this->user)
+            ->postJson('/claims', $this->getPayload(), [
+                Idempotency::HEADER => base64_encode(__CLASS__),
+            ])
+            ->assertStatus(201)
+            ->assertJson([
+                'title' => $this->claim->title,
+                'text'  => $this->claim->text,
+                'op_id' => $this->claim->op->id,
+            ])
+            ->assertDontExposeUserEmails($this->user->email);
+        $r3 = $this->actingAs($this->user)
+            ->postJson('/claims', $this->getPayload())
+            ->assertStatus(201)
+            ->assertJson([
+                'title' => $this->claim->title,
+                'text'  => $this->claim->text,
+                'op_id' => $this->claim->op->id,
+            ])
+            ->assertDontExposeUserEmails($this->user->email);
+        $this->assertEquals($r1->json('id'), $r2->json('id'));
+        $this->assertNotEquals($r1->json('id'), $r3->json('id'));
+    }
+
     public function testStoreClaimAsGuest()
     {
         $this->postJson('/claims', $this->getPayload())

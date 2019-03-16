@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 
 /**
  * @group store
+ * @group comments
  */
 class StoreTest extends TestCase
 {
@@ -48,9 +49,6 @@ class StoreTest extends TestCase
         ]);
     }
 
-    /**
-     * @group comment
-     */
     public function testStoreSideCommentAsUserAndReplyAsOtherUser()
     {
         $r = $this->actingAs($this->users[0])
@@ -84,7 +82,45 @@ class StoreTest extends TestCase
 
     /**
      * @group comment
+     * @group idempotency
      */
+    public function testStoreSideCommentAsUserIdempotent()
+    {
+        $r1 = $this->actingAs($this->users[0])
+            ->postJson('/sides/'.$this->side->id.'/comments', $this->getPayload(), [
+                Idempotency::HEADER => base64_encode(__CLASS__),
+            ])
+            ->assertStatus(201)
+            ->assertJson([
+                'text'  => $this->comment->text,
+                'pc_id' => $this->comment->pc_id,
+                'op_id' => $this->comment->op->id,
+            ])
+            ->assertDontExposeUserEmails($this->users);
+        $r2 = $this->actingAs($this->users[0])
+            ->postJson('/sides/'.$this->side->id.'/comments', $this->getPayload(), [
+                Idempotency::HEADER => base64_encode(__CLASS__),
+            ])
+            ->assertStatus(201)
+            ->assertJson([
+                'text'  => $this->comment->text,
+                'pc_id' => $this->comment->pc_id,
+                'op_id' => $this->comment->op->id,
+            ])
+            ->assertDontExposeUserEmails($this->users);
+        $r3 = $this->actingAs($this->users[0])
+            ->postJson('/sides/'.$this->side->id.'/comments', $this->getPayload())
+            ->assertStatus(201)
+            ->assertJson([
+                'text'  => $this->comment->text,
+                'pc_id' => $this->comment->pc_id,
+                'op_id' => $this->comment->op->id,
+            ])
+            ->assertDontExposeUserEmails($this->users);
+        $this->assertEquals($r1->json('id'), $r2->json('id'));
+        $this->assertNotEquals($r1->json('id'), $r3->json('id'));
+    }
+
     public function testStoreSideCommentAsUserAndReplyAsOtherUserWithInvalidParentCommentId()
     {
         $r = $this->actingAs($this->users[0])
@@ -117,18 +153,12 @@ class StoreTest extends TestCase
             ]);
     }
 
-    /**
-     * @group comment
-     */
     public function testStoreSideCommentAsGuest()
     {
         $this->postJson('/sides/'.$this->side->id.'/comments', $this->getPayload())
             ->assertStatus(401);
     }
 
-    /**
-     * @group comment
-     */
     public function testStoreCommentEmptyPayload()
     {
         $this->actingAs($this->users[0])

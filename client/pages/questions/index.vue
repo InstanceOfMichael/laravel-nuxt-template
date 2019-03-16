@@ -1,6 +1,12 @@
 <template lang="pug">
   .questions-list
     | TODO
+    .card(
+      v-for="question in questions.data"
+      :key="question.id"
+    )
+      .card-body
+      | {{ {question} }}
 </template>
 
 <script>

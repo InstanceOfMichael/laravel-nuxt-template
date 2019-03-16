@@ -51,6 +51,7 @@ class StoreTest extends TestCase
             ->assertDontExposeUserEmails($this->user->email);
     }
 
+
     /**
      * @group idempotency
      */

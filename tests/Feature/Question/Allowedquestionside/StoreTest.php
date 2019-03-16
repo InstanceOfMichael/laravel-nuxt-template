@@ -79,6 +79,51 @@ class StoreTest extends TestCase
             ->assertDontExposeUserEmails($this->users[0]->email);
     }
 
+    /**
+     * @group idempotency
+     */
+    public function testStoreAllowedquestionsideAsUserIdempotent()
+    {
+        $allowedquestionside = $this->allowedquestionsides[0];
+        $r1 = $this->actingAs($this->users[0])
+            ->postJson('/questions/'.$this->question->id.'/allowedquestionsides', $this->getPayload(), [
+                Idempotency::HEADER => base64_encode(__CLASS__),
+            ])
+            // ->assertStatus(201)
+            ->assertJson([
+                // 'id' => $allowedquestionside->id,
+                'op_id' => $allowedquestionside->op->id,
+                'side_id' => $allowedquestionside->side_id,
+                'question_id' => $allowedquestionside->question_id,
+            ])
+            ->assertDontExposeUserEmails($this->users[0]->email);
+        $r2 = $this->actingAs($this->users[0])
+            ->postJson('/questions/'.$this->question->id.'/allowedquestionsides', $this->getPayload(), [
+                Idempotency::HEADER => base64_encode(__CLASS__),
+            ])
+            ->assertStatus(201)
+            ->assertJson([
+                // 'id' => $allowedquestionside->id,
+                'op_id' => $allowedquestionside->op->id,
+                'side_id' => $allowedquestionside->side_id,
+                'question_id' => $allowedquestionside->question_id,
+            ])
+            ->assertDontExposeUserEmails($this->users[0]->email);
+        $r3 = $this->actingAs($this->users[0])
+            ->postJson('/questions/'.$this->question->id.'/allowedquestionsides', $this->getPayload())
+            ->assertStatus(422)
+            ->assertExactJson([
+                "errors" => [
+                    "side_id" => ["This side is already associated with this question."],
+                ],
+                "message" => "The given data was invalid.",
+            ])
+            ->assertDontExposeUserEmails($this->users);
+        $this->assertEquals($r1->json('id'), $r2->json('id'));
+        $this->assertNotEquals($r1->json('id'), $r3->json('id'));
+        $this->assertNull($r3->json('id'));
+    }
+
     public function testStoreBulkAllowedquestionsideAsUser()
     {
         $this->actingAs($this->users[0])
@@ -139,6 +184,14 @@ class StoreTest extends TestCase
         $this->actingAs($this->users[0])
             ->postJson('/questions/'.$this->question->id.'/allowedquestionsides', [
                 "side_id" => 0,
+            ])
+            ->assertStatus(422);
+    }
+
+    public function testStoreAllowedquestionsideEmptyZeroBulkPayload()
+    {
+        $this->actingAs($this->users[0])
+            ->postJson('/questions/'.$this->question->id.'/allowedquestionsides', [
                 "side_id_list" => [0],
             ])
             ->assertStatus(404);

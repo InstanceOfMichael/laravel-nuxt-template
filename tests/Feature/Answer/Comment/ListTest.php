@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 
 /**
  * @group list
+ * @group comments
  */
 class ListTest extends TestCase
 {
@@ -63,9 +64,6 @@ class ListTest extends TestCase
         $this->assertEquals(9, Comment::query()->count());
     }
 
-    /**
-     * @group comment
-     */
     public function testListAnswerCommentsAsUser()
     {
         $comments = $this->comments
@@ -94,9 +92,6 @@ class ListTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
-    /**
-     * @group comment
-     */
     public function testListAnswerCommentsAsGuest()
     {
         $comments = $this->comments

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 /**
  * @group update
+ * @group comments
  */
 class UpdateTest extends TestCase
 {
@@ -65,9 +66,6 @@ class UpdateTest extends TestCase
         ];
     }
 
-    /**
-     * @group comment
-     */
     public function testUpdateClaimrelationCommentAsUser()
     {
         $this->actingAs($this->users[0])
@@ -84,9 +82,6 @@ class UpdateTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
-    /**
-     * @group comment
-     */
     public function testUpdateClaimrelationCommentAsUserWhoIsNotOp()
     {
         $this->actingAs($this->users[3])
@@ -94,9 +89,6 @@ class UpdateTest extends TestCase
             ->assertStatus(403);
     }
 
-    /**
-     * @group comment
-     */
     public function testUpdateClaimCommentAsUserWithCommentableEndpoint()
     {
         $this->actingAs($this->users[0])

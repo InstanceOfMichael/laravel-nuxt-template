@@ -53,6 +53,53 @@ class StoreTest extends TestCase
             ->assertDontExposeUserEmails($this->user->email);
     }
 
+    /**
+     * @group idempotency
+     */
+    public function testStoreLinkAsUserIdempotent()
+    {
+        $link = $this->link;
+        $r1 = $this->actingAs($this->user)
+            ->postJson('/links', $this->getPayload(), [
+                Idempotency::HEADER => base64_encode(__CLASS__),
+            ])
+            ->assertStatus(201)
+            ->assertJson([
+                // 'id'    => $link->id,
+                'title'  => $link->title,
+                'url'  => $link->url,
+                'op_id' => $link->op_id,
+                'ld_id' => Linkdomain::first()->id,
+            ])
+            ->assertDontExposeUserEmails($this->user->email);
+        $r2 = $this->actingAs($this->user)
+            ->postJson('/links', $this->getPayload(), [
+                Idempotency::HEADER => base64_encode(__CLASS__),
+            ])
+            ->assertStatus(201)
+            ->assertJson([
+                // 'id'    => $link->id,
+                'title'  => $link->title,
+                'url'  => $link->url,
+                'op_id' => $link->op_id,
+                'ld_id' => Linkdomain::first()->id,
+            ])
+            ->assertDontExposeUserEmails($this->user->email);
+        $r3 = $this->actingAs($this->user)
+            ->postJson('/links', $this->getPayload())
+            ->assertStatus(201)
+            ->assertJson([
+                // 'id'    => $link->id,
+                'title'  => $link->title,
+                'url'  => $link->url,
+                'op_id' => $link->op_id,
+                'ld_id' => Linkdomain::first()->id,
+            ])
+            ->assertDontExposeUserEmails($this->user->email);
+        $this->assertEquals($r1->json('id'), $r2->json('id'));
+        $this->assertNotEquals($r1->json('id'), $r3->json('id'));
+    }
+
     public function testStoreLinkIfLinkDomainAlreadyExistsAsUser()
     {
         $link = $this->link;

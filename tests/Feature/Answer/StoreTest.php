@@ -69,6 +69,51 @@ class StoreTest extends TestCase
             ->assertDontExposeUserEmails($this->users[0]->email);
     }
 
+    /**
+     * @group idempotency
+     */
+    public function testStoreAnswerAsUserIdempotent()
+    {
+        $answer = $this->answer;
+        $r1 = $this->actingAs($this->users[0])
+            ->postJson('/answers', $this->getPayload(), [
+                Idempotency::HEADER => base64_encode(__CLASS__),
+            ])
+            ->assertStatus(201)
+            ->assertJson([
+                // 'id' => $answer->id,
+                'op_id' => $answer->op->id,
+                'claim_id' => $answer->claim_id,
+                'question_id' => $answer->question_id,
+            ])
+            ->assertDontExposeUserEmails($this->users[0]->email);
+        $r2 = $this->actingAs($this->users[0])
+            ->postJson('/answers', $this->getPayload(), [
+                Idempotency::HEADER => base64_encode(__CLASS__),
+            ])
+            ->assertStatus(201)
+            ->assertJson([
+                // 'id' => $answer->id,
+                'op_id' => $answer->op->id,
+                'claim_id' => $answer->claim_id,
+                'question_id' => $answer->question_id,
+            ])
+            ->assertDontExposeUserEmails($this->users[0]->email);
+        $r3 = $this->actingAs($this->users[0])
+            ->postJson('/answers', $this->getPayload())
+            ->assertStatus(422)
+            ->assertExactJson([
+                "errors" => [
+                    "claim_id" => ["This claim is already associated with this question."],
+                ],
+                "message" => "The given data was invalid.",
+            ])
+            ->assertDontExposeUserEmails($this->users);
+        $this->assertEquals($r1->json('id'), $r2->json('id'));
+        $this->assertNotEquals($r1->json('id'), $r3->json('id'));
+        $this->assertNull($r3->json('id'));
+    }
+
     public function testStoreAnswerAsGuest()
     {
         $this->postJson('/answers', $this->getPayload())

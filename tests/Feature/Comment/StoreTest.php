@@ -48,9 +48,6 @@ class StoreTest extends TestCase
         ]);
     }
 
-    /**
-     * @group comment
-     */
     public function testStoreCommentAsUserWithoutTopic()
     {
         $this->actingAs($this->users[0])
@@ -58,18 +55,12 @@ class StoreTest extends TestCase
             ->assertStatus(405);
     }
 
-    /**
-     * @group comment
-     */
     public function testStoreCommentAsGuestWithoutTopic()
     {
         $this->postJson('/comments', $this->getPayload())
             ->assertStatus(401);
     }
 
-    /**
-     * @group comment
-     */
     public function testStoreCommentEmptyPayload()
     {
         $this->actingAs($this->users[0])

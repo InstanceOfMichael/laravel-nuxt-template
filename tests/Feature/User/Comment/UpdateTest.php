@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 /**
  * @group update
+ * @group comments
  */
 class UpdateTest extends TestCase
 {
@@ -50,9 +51,6 @@ class UpdateTest extends TestCase
         ];
     }
 
-    /**
-     * @group comment
-     */
     public function testUpdateQuestionCommentAsUserWithCommentableEndpoint()
     {
         $this->actingAs($this->users[0])
