@@ -1,15 +1,19 @@
 <template lang="pug">
-  div
-    | Question Answers
+  .questions-answers-list
+    AnswerCardRow(
+      v-for="answer in answers.data"
+      :key="answer.id"
+      :item="answer"
+    )
 </template>
 
 <script>
 import axios from 'axios'
-import QuestionCardRow from '~/components/Question/CardRow'
+import AnswerCardRow from '~/components/Answer/CardRow'
 
 export default {
-  componenets: {
-    QuestionCardRow,
+  components: {
+    AnswerCardRow,
   },
   props: {
     question: {
@@ -17,5 +21,20 @@ export default {
       required: true,
     },
   },
+  async asyncData ({ api, route, deslug }) {
+    return {
+      answers: (await api.get('/answers', {
+        params: {
+          question_id: deslug(route.params.slug),
+        },
+      })).data,
+    }
+  },
 }
 </script>
+
+<style lang="sass">
+.questions-answers-list
+  .card.card-answer
+    margin-bottom: 15px
+</style>

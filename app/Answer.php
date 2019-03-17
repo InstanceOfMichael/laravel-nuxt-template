@@ -12,7 +12,8 @@ class Answer extends Model
 {
     use Traits\SerializesDates,
         Traits\HasComments,
-        Traits\HasOpId;
+        Traits\HasOpId,
+        Traits\HasQuestionId;
 
     protected $fillable = [
         'question_id',
@@ -26,18 +27,17 @@ class Answer extends Model
     }
 
     /**
-     * Get the question associated with this answer
-     */
-    public function question()
-    {
-        return $this->belongsTo(Question::class);
-    }
-
-    /**
      * Get the claim associated with this answer
      */
     public function claim()
     {
         return $this->belongsTo(Claim::class);
+    }
+
+    public function scopeWhereRequest ($query, $request) {
+        $arr = $request->all();
+        if (array_key_exists('question_id', $arr)) {
+            $this->scopeWhereQuestionId($query, $arr['question_id']);
+        }
     }
 }

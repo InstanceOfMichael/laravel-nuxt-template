@@ -3,9 +3,9 @@
     :to="{ name: 'users-handle', params: { handle: $slug(user) } }"
   )
     img.rounded(
+      v-if="withImage && user.photo_url"
       width="160"
       height="160"
-      v-if="user.photo_url"
       :src="user && user.photo_url"
     )
     br
@@ -19,6 +19,10 @@ export default {
     user: {
       type: Object,
       required: true,
+    },
+    withImage: {
+      type: Boolean,
+      default: false,
     },
   },
 }

@@ -19,9 +19,10 @@ class AnswerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return Answer::query()
+            ->whereRequest($request)
             ->with(['question.op', 'claim.op', 'op'])
             ->orderBy('answers.id', 'DESC')
             ->paginate();
