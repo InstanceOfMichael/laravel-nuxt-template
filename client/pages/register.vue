@@ -84,8 +84,8 @@ export default {
       name: '',
       email: '',
       password: '',
-      password_confirmation: ''
-    })
+      password_confirmation: '',
+    }),
   }),
 
   methods: {
@@ -104,7 +104,7 @@ export default {
 
       // Redirect home.
       this.$router.push({ name: 'home' })
-    }
-  }
+    },
+  },
 }
 </script>

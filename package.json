@@ -8,6 +8,14 @@
     "demo:build": "nuxt generate --spa -c client/nuxt.config.js",
     "demo:deploy": "npm run lint && npm run demo:build && netlify deploy --prod --dir=dist --site=389dda0f-ea92-4010-a274-99d4b188d264"
   },
+  "engines": {
+    "node": ">= 9.6.0",
+    "yarn": ">= 0.23.0"
+  },
+  "browserslist": [
+    "last 4 versions",
+    "not ie <= 8"
+  ],
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.7",
     "@fortawesome/fontawesome-free-brands": "^5.0.12",
@@ -24,6 +32,10 @@
     "coffeescript": "^2.3.2",
     "date-fns": "^1.30.1",
     "dotenv": "^5.0.1",
+    "eslint": "^5.15.3",
+    "eslint-plugin-compat": "^3.0.1",
+    "eslint-plugin-optimize-regex": "^1.1.6",
+    "eslint-plugin-sonarjs": "^0.3.0",
     "jquery": "^3.3.1",
     "js-cookie": "^2.2.0",
     "nuxt": "^2.0.0",

@@ -25,8 +25,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   async asyncData ({ api, route, deslug }) {
     return {

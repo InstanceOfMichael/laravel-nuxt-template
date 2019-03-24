@@ -33,13 +33,13 @@
  * @param  integer len
  * @return array<integer>
  */
-function sequence(len) {
-  return Array.apply(null, Array(len));
+function sequence (len) {
+  return Array.apply(null, Array(len))
 }
 
 export default {
   name: 'LengthAwarePaginator',
-  props:{
+  props: {
     pagination: {
       // current_page: 1
       // data: [,…]
@@ -59,16 +59,16 @@ export default {
     range: {
       type: Number,
       default () {
-        return 3;
+        return 3
       },
     },
   },
   computed: {
     showPagination () {
-      return this.pagination.total > this.pagination.per_page;
+      return this.pagination.total > this.pagination.per_page
     },
     activePage () {
-      return this.pagination.current_page;
+      return this.pagination.current_page
     },
     middlePageNumbers () {
       const { range } = this
@@ -76,7 +76,6 @@ export default {
       return sequence(1 + (2 * range))
         .map((x, y) => (current_page + y) - range)
         .filter(v => v > 0 && v <= last_page)
-      ;
     },
   },
 }

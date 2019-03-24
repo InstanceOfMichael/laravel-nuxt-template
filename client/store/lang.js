@@ -6,21 +6,21 @@ export const state = () => ({
   locales: {
     'en': 'EN',
     'zh-CN': '中文',
-    'es': 'ES'
-  }
+    'es': 'ES',
+  },
 })
 
 // getters
 export const getters = {
   locale: state => state.locale,
-  locales: state => state.locales
+  locales: state => state.locales,
 }
 
 // mutations
 export const mutations = {
   SET_LOCALE (state, { locale }) {
     state.locale = locale
-  }
+  },
 }
 
 // actions
@@ -29,5 +29,5 @@ export const actions = {
     commit('SET_LOCALE', { locale })
 
     Cookies.set('locale', locale, { expires: 365 })
-  }
+  },
 }

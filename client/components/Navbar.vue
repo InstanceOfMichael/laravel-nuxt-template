@@ -66,15 +66,15 @@ import LocaleDropdown from './LocaleDropdown'
 
 export default {
   components: {
-    LocaleDropdown
+    LocaleDropdown,
   },
 
   data: () => ({
-    appName: process.env.appName
+    appName: process.env.appName,
   }),
 
   computed: mapGetters({
-    user: 'auth/user'
+    user: 'auth/user',
   }),
 
   methods: {
@@ -84,8 +84,8 @@ export default {
 
       // Redirect to login.
       this.$router.push({ name: 'login' })
-    }
-  }
+    },
+  },
 }
 </script>
 

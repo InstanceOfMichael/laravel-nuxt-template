@@ -3,13 +3,13 @@ import { cookieFromRequest } from '~/utils'
 import get from 'lodash/get'
 
 export const state = () => ({
-  windowActive: process.server || !!get(document, 'hidden')
+  windowActive: process.server || !!get(document, 'hidden'),
 })
 
 export const mutations = {
   windowActive (state, value) {
     state.windowActive = !!value
-  }
+  },
 }
 
 export const actions = {
@@ -35,7 +35,7 @@ export const actions = {
     if (locale) {
       commit('lang/SET_LOCALE', { locale })
     }
-  }
+  },
 }
 
 // export const strict = false;

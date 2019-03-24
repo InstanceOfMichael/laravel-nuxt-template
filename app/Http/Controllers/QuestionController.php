@@ -22,6 +22,7 @@ class QuestionController extends Controller
     {
         return Question::query()
             ->with('op')
+            ->orderby('questions.id', 'desc')
             ->paginate();
     }
 

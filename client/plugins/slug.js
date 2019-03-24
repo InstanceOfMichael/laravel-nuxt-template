@@ -21,6 +21,7 @@ export default (ctx) => {
     }
   }
   Vue.prototype.$deslug = ctx.deslug = (value) => {
+    /* eslint no-param-reassign: "off" */
     if (value && value.lastIndexOf) {
       value = value.slice(value.lastIndexOf('-') + 1)
       return parseInt(value, RADIX)
@@ -33,7 +34,7 @@ Vue.prototype.$mergeRouteQuery = function (object) {
     ...this.$route,
     query: {
       ...this.$route.query,
-      ...object
-    }
+      ...object,
+    },
   }
 }

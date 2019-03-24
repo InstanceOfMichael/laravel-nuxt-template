@@ -25,11 +25,11 @@ export default {
 
   data: () => ({
     isResent: false,
-    busy: false
+    busy: false,
   }),
 
   computed: mapGetters({
-    user: 'auth/user'
+    user: 'auth/user',
   }),
 
   methods: {
@@ -41,8 +41,8 @@ export default {
       } finally {
         this.busy = false
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

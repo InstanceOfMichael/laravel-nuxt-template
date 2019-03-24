@@ -21,7 +21,7 @@ import ResendEmailVerifyAlert from '~/components/ResendEmailVerifyAlert'
 
 export default {
   components: {
-    ResendEmailVerifyAlert
+    ResendEmailVerifyAlert,
   },
 
   head () {
@@ -31,7 +31,7 @@ export default {
   methods: {
     async resend () {
       // {{ route('verification.resend') }}
-    }
-  }
+    },
+  },
 }
 </script>

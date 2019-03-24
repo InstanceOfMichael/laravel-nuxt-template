@@ -37,12 +37,12 @@ export default {
   data: () => ({
     form: new Form({
       name: '',
-      email: ''
-    })
+      email: '',
+    }),
   }),
 
   computed: mapGetters({
-    user: 'auth/user'
+    user: 'auth/user',
   }),
 
   created () {
@@ -57,7 +57,7 @@ export default {
       const { data } = await this.form.patch('/settings/profile')
 
       this.$store.dispatch('auth/updateUser', { user: data })
-    }
-  }
+    },
+  },
 }
 </script>

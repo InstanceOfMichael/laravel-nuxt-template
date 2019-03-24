@@ -45,7 +45,7 @@ export default (ctx) => {
         text: app.i18n.t('error_alert_text'),
         reverseButtons: true,
         confirmButtonText: app.i18n.t('ok'),
-        cancelButtonText: app.i18n.t('cancel')
+        cancelButtonText: app.i18n.t('cancel'),
       })
     }
 
@@ -56,7 +56,7 @@ export default (ctx) => {
         text: app.i18n.t('token_expired_alert_text'),
         reverseButtons: true,
         confirmButtonText: app.i18n.t('ok'),
-        cancelButtonText: app.i18n.t('cancel')
+        cancelButtonText: app.i18n.t('cancel'),
       }).then(() => {
         store.commit('auth/LOGOUT')
 

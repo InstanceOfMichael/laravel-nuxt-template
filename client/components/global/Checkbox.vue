@@ -21,11 +21,11 @@ export default {
     id: { type: String, default: null },
     name: { type: String, default: 'checkbox' },
     value: { type: Boolean, default: false },
-    checked: { type: Boolean, default: false }
+    checked: { type: Boolean, default: false },
   },
 
   data: () => ({
-    internalValue: false
+    internalValue: false,
   }),
 
   watch: {
@@ -41,7 +41,7 @@ export default {
       if (val !== oldVal) {
         this.$emit('input', val)
       }
-    }
+    },
   },
 
   created () {
@@ -59,7 +59,7 @@ export default {
       if (!e.isPropagationStopped) {
         this.internalValue = e.target.checked
       }
-    }
-  }
+    },
+  },
 }
 </script>

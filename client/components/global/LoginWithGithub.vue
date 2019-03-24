@@ -11,7 +11,7 @@ export default {
 
   computed: {
     githubAuth: () => process.env.githubAuth,
-    url: () => `${process.env.apiUrl}/oauth/github`
+    url: () => `${process.env.apiUrl}/oauth/github`,
   },
 
   mounted () {
@@ -27,7 +27,7 @@ export default {
       const newWindow = openWindow('', this.$t('login'))
 
       const url = await this.$store.dispatch('auth/fetchOauthUrl', {
-        provider: 'github'
+        provider: 'github',
       })
 
       newWindow.location.href = url
@@ -42,12 +42,12 @@ export default {
       }
 
       this.$store.dispatch('auth/saveToken', {
-        token: e.data.token
+        token: e.data.token,
       })
 
       this.$router.push('/home')
-    }
-  }
+    },
+  },
 }
 
 /**
@@ -55,6 +55,7 @@ export default {
  * @return {Window}
  */
 function openWindow (url, title, options = {}) {
+  /* eslint-disable no-param-reassign */
   if (typeof url === 'object') {
     options = url
     url = ''

@@ -7,8 +7,7 @@ export function get (key, defaultValue = null) {
   }
   try {
     const rawValue = window.localStorage.getItem(`${prefix}${key}`)
-    const parsedValue = JSON.parse(rawValue)
-    return parsedValue
+    return JSON.parse(rawValue)
   } catch (err) {
     console.error(err)
     return defaultValue

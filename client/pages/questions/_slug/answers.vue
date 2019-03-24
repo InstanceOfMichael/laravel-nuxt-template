@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import AnswerCardRow from '~/components/Answer/CardRow'
 
 export default {

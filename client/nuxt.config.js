@@ -23,7 +23,7 @@ module.exports = {
     apiUrl: process.env.APP_URL || 'http://api.lndebate.test',
     appName: process.env.APP_NAME || 'lndebate',
     appLocale: process.env.APP_LOCALE || 'en',
-    githubAuth: !!process.env.GITHUB_CLIENT_ID
+    githubAuth: !!process.env.GITHUB_CLIENT_ID,
   },
 
   head: {
@@ -32,7 +32,7 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Nuxt.js project' }
+      { hid: 'description', name: 'description', content: 'Nuxt.js project' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -44,17 +44,17 @@ module.exports = {
     ],
     script: [
       // { src: `https://cdn.polyfill.io/v2/polyfill.min.js?features=${polyfills.join(',')}` }
-    ]
+    ],
   },
 
   loading: { color: '#007bff' },
 
   router: {
-    middleware: ['redirects', 'locale', 'check-auth']
+    middleware: ['redirects', 'locale', 'check-auth'],
   },
 
   css: [
-    { src: '~assets/sass/app.scss', lang: 'scss' }
+    { src: '~assets/sass/app.scss', lang: 'scss' },
   ],
 
   plugins: [
@@ -72,7 +72,7 @@ module.exports = {
 
   modules: [
     ['@nuxtjs/google-analytics', {
-      id: 'UA-130086131-3'
+      id: 'UA-130086131-3',
     }],
     '@nuxtjs/pwa',
     '@nuxtjs/sentry',
@@ -82,11 +82,25 @@ module.exports = {
 
   sentry: {
     dsn: 'https://ca5f7225c31f44ba844281149475c5af@sentry.io/1407940',
-    config: {} // Additional config
+    config: {}, // Additional config
   },
 
   build: {
-    extractCSS: true
+    extractCSS: true,
+    /*
+    ** You can extend webpack config here
+    */
+    extend (config, ctx) {
+      // Run ESLint on save
+      if (ctx.isDev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/,
+        })
+      }
+    },
   },
 
   // proxy: {

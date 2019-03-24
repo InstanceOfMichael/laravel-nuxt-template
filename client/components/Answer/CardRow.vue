@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import UserProfileLink from '~/components/User/ProfileLink'
 // import AnswerSidesFlair from '~/components/Answer/SidesFlair'
 

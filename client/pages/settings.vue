@@ -32,21 +32,21 @@ export default {
           icon: 'user',
           name: this.$t('profile'),
           route: 'settings-profile',
-          dusk: 'settings_profile_link'
+          dusk: 'settings_profile_link',
         }, {
           icon: 'lock',
           name: this.$t('password'),
           route: 'settings-password',
-          dusk: 'settings_password_link'
+          dusk: 'settings_password_link',
         }, {
           icon: 'envelope',
           name: this.$t('email'),
           route: 'settings-email',
-          dusk: 'settings_email_link'
-        }
+          dusk: 'settings_email_link',
+        },
       ]
-    }
-  }
+    },
+  },
 }
 </script>
 

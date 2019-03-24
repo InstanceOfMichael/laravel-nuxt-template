@@ -20,7 +20,7 @@ import { loadMessages } from '~/plugins/i18n'
 export default {
   computed: mapGetters({
     locale: 'lang/locale',
-    locales: 'lang/locales'
+    locales: 'lang/locales',
   }),
 
   methods: {
@@ -30,7 +30,7 @@ export default {
 
         this.$store.dispatch('lang/setLocale', { locale })
       }
-    }
-  }
+    },
+  },
 }
 </script>

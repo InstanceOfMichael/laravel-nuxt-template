@@ -61,8 +61,8 @@ export default {
       token: '',
       email: '',
       password: '',
-      password_confirmation: ''
-    })
+      password_confirmation: '',
+    }),
   }),
 
   created () {
@@ -77,7 +77,7 @@ export default {
       this.status = data.status
 
       this.form.reset()
-    }
-  }
+    },
+  },
 }
 </script>

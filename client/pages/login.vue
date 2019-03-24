@@ -65,9 +65,9 @@ export default {
   data: () => ({
     form: new Form({
       email: '',
-      password: ''
+      password: '',
     }),
-    remember: false
+    remember: false,
   }),
 
   methods: {
@@ -78,7 +78,7 @@ export default {
       // Save the token.
       this.$store.dispatch('auth/saveToken', {
         token: data.token,
-        remember: this.remember
+        remember: this.remember,
       })
 
       // Fetch the user.
@@ -86,7 +86,7 @@ export default {
 
       // Redirect home.
       this.$router.push({ name: 'home' })
-    }
-  }
+    },
+  },
 }
 </script>

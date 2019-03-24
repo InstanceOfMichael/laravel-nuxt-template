@@ -46,8 +46,8 @@ export default {
   data: () => ({
     form: new Form({
       password: '',
-      password_confirmation: ''
-    })
+      password_confirmation: '',
+    }),
   }),
 
   methods: {
@@ -55,7 +55,7 @@ export default {
       await this.form.patch('/settings/password')
 
       this.form.reset()
-    }
-  }
+    },
+  },
 }
 </script>

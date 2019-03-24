@@ -44,23 +44,23 @@ export default {
   },
 
   components: {
-    ResendEmailVerifyAlert
+    ResendEmailVerifyAlert,
   },
 
   data: () => ({
     form: new Form({
       name: '',
-      email: ''
-    })
+      email: '',
+    }),
   }),
 
   computed: {
     ...mapGetters({
-      user: 'auth/user'
+      user: 'auth/user',
     }),
     isEmailVerified () {
       return !!get(this.user, 'email_verified_at')
-    }
+    },
   },
 
   created () {
@@ -75,7 +75,7 @@ export default {
       const { data } = await this.form.patch('/settings/email')
 
       this.$store.dispatch('auth/updateUser', { user: data })
-    }
-  }
+    },
+  },
 }
 </script>

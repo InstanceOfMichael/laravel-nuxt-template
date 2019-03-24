@@ -15,7 +15,7 @@ export default {
   name: 'Card',
 
   props: {
-    title: { type: String, default: null }
-  }
+    title: { type: String, default: null },
+  },
 }
 </script>

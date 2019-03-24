@@ -7,9 +7,21 @@
   },
   "extends": [
     "plugin:vue/recommended",
+    "plugin:sonarjs/recommended",
     "@vue/standard"
   ],
+  plugins: [
+    "compat",
+    "optimize-regex",
+    "sonarjs",
+  ],
   "rules": {
+    "no-param-reassign": ["error", {
+      "ignorePropertyModificationsFor": ["state", "carry", "value"]
+    }],
+    "comma-dangle": ["error", "always-multiline"],
+    "camelcase": "off",
+    "optimize-regex/optimize-regex": "warn",
     "vue/max-attributes-per-line": "off"
   }
 }

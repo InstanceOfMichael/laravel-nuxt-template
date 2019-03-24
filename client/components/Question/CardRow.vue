@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import UserProfileLink from '~/components/User/ProfileLink'
 import QuestionSidesFlair from '~/components/Question/SidesFlair'
 

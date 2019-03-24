@@ -38,8 +38,8 @@ export default {
   data: () => ({
     status: '',
     form: new Form({
-      email: ''
-    })
+      email: '',
+    }),
   }),
 
   methods: {
@@ -49,7 +49,7 @@ export default {
       this.status = data.status
 
       this.form.reset()
-    }
-  }
+    },
+  },
 }
 </script>

@@ -10,6 +10,6 @@ export default {
 
   head () {
     return { title: this.$t('home') }
-  }
+  },
 }
 </script>

@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import isNumber from 'lodash/isNumber';
-const distanceInWordsToNow = require('date-fns/distance_in_words_to_now');
+import isNumber from 'lodash/isNumber'
+const distanceInWordsToNow = require('date-fns/distance_in_words_to_now')
 
 export default {
   name: 'DateTime',
@@ -15,25 +15,25 @@ export default {
     },
   },
   computed: {
-    dateValue() {
-      const { value } = this;
+    dateValue () {
+      const { value } = this
       if (value instanceof Date) {
-        return value;
+        return value
       }
       if (isNumber(value)) {
-        return new Date(value * 1000);
+        return new Date(value * 1000)
       }
-      return new Date(value);
+      return new Date(value)
     },
-    title() {
-      return distanceInWordsToNow(this.dateValue) + ' ago';
+    title () {
+      return distanceInWordsToNow(this.dateValue) + ' ago'
     },
-    text() {
-      const d = new Date(this.dateValue);
-      return d.toLocaleString();
+    text () {
+      const d = new Date(this.dateValue)
+      return d.toLocaleString()
     },
   },
-};
+}
 </script>
 
 <style>

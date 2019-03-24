@@ -43,12 +43,12 @@ export default {
   },
 
   data: () => ({
-    title: process.env.appName
+    title: process.env.appName,
   }),
 
   computed: mapGetters({
-    authenticated: 'auth/check'
-  })
+    authenticated: 'auth/check',
+  }),
 }
 </script>
 

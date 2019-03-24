@@ -6,11 +6,11 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 import {
   faUser, faLock, faSignOutAlt, faCog, faEnvelope, faChevronUp,
-  faList
+  faList,
 } from '@fortawesome/fontawesome-free-solid/shakable.es'
 
 import {
-  faGithub
+  faGithub,
 } from '@fortawesome/fontawesome-free-brands/shakable.es'
 
 fontawesome.library.add(

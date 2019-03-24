@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import get from 'lodash/get';
+import get from 'lodash/get'
 
 export default {
   name: 'ItemHtml',
@@ -18,16 +18,14 @@ export default {
     },
   },
   computed: {
-    html() {
-      let html =
-        this.value ||
+    html () {
+      return this.value ||
         get(this.item, 'data.body_html') ||
         get(this.item, 'data.selftext_html') ||
-        '';
-      return html;
+        ''
     },
   },
-};
+}
 </script>
 
 <style lang="sass">
