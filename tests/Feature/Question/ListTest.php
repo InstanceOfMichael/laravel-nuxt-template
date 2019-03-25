@@ -5,7 +5,6 @@ namespace Tests\Feature\Question;
 use App\User;
 use App\Question;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @group list
@@ -35,7 +34,7 @@ class ListTest extends TestCase
             ->getJson('/questions')
             ->assertSuccessful()
             ->assertJson([
-                'data' => $this->questions->map(function (Question $q):array {
+                'data' => $this->questions->reverse()->map(function (Question $q):array {
                     return [
                         'id'    => $q->id,
                         'title'  => $q->title,
@@ -47,7 +46,7 @@ class ListTest extends TestCase
                             'handle' => $q->op->handle,
                         ],
                     ];
-                })->all(),
+                })->values()->all(),
                 'total' => $this->questions->count(),
             ])
             ->assertDontExposeUserEmails($this->users);
@@ -58,7 +57,7 @@ class ListTest extends TestCase
         $this->getJson('/questions')
             ->assertSuccessful()
             ->assertJson([
-                'data' => $this->questions->map(function (Question $q):array {
+                'data' => $this->questions->reverse()->map(function (Question $q):array {
                     return [
                         'id'    => $q->id,
                         'title'  => $q->title,
@@ -70,7 +69,7 @@ class ListTest extends TestCase
                             'handle' => $q->op->handle,
                         ],
                     ];
-                })->all(),
+                })->values()->all(),
                 'total' => $this->questions->count(),
             ])
             ->assertDontExposeUserEmails($this->users);

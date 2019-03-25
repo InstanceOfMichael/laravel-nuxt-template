@@ -11,6 +11,6 @@ trait HasComments {
      */
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'topic');
+        return $this->morphMany(Comment::class, 'context');
     }
 }

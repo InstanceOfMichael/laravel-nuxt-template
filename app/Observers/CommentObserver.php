@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Comment;
 use App\Jobs\UpdateQuestionStats;
+use App\Jobs\UpdateCommentStats;
 use App\Question;
 
 class CommentObserver
@@ -14,10 +15,31 @@ class CommentObserver
      * @param  \App\Comment  $comment
      * @return void
      */
+    public function creating(Comment $comment)
+    {
+        if ($comment->pc_id) {
+            $comment->depth = $comment->parentComment->depth + 1;
+            dispatch_now(new UpdateCommentStats($comment->parentComment, [
+                'reply_count',
+            ]));
+        }
+        if ($comment->context instanceof Question) {
+            dispatch_now(new UpdateQuestionStats($comment->context, [
+                'comments_count',
+            ]));
+        }
+    }
+
+    /**
+     * Handle the comment "created" event.
+     *
+     * @param  \App\Comment  $comment
+     * @return void
+     */
     public function created(Comment $comment)
     {
-        if ($comment->topic instanceof Question) {
-            dispatch_now(new UpdateQuestionStats($comment->topic, [
+        if ($comment->context instanceof Question) {
+            dispatch_now(new UpdateQuestionStats($comment->context, [
                 'comments_count',
             ]));
         }
@@ -42,8 +64,8 @@ class CommentObserver
      */
     public function deleted(Comment $comment)
     {
-        if ($comment->topic instanceof Question) {
-            dispatch_now(new UpdateQuestionStats($comment->topic, [
+        if ($comment->context instanceof Question) {
+            dispatch_now(new UpdateQuestionStats($comment->context, [
                 'comments_count',
             ]));
         }
@@ -57,8 +79,8 @@ class CommentObserver
      */
     public function restored(Comment $comment)
     {
-        if ($comment->topic instanceof Question) {
-            dispatch_now(new UpdateQuestionStats($comment->topic, [
+        if ($comment->context instanceof Question) {
+            dispatch_now(new UpdateQuestionStats($comment->context, [
                 'comments_count',
             ]));
         }
@@ -72,8 +94,8 @@ class CommentObserver
      */
     public function forceDeleted(Comment $comment)
     {
-        if ($comment->topic instanceof Question) {
-            dispatch_now(new UpdateQuestionStats($comment->topic, [
+        if ($comment->context instanceof Question) {
+            dispatch_now(new UpdateQuestionStats($comment->context, [
                 'comments_count',
             ]));
         }

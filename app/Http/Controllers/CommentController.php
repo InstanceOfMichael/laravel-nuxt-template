@@ -55,7 +55,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        $comment->load('op', 'topic');
+        $comment->load('op', 'context');
         return $comment;
     }
 

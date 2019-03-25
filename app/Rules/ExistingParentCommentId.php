@@ -8,16 +8,16 @@ use App\Contracts\Commentable;
 class ExistingParentCommentId implements Rule
 {
     /** @var \App\Commentable */
-    protected $topic;
+    protected $context;
 
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct(Commentable $topic)
+    public function __construct(Commentable $context)
     {
-        $this->topic = $topic;
+        $this->context = $context;
     }
 
     /**
@@ -34,7 +34,7 @@ class ExistingParentCommentId implements Rule
             // because it indicates no parent
             return true;
         }
-        return $this->topic->comments()->where('comments.id', $value)->take(1)->get()->count() > 0;
+        return $this->context->comments()->where('comments.id', $value)->take(1)->get()->count() > 0;
     }
 
     /**

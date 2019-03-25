@@ -11,8 +11,6 @@ use App\Question;
 use App\Side;
 use App\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UpdateQuestionStatsTest extends TestCase
 {

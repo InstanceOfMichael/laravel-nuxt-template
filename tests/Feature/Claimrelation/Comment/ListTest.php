@@ -7,7 +7,6 @@ use App\User;
 use App\Claim;
 use App\Comment;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @group list
@@ -69,8 +68,8 @@ class ListTest extends TestCase
     public function testListClaimrelationCommentsAsUser()
     {
         $comments = $this->comments
-            ->where('topic_type', $this->claimrelation->getMorphClass())
-            ->where('topic_id', $this->claimrelation->id)
+            ->where('context_type', $this->claimrelation->getMorphClass())
+            ->where('context_id', $this->claimrelation->id)
             ->sortByDesc('id')
             ->values();
         $this->actingAs($this->users[0])
@@ -97,8 +96,8 @@ class ListTest extends TestCase
     public function testListClaimrelationCommentsAsGuest()
     {
         $comments = $this->comments
-            ->where('topic_type', $this->claimrelation->getMorphClass())
-            ->where('topic_id', $this->claimrelation->id)
+            ->where('context_type', $this->claimrelation->getMorphClass())
+            ->where('context_id', $this->claimrelation->id)
             ->sortByDesc('id')
             ->values();
         $this->getJson('/claimrelations/'.$this->claimrelation->id.'/comments')

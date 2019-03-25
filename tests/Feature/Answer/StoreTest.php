@@ -8,7 +8,6 @@ use App\User;
 use App\Claim;
 use App\Question;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @group store

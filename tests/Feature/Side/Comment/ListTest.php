@@ -7,7 +7,6 @@ use App\Comment;
 use App\Side;
 use App\Claim;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @group list
@@ -60,8 +59,8 @@ class ListTest extends TestCase
     public function testListSideCommentsAsUser()
     {
         $comments = $this->comments
-            ->where('topic_type', $this->side->getMorphClass())
-            ->where('topic_id', $this->side->id)
+            ->where('context_type', $this->side->getMorphClass())
+            ->where('context_id', $this->side->id)
             ->sortByDesc('id')
             ->values();
         $this->actingAs($this->users[0])
@@ -88,8 +87,8 @@ class ListTest extends TestCase
     public function testListSideCommentsAsGuest()
     {
         $comments = $this->comments
-            ->where('topic_type', $this->side->getMorphClass())
-            ->where('topic_id', $this->side->id)
+            ->where('context_type', $this->side->getMorphClass())
+            ->where('context_id', $this->side->id)
             ->sortByDesc('id')
             ->values();
         $this->getJson('/sides/'.$this->side->id.'/comments')

@@ -7,7 +7,6 @@ use App\Claim;
 use App\Comment;
 use App\Link;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @group show

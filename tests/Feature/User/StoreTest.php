@@ -5,7 +5,6 @@ namespace Tests\Feature\User;
 use App\Http\Middleware\Idempotency;
 use App\User;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @group store

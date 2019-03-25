@@ -6,7 +6,6 @@ use App\User;
 use App\Claim;
 use App\Http\Middleware\Idempotency;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @group store

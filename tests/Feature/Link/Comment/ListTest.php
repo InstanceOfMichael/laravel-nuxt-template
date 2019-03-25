@@ -7,7 +7,6 @@ use App\Comment;
 use App\Link;
 use App\Claim;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @group list
@@ -60,8 +59,8 @@ class ListTest extends TestCase
     public function testListLinkCommentsAsUser()
     {
         $comments = $this->comments
-            ->where('topic_type', $this->link->getMorphClass())
-            ->where('topic_id', $this->link->id)
+            ->where('context_type', $this->link->getMorphClass())
+            ->where('context_id', $this->link->id)
             ->sortByDesc('id')
             ->values();
         $this->actingAs($this->users[0])
@@ -88,8 +87,8 @@ class ListTest extends TestCase
     public function testListLinkCommentsAsGuest()
     {
         $comments = $this->comments
-            ->where('topic_type', $this->link->getMorphClass())
-            ->where('topic_id', $this->link->id)
+            ->where('context_type', $this->link->getMorphClass())
+            ->where('context_id', $this->link->id)
             ->sortByDesc('id')
             ->values();
         $this->getJson('/links/'.$this->link->id.'/comments')

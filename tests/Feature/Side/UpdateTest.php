@@ -5,7 +5,6 @@ namespace Tests\Feature\Side;
 use App\User;
 use App\Side;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @group update

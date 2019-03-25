@@ -7,7 +7,6 @@ use App\Comment;
 use App\Question;
 use App\Claim;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @group list

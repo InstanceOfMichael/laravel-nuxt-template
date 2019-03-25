@@ -20,8 +20,8 @@ class Comment extends Model
         'text',
         'op_id',
         'pc_id',
-        'topic_id',
-        'topic_type',
+        'context_id',
+        'context_type',
     ];
 
     public static function boot() {
@@ -48,7 +48,7 @@ class Comment extends Model
     /**
      * Get the original poster (User) associated with the question.
      */
-    public function topic()
+    public function context()
     {
         return $this->morphTo();
     }

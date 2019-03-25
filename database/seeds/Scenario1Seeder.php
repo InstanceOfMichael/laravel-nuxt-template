@@ -166,7 +166,7 @@ class Scenario1Seeder extends Seeder
         // dump(get_class($parent).'_'.$parent->id.' '.$num);
         if ($parent instanceof Comment) {
             $this->randomUsers($num)->each(function (User $user) use ($parent, $num) {
-                $comment = $parent->topic->comments()->create(factory(Comment::class)->raw([
+                $comment = $parent->context->comments()->create(factory(Comment::class)->raw([
                     'op_id' => $user->id,
                     'pc_id' => $parent->id,
                 ]));

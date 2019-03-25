@@ -4,7 +4,6 @@ namespace Tests\Feature\User;
 
 use App\User;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @group update

@@ -5,7 +5,6 @@ namespace Tests\Feature\Claim;
 use App\User;
 use App\Claim;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @group update

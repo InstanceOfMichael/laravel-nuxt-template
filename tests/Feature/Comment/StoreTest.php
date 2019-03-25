@@ -8,7 +8,6 @@ use App\Comment;
 use App\Question;
 use App\Http\Middleware\Idempotency;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @group store

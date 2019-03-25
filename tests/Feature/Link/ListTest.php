@@ -5,7 +5,6 @@ namespace Tests\Feature\Link;
 use App\User;
 use App\Link;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @group list

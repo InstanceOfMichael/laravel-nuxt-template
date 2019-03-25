@@ -19,12 +19,17 @@ class CreateCommentsTable extends Migration
             $table->unsignedBigInteger('pc_id')->index()->default(0);
             // original poster id
             $table->unsignedBigInteger('op_id')->index();
-            $table->unsignedBigInteger('topic_id');
-            $table->unsignedTinyInteger('topic_type');
+            $table->unsignedBigInteger('context_id');
+            $table->unsignedTinyInteger('context_type');
+
+            // if it is a reply
+            $table->unsignedSmallInteger('depth')->default(0);
+            $table->unsignedSmallInteger('reply_count')->default(0);
+
             $table->timestamps();
             $table->text('text');
 
-            $table->index(['topic_type', 'topic_id']);
+            $table->index(['context_type', 'context_id']);
 
             $table->foreign('op_id')
                 ->references('id')

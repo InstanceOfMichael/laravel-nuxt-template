@@ -36,30 +36,30 @@ class CommentTopicMorphMapTest extends TestCase
         $this->assertEquals([
             $question->getMorphClass(),
             $claim->getMorphClass(),
-        ], Comment::query()->pluck('topic_type')->all());
+        ], Comment::query()->pluck('context_type')->all());
 
-        $this->assertNotNull($comment1->topic());
-        $this->assertNotNull($comment1->topic);
+        $this->assertNotNull($comment1->context());
+        $this->assertNotNull($comment1->context);
         $this->assertEquals(
             'select * from "questions" where "questions"."id" = ?',
-            $comment1->topic()->toSql());
+            $comment1->context()->toSql());
         $this->assertEquals(
-            get_class($comment1->topic),
+            get_class($comment1->context),
             get_class($question));
         $this->assertEquals(
-            $comment1->topic->getAttributes(),
+            $comment1->context->getAttributes(),
             $question->getAttributes());
 
-        $this->assertNotNull($comment2->topic());
-        $this->assertNotNull($comment2->topic);
+        $this->assertNotNull($comment2->context());
+        $this->assertNotNull($comment2->context);
         $this->assertEquals(
             'select * from "claims" where "claims"."id" = ?',
-            $comment2->topic()->toSql());
+            $comment2->context()->toSql());
         $this->assertEquals(
-            get_class($comment2->topic),
+            get_class($comment2->context),
             get_class($claim));
         $this->assertEquals(
-            $comment2->topic->getAttributes(),
+            $comment2->context->getAttributes(),
             $claim->getAttributes());
     }
 }

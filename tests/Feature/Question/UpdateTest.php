@@ -5,7 +5,6 @@ namespace Tests\Feature\Question;
 use App\User;
 use App\Question;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @group update

@@ -7,7 +7,6 @@ use App\Http\Middleware\Idempotency;
 use App\Link;
 use App\Linkdomain;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @group store

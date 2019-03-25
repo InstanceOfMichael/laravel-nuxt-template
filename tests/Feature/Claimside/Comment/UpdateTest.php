@@ -8,7 +8,6 @@ use App\Claim;
 use App\Comment;
 use App\Side;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @group update

@@ -9,7 +9,6 @@ use App\Comment;
 use App\Http\Middleware\Idempotency;
 use App\Question;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @group store
