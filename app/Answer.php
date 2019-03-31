@@ -10,10 +10,10 @@ class Answer extends Model
         Contracts\Commentable,
         Contracts\HasOp
 {
-    use Traits\SerializesDates,
-        Traits\HasComments,
-        Traits\HasOpId,
-        Traits\HasQuestionId;
+    use Concerns\SerializesDates,
+        Concerns\HasComments,
+        Concerns\HasOpId,
+        Concerns\HasQuestionId;
 
     protected $fillable = [
         'question_id',

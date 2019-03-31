@@ -10,8 +10,8 @@ class Comment extends Model
     implements
         Contracts\HasOp
 {
-    use Traits\SerializesDates,
-        Traits\HasOpId;
+    use Concerns\SerializesDates,
+        Concerns\HasOpId;
 
     protected $attributes = [
         'pc_id' => 0, // using 0 as null to not bloat column definition

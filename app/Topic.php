@@ -9,7 +9,7 @@ class Topic extends Model
         Contracts\HasComments,
         Contracts\HasOp
 {
-    use Traits\SerializesDates,
-        Traits\HasOpId;
+    use Concerns\SerializesDates,
+        Concerns\HasOpId;
     //
 }

@@ -14,8 +14,8 @@ class User extends Authenticatable
         MustVerifyEmail
 {
     use Notifiable,
-        Traits\SerializesDates,
-        Traits\HasComments;
+        Concerns\SerializesDates,
+        Concerns\HasComments;
 
     /**
      * The attributes that are mass assignable.

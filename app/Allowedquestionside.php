@@ -8,9 +8,9 @@ class Allowedquestionside extends Model
     implements
         Contracts\HasOp
 {
-    use Traits\HasOpId,
-        Traits\HasQuestionId,
-        Traits\SerializesDates;
+    use Concerns\HasOpId,
+        Concerns\HasQuestionId,
+        Concerns\SerializesDates;
 
     protected $fillable = [
         'side_id',

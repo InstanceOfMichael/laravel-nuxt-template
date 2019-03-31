@@ -9,9 +9,9 @@ class Linkdomain extends Model
         Contracts\Commentable,
         Contracts\HasOp
 {
-    use Traits\SerializesDates,
-        Traits\HasComments,
-        Traits\HasOpId;
+    use Concerns\SerializesDates,
+        Concerns\HasComments,
+        Concerns\HasOpId;
 
     protected $fillable = [
         'name',

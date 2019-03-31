@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
-    use Traits\SerializesDates,
-        Traits\HasOpId;
+    use Concerns\SerializesDates,
+        Concerns\HasOpId;
 
     protected $fillable = [
         'name',

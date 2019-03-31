@@ -9,16 +9,16 @@ class Side extends Model
         Contracts\Commentable,
         Contracts\HasOp
 {
-    use Traits\SerializesDates,
-        Traits\HasComments,
-        Traits\HasOpId;
+    use Concerns\SerializesDates,
+        Concerns\HasComments,
+        Concerns\HasOpId;
 
     // question->sides_type options:
     public const TYPE_NONE  = 0; // no sides, do not display anything
     public const TYPE_ANY   = 1; // answers can pick literally any side
     public const TYPE_ALLOW = 2; // sides from allowedquestionsides table are allowed
 
-    use Traits\SerializesDates;
+    use Concerns\SerializesDates;
 
     protected $fillable = [
         'name',

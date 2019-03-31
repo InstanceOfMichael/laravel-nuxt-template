@@ -9,9 +9,9 @@ class Groupmembership extends Model
         Contracts\HasGroup,
         Contracts\HasUser
 {
-    use Traits\SerializesDates,
-        Traits\HasGroupId,
-        Traits\HasUserId;
+    use Concerns\SerializesDates,
+        Concerns\HasGroupId,
+        Concerns\HasUserId;
     //
 
     protected $fillable = [
