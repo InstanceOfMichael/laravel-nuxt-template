@@ -23,9 +23,7 @@ class ShowTest extends TestCase
         parent::setUp();
 
         $this->users = factory(User::class, 3)->create();
-        $this->side = factory(Side::class)->create([
-            'op_id' => $this->users[2]->id,
-        ]);
+        $this->side = factory(Side::class)->create();
         $this->claim = factory(Claim::class)->create([
             'op_id' => $this->users[1]->id,
         ]);
@@ -41,7 +39,7 @@ class ShowTest extends TestCase
         $claimside = $this->claimside;
         $this->actingAs($this->users[0])
             ->getJson('/claims/'.$this->claim->id.'/claimsides/'.$this->claimside->id)
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'id' => $claimside->id,
                 'op_id' => $claimside->op->id,
@@ -54,11 +52,6 @@ class ShowTest extends TestCase
                     'id' => $claimside->side->id,
                     'name' => $claimside->side->name,
                     'text'  => $claimside->side->text,
-                    'op_id' => $claimside->side->op->id,
-                    'op' => [
-                        'id'     => $claimside->side->op->id,
-                        'handle' => $claimside->side->op->handle,
-                    ],
                 ],
                 'claim_id' => $claimside->claim_id,
                 'claim' => [
@@ -79,7 +72,7 @@ class ShowTest extends TestCase
     {
         $claimside = $this->claimside;
         $this->getJson('/claims/'.$this->claim->id.'/claimsides/'.$this->claimside->id)
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'id' => $claimside->id,
                 'op_id' => $claimside->op->id,
@@ -92,11 +85,6 @@ class ShowTest extends TestCase
                     'id' => $claimside->side->id,
                     'name' => $claimside->side->name,
                     'text'  => $claimside->side->text,
-                    'op_id' => $claimside->side->op->id,
-                    'op' => [
-                        'id'     => $claimside->side->op->id,
-                        'handle' => $claimside->side->op->handle,
-                    ],
                 ],
                 'claim_id' => $claimside->claim_id,
                 'claim' => [

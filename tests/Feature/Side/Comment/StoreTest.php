@@ -28,9 +28,7 @@ class StoreTest extends TestCase
     {
         parent::setUp();
         $this->users = factory(User::class, 4)->create();
-        $this->side = factory(Side::class)->create([
-            'op_id' => $this->users[0]->id,
-        ]);
+        $this->side = factory(Side::class)->create();
         $this->claim = factory(Claim::class)->create([
             'op_id' => $this->users[1]->id,
         ]);

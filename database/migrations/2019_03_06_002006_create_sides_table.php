@@ -17,15 +17,10 @@ class CreateSidesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 128);
             $table->text('text')->default('');
-            $table->unsignedBigInteger('op_id')->index()->nullable();
             $table->timestamps();
-
-            $table->foreign('op_id')
-                ->references('id')
-                ->on('users');
         });
 
-        DB::statement('CREATE UNIQUE INDEX uilc_name ON sides (lower(name));');
+        DB::statement('CREATE UNIQUE INDEX uilc_sidename ON sides (lower(name));');
     }
 
     /**

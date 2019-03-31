@@ -23,9 +23,7 @@ class UpdateTest extends TestCase
         parent::setUp();
 
         $this->user = factory(User::class)->create();
-        $this->side = factory(Side::class)->create([
-            'op_id' => $this->user->id,
-        ]);
+        $this->side = factory(Side::class)->create();
         $q = factory(Side::class)->make();
         $this->updatedSide = factory(Side::class)->make();
     }
@@ -45,11 +43,6 @@ class UpdateTest extends TestCase
             ->assertJson([
                 'name' => $this->side->name,
                 'text'  => $this->updatedSide->text,
-                'op_id' => $this->side->op->id,
-                'op' => [
-                    'id'     => $this->side->op->id,
-                    'handle' => $this->side->op->handle,
-                ],
             ])
             ->assertDontSeeText($this->user->email)
             ->assertJsonMissing(['email']);
@@ -75,11 +68,6 @@ class UpdateTest extends TestCase
             ->assertJson([
                 'name' => $this->side->name,
                 'text'  => $this->side->text,
-                'op_id' => $this->side->op->id,
-                'op' => [
-                    'id'     => $this->side->op->id,
-                    'handle' => $this->side->op->handle,
-                ],
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }
@@ -154,11 +142,6 @@ class UpdateTest extends TestCase
             ->assertJson([
                 'name' => strtoupper($this->side->name),
                 'text'  => $this->side->text,
-                'op_id' => $this->side->op->id,
-                'op' => [
-                    'id'     => $this->side->op->id,
-                    'handle' => $this->side->op->handle,
-                ],
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }
@@ -173,11 +156,6 @@ class UpdateTest extends TestCase
             ->assertJson([
                 'name' => strtolower($this->side->name),
                 'text'  => $this->side->text,
-                'op_id' => $this->side->op->id,
-                'op' => [
-                    'id'     => $this->side->op->id,
-                    'handle' => $this->side->op->handle,
-                ],
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }
@@ -192,11 +170,6 @@ class UpdateTest extends TestCase
             ->assertJson([
                 'name' => $this->side->name,
                 'text'  => $this->side->text,
-                'op_id' => $this->side->op->id,
-                'op' => [
-                    'id'     => $this->side->op->id,
-                    'handle' => $this->side->op->handle,
-                ],
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }

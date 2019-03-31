@@ -15,16 +15,12 @@ class CreateTopicsTable extends Migration
     {
         Schema::create('topics', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->text('text');
-            $table->unsignedBigInteger('op_id')->index();
+            $table->string('name', 128);
+            $table->text('text')->default('');
             $table->timestamps();
-
-            $table->foreign('op_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
         });
+
+        DB::statement('CREATE UNIQUE INDEX uilc_topicname ON topics (lower(name));');
     }
 
     /**

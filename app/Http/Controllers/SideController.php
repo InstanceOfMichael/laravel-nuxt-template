@@ -21,7 +21,6 @@ class SideController extends Controller
     public function index()
     {
         return Side::query()
-            ->with('op')
             ->orderBy('sides.id', 'DESC')
             ->paginate();
     }
@@ -44,9 +43,7 @@ class SideController extends Controller
      */
     public function store(StoreSide $request)
     {
-        return $request->user()
-            ->sides()
-            ->create($request->all());
+        return Side::create($request->all());
     }
 
     /**
@@ -57,7 +54,7 @@ class SideController extends Controller
      */
     public function show(Side $side)
     {
-        return $side->load('op');
+        return $side;
     }
 
     /**
@@ -83,7 +80,7 @@ class SideController extends Controller
     public function update(UpdateSide $request, Side $side)
     {
         $side->update($request->all());
-        return $side->load('op');
+        return $side;
     }
 
     /**

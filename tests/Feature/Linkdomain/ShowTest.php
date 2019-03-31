@@ -31,7 +31,7 @@ class ShowTest extends TestCase
         $link = $this->link;
         $this->actingAs($this->user)
             ->getJson('/linkdomains/'.$this->link->linkdomain->id)
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'id'     => $link->linkdomain->id,
                 'domain' => $link->linkdomain->domain,
@@ -44,7 +44,7 @@ class ShowTest extends TestCase
     {
         $link = $this->link;
         $this->getJson('/linkdomains/'.$this->link->linkdomain->id)
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'id'     => $link->linkdomain->id,
                 'domain' => $link->linkdomain->domain,

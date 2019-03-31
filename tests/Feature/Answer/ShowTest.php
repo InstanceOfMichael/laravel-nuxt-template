@@ -41,7 +41,7 @@ class ShowTest extends TestCase
         $answer = $this->answer;
         $this->actingAs($this->users[0])
             ->getJson('/answers/'.$this->claim->id)
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'id' => $answer->id,
                 'op_id' => $answer->op->id,
@@ -79,7 +79,7 @@ class ShowTest extends TestCase
     {
         $answer = $this->answer;
         $this->getJson('/answers/'.$this->claim->id)
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'id' => $answer->id,
                 'op_id' => $answer->op->id,

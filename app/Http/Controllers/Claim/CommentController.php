@@ -20,7 +20,7 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $reqest, Claim $claim)
+    public function index(Request $request, Claim $claim)
     {
         return $claim->comments()
             ->with('op')

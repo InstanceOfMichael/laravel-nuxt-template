@@ -37,7 +37,7 @@ class ShowTest extends TestCase
         $groupmembership = $this->groupmembership;
         $this->actingAs($this->users[0])
             ->getJson('/groups/'.$this->group->id.'/groupmemberships/'.$this->groupmembership->id)
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'id' => $groupmembership->id,
                 'user_id' => $groupmembership->user_id,
@@ -65,7 +65,7 @@ class ShowTest extends TestCase
     {
         $groupmembership = $this->groupmembership;
         $this->getJson('/groups/'.$this->group->id.'/groupmemberships/'.$this->groupmembership->id)
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'id' => $groupmembership->id,
                 'user_id' => $groupmembership->user_id,

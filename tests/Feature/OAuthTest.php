@@ -35,7 +35,7 @@ class OAuthTest extends TestCase
         $this->mockSocialite('github');
 
         $this->postJson('/oauth/github')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson(['url' => 'https://url-to-provider']);
     }
 
@@ -55,7 +55,7 @@ class OAuthTest extends TestCase
 
         $this->get('/oauth/github/callback')
             ->assertText('token')
-            ->assertSuccessful();
+            ->assertStatus(200);
 
         $this->assertDatabaseHas('users', [
             'name' => 'Test User',
@@ -89,7 +89,7 @@ class OAuthTest extends TestCase
 
         $this->get('/oauth/github/callback')
             ->assertText('token')
-            ->assertSuccessful();
+            ->assertStatus(200);
 
         $this->assertDatabaseHas('oauth_providers', [
             'user_id' => $user->id,

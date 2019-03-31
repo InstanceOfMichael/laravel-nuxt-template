@@ -26,7 +26,7 @@ class SettingsTest extends TestCase
                 'name' => 'Test User',
                 'email' => 'test@test.app',
             ])
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJsonStructure(['id', 'name', 'email']);
 
         $this->assertDatabaseHas('users', [
@@ -44,7 +44,7 @@ class SettingsTest extends TestCase
                 'password' => 'updated',
                 'password_confirmation' => 'updated',
             ])
-            ->assertSuccessful();
+            ->assertStatus(200);
 
         $this->assertTrue(Hash::check('updated', $this->user->password));
     }

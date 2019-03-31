@@ -20,7 +20,7 @@ class ListTest extends TestCase
     /** @var \App\CommentTopic[] */
     protected $commentables;
     /** @var \App\Side */
-    protected $question;
+    protected $side;
     /** @var \App\Claim */
     protected $claim;
     /** @var \App\Claimside */
@@ -33,12 +33,14 @@ class ListTest extends TestCase
         $this->users = factory(User::class, 9)->create();
 
         $this->commentables = collect([
-            $this->question = factory(Side::class)->create([ 'op_id' => factory(User::class)->create()->id ]),
-            $this->claim = factory(Claim::class)->create([ 'op_id' => factory(User::class)->create()->id ]),
+            $this->side = factory(Side::class)->create(),
+            $this->claim = factory(Claim::class)->create([
+                'op_id' => factory(User::class)->create()->id,
+            ]),
             $this->claimside = factory(Claimside::class)->create([
                 'op_id' => factory(User::class)->create()->id,
                 'claim_id' => $this->claim->id,
-                'side_id' => $this->question->id,
+                'side_id' => $this->side->id,
             ]),
         ]);
 
@@ -72,7 +74,7 @@ class ListTest extends TestCase
             ->values();
         $this->actingAs($this->users[0])
             ->getJson('/claimsides/'.$this->claimside->id.'/comments')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'data' => $comments->map(function (Comment $c):array {
                     return [
@@ -99,7 +101,7 @@ class ListTest extends TestCase
             ->sortByDesc('id')
             ->values();
         $this->getJson('/claimsides/'.$this->claimside->id.'/comments')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'data' => $comments->map(function (Comment $c):array {
                     return [

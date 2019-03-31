@@ -42,7 +42,8 @@ class SidePolicy
      */
     public function update(User $user, Side $side)
     {
-        return $side->op_id === $user->id;
+        // @todo check other permission
+        return true;
     }
 
     /**

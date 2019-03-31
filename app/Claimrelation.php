@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Claimrelation extends Model
     implements
-        Contracts\Commentable,
+        Contracts\HasComments,
         Contracts\HasOp
 {
     use Concerns\SerializesDates,

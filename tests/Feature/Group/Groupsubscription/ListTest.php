@@ -51,7 +51,7 @@ class ListTest extends TestCase
     {
         $this->actingAs($this->users[0])
             ->getJson('/groups/'.$this->group->id.'/groupsubscriptions')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson($this->groupsubscriptions->map(function (Groupsubscription $groupsubscription):array {
                 return [
                     'id' => $groupsubscription->id,
@@ -75,7 +75,7 @@ class ListTest extends TestCase
     public function testListGroupsubscriptionAsGuest()
     {
         $this->getJson('/groups/'.$this->group->id.'/groupsubscriptions')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson($this->groupsubscriptions->map(function (Groupsubscription $groupsubscription):array {
                 return [
                     'id' => $groupsubscription->id,

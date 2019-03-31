@@ -7,7 +7,7 @@ use App\Observers\QuestionObserver;
 
 class Question extends Model
     implements
-        Contracts\Commentable,
+        Contracts\HasComments,
         Contracts\HasOp
 {
     use Concerns\SerializesDates,

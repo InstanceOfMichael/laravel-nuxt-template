@@ -74,7 +74,7 @@ class ListTest extends TestCase
             ->values();
         $this->actingAs($this->users[0])
             ->getJson('/claimrelations/'.$this->claimrelation->id.'/comments')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'data' => $comments->map(function (Comment $c):array {
                     return [
@@ -101,7 +101,7 @@ class ListTest extends TestCase
             ->sortByDesc('id')
             ->values();
         $this->getJson('/claimrelations/'.$this->claimrelation->id.'/comments')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'data' => $comments->map(function (Comment $c):array {
                     return [

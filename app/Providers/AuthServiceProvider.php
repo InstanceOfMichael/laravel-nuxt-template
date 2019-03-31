@@ -25,6 +25,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Linkdomain' => 'App\Policies\LinkdomainPolicy',
         'App\Question' => 'App\Policies\QuestionPolicy',
         'App\Side' => 'App\Policies\SidePolicy',
+        'App\Topic' => 'App\Policies\TopicPolicy',
         'App\User' => 'App\Policies\UserPolicy',
     ];
 

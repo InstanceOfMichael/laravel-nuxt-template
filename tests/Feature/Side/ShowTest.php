@@ -21,9 +21,7 @@ class ShowTest extends TestCase
         parent::setUp();
 
         $this->user = factory(User::class)->create();
-        $this->side = factory(Side::class)->create([
-            'op_id' => $this->user->id,
-        ]);
+        $this->side = factory(Side::class)->create();
     }
 
     public function testShowSideAsUser()
@@ -31,16 +29,11 @@ class ShowTest extends TestCase
         $side = $this->side;
         $this->actingAs($this->user)
             ->getJson('/sides/'.$this->side->id)
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'id'    => $side->id,
                 'name'  => $side->name,
                 'text'  => $side->text,
-                'op_id' => $side->op_id,
-                'op' => [
-                    'id'     => $side->op->id,
-                    'handle' => $side->op->handle,
-                ],
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }
@@ -49,16 +42,11 @@ class ShowTest extends TestCase
     {
         $side = $this->side;
         $this->getJson('/sides/'.$this->side->id)
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'id'    => $side->id,
                 'name'  => $side->name,
                 'text'  => $side->text,
-                'op_id' => $side->op_id,
-                'op' => [
-                    'id'     => $side->op->id,
-                    'handle' => $side->op->handle,
-                ],
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }

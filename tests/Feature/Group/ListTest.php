@@ -32,7 +32,7 @@ class ListTest extends TestCase
     {
         $this->actingAs($this->users[0])
             ->getJson('/groups')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'data' => $this->groups->reverse()->map(function (Group $q):array {
                     return [
@@ -54,7 +54,7 @@ class ListTest extends TestCase
     public function testListGroupAsGuest()
     {
         $this->getJson('/groups')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'data' => $this->groups->reverse()->map(function (Group $q):array {
                     return [

@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTopic;
+use App\Http\Requests\UpdateTopic;
 use App\Topic;
 use Illuminate\Http\Request;
 
 class TopicController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth')->except(['index', 'show']);
+        $this->middleware('transaction')->only(['update', 'store']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,9 @@ class TopicController extends Controller
      */
     public function index()
     {
-        //
+        return Topic::query()
+            ->orderBy('topics.id', 'DESC')
+            ->paginate();
     }
 
     /**
@@ -33,9 +41,9 @@ class TopicController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTopic $request)
     {
-        //
+        return Topic::create($request->all());
     }
 
     /**
@@ -46,7 +54,7 @@ class TopicController extends Controller
      */
     public function show(Topic $topic)
     {
-        //
+        return $topic;
     }
 
     /**
@@ -57,7 +65,9 @@ class TopicController extends Controller
      */
     public function edit(Topic $topic)
     {
-        //
+        return [
+            'topic' => $topic,
+        ];
     }
 
     /**
@@ -67,9 +77,10 @@ class TopicController extends Controller
      * @param  \App\Topic  $topic
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Topic $topic)
+    public function update(UpdateTopic $request, Topic $topic)
     {
-        //
+        $topic->update($request->all());
+        return $topic;
     }
 
     /**
@@ -80,6 +91,8 @@ class TopicController extends Controller
      */
     public function destroy(Topic $topic)
     {
-        //
+        $this->authorize($topic);
+        $topic->delete();
+        return $topic;
     }
 }

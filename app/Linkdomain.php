@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Linkdomain extends Model
     implements
-        Contracts\Commentable,
+        Contracts\HasComments,
         Contracts\HasOp
 {
     use Concerns\SerializesDates,

@@ -158,12 +158,4 @@ class User extends Authenticatable
         return $this->hasMany(Link::class, 'op_id');
     }
 
-    /**
-     * Get the sides created by this user.
-     */
-    public function sides()
-    {
-        return $this->hasMany(Side::class, 'op_id');
-    }
-
 }

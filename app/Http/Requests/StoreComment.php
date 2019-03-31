@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Comment;
-use App\Contracts\Commentable;
+use App\Contracts\HasComments;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\ExistingParentCommentId;
@@ -33,7 +33,7 @@ class StoreComment extends FormRequest
         ];
     }
 
-    public function commentable(): Commentable {
+    public function commentable(): HasComments {
         foreach([
             'question',
             'claim',
@@ -43,8 +43,9 @@ class StoreComment extends FormRequest
             'claimrelation',
             'link',
             'linkdomain',
+            'topic',
         ] as $key) {
-            if ($this->{$key} instanceof Commentable) {
+            if ($this->{$key} instanceof HasComments) {
                 return $this->{$key};
             }
         }

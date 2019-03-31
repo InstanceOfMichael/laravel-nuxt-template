@@ -22,7 +22,7 @@ class ShowTest extends TestCase
     /** @var \App\Claim */
     protected $claim;
     /** @var \App\Side */
-    protected $question;
+    protected $side;
     /** @var \App\Claimside */
     protected $claimside;
 
@@ -31,19 +31,17 @@ class ShowTest extends TestCase
         parent::setUp();
 
         $this->users = factory(User::class, 7)->create();
-        $this->question = factory(Side::class)->create([
-            'op_id' => $this->users[0]->id,
-        ]);
+        $this->side = factory(Side::class)->create();
         $this->claim = factory(Claim::class)->create([
             'op_id' => $this->users[1]->id,
         ]);
         $this->claimside = factory(Claimside::class)->create([
             'op_id' => $this->users[3]->id,
             'claim_id' => $this->claim->id,
-            'side_id' => $this->question->id,
+            'side_id' => $this->side->id,
         ]);
         $this->comments = collect([
-            $this->question->comments()->create(factory(Comment::class)->raw([
+            $this->side->comments()->create(factory(Comment::class)->raw([
                 'op_id' => $this->users[4]->id,
             ])),
             $this->claim->comments()->create(factory(Comment::class)->raw([

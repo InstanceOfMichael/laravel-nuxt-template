@@ -20,7 +20,7 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $reqest, Side $side)
+    public function index(Request $request, Side $side)
     {
         return $side->comments()
             ->with('op')

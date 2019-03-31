@@ -20,7 +20,7 @@ class UpdateTest extends TestCase
     /** @var \App\Comment */
     protected $comment;
     /** @var \App\Side */
-    protected $question;
+    protected $side;
     /** @var \App\Claimside */
     protected $claimside;
     /** @var \App\Comment */
@@ -31,25 +31,23 @@ class UpdateTest extends TestCase
         parent::setUp();
 
         $this->users = factory(User::class, 4)->create();
-        $this->question = factory(Side::class)->create([
-            'op_id' => $this->users[1]->id,
-        ]);
+        $this->side = factory(Side::class)->create();
         $this->claim = factory(Claim::class)->create([
             'op_id' => $this->users[2]->id,
         ]);
-        $this->question->comments()->create(factory(Comment::class)->raw([
+        $this->side->comments()->create(factory(Comment::class)->raw([
             'op_id' => $this->users[0]->id,
         ]));
         $this->claim->comments()->create(factory(Comment::class)->raw([
             'op_id' => $this->users[0]->id,
         ]));
-        $this->question->comments[0]->setRelation('op', $this->users[0]);
+        $this->side->comments[0]->setRelation('op', $this->users[0]);
         $this->claim->comments[0]->setRelation('op', $this->users[0]);
 
         $this->claimside = factory(Claimside::class)->create([
             'op_id' => $this->users[0]->id,
             'claim_id' => $this->claim->id,
-            'side_id' => $this->question->id,
+            'side_id' => $this->side->id,
         ]);
         $this->claimside->comments()->create(factory(Comment::class)->raw([
             'op_id' => $this->users[0]->id,
@@ -92,7 +90,7 @@ class UpdateTest extends TestCase
     public function testUpdateClaimsideCommentAsUserWithCommentableEndpoint()
     {
         $this->actingAs($this->users[0])
-            ->patchJson('/claimsides/'.$this->claimside->id.'/comments/'.$this->question->comments[0]->id, $this->getPayload())
+            ->patchJson('/claimsides/'.$this->claimside->id.'/comments/'.$this->side->comments[0]->id, $this->getPayload())
             ->assertStatus(405);
     }
 }

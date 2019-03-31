@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Link extends Model
     implements
-        Contracts\Commentable,
+        Contracts\HasComments,
         Contracts\HasOp
 {
     use Concerns\SerializesDates,

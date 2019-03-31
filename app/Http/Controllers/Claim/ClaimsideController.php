@@ -27,7 +27,7 @@ class ClaimsideController extends Controller
         return $claim->claimsides()
             ->orderBy('id', 'desc')
             ->get()
-            ->load('side', 'op', 'side.op');
+            ->load('side', 'op');
     }
 
     /**
@@ -64,7 +64,7 @@ class ClaimsideController extends Controller
     public function show(Request $request, Claim $claim, Claimside $claimside)
     {
         abort_if($claim->id !== $claimside->claim_id, 404);
-        return $claimside->load('side', 'op', 'side.op', 'claim', 'claim.op');
+        return $claimside->load('side', 'op', 'claim', 'claim.op');
     }
 
     /**
@@ -89,7 +89,7 @@ class ClaimsideController extends Controller
     {
         abort_if($claim->id !== $claimside->claim_id, 404);
         $claimside->update($request->all());
-        return $claimside->load('side', 'op', 'side.op');
+        return $claimside->load('side', 'op');
     }
 
     /**

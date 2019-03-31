@@ -27,7 +27,7 @@ class AllowedquestionsideController extends Controller
         return $question->allowedsides()
             ->orderBy('id', 'desc')
             ->get()
-            ->load('side', 'op', 'side.op');
+            ->load('side', 'op');
     }
 
     /**
@@ -78,7 +78,7 @@ class AllowedquestionsideController extends Controller
     public function show(Request $request, Question $question, Allowedquestionside $allowedquestionside)
     {
         abort_if($question->id !== $allowedquestionside->question_id, 404);
-        return $allowedquestionside->load('side', 'op', 'side.op', 'question', 'question.op');
+        return $allowedquestionside->load('side', 'op', 'question', 'question.op');
     }
 
     /**
@@ -103,7 +103,7 @@ class AllowedquestionsideController extends Controller
     {
         abort_if($question->id !== $allowedquestionside->question_id, 404);
         $allowedquestionside->update($request->all());
-        return $allowedquestionside->load('side', 'op', 'side.op');
+        return $allowedquestionside->load('side', 'op');
     }
 
     /**

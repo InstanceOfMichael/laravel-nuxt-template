@@ -60,7 +60,7 @@ class ListTest extends TestCase
         $comments = $this->comments;
         $this->actingAs($this->users[0])
             ->getJson('/comments')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'data' => $comments->map(function (Comment $c):array {
                     return [
@@ -83,7 +83,7 @@ class ListTest extends TestCase
     {
         $comments = $this->comments;
         $this->getJson('/comments')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'data' => $comments->map(function (Comment $c):array {
                     return [

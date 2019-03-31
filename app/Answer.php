@@ -7,7 +7,7 @@ use App\Observers\AnswerObserver;
 
 class Answer extends Model
     implements
-        Contracts\Commentable,
+        Contracts\HasComments,
         Contracts\HasOp
 {
     use Concerns\SerializesDates,

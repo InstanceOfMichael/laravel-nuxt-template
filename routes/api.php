@@ -88,6 +88,9 @@ Route::group([], function () {
     });
 
     Route::resource('topics', 'TopicController');
+    Route::group([ 'prefix' => 'topics/{topic}' ], function () {
+        Route::resource('comments', 'Topic\CommentController');
+    });
 
     Route::resource('users', 'UserController');
     Route::group([ 'prefix' => 'users/{user}' ], function () {

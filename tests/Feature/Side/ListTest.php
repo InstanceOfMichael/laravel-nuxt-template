@@ -22,9 +22,9 @@ class ListTest extends TestCase
 
         $this->users = factory(User::class, 3)->create();
         $this->sides = collect([
-            factory(Side::class)->create([ 'op_id' => $this->users[0]->id ]),
-            factory(Side::class)->create([ 'op_id' => $this->users[1]->id ]),
-            factory(Side::class)->create([ 'op_id' => $this->users[2]->id ]),
+            factory(Side::class)->create(),
+            factory(Side::class)->create(),
+            factory(Side::class)->create(),
         ])->sortByDesc('id')->values();
     }
 
@@ -32,18 +32,13 @@ class ListTest extends TestCase
     {
         $this->actingAs($this->users[0])
             ->getJson('/sides')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'data' => $this->sides->map(function (Side $side):array {
                     return [
                         'id'    => $side->id,
                         'name'  => $side->name,
                         'text'  => $side->text,
-                        'op_id' => $side->op_id,
-                        'op' => [
-                            'id'     => $side->op->id,
-                            'handle' => $side->op->handle,
-                        ],
                     ];
                 })->all(),
                 'total' => $this->sides->count(),
@@ -54,18 +49,13 @@ class ListTest extends TestCase
     public function testListSideAsGuest()
     {
         $this->getJson('/sides')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'data' => $this->sides->map(function (Side $side):array {
                     return [
                         'id'    => $side->id,
                         'name'  => $side->name,
                         'text'  => $side->text,
-                        'op_id' => $side->op_id,
-                        'op' => [
-                            'id'     => $side->op->id,
-                            'handle' => $side->op->handle,
-                        ],
                     ];
                 })->all(),
                 'total' => $this->sides->count(),

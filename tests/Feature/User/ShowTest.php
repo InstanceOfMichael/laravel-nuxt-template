@@ -21,7 +21,7 @@ class UsersTest extends TestCase
     {
         $this->actingAs($this->users[0])
             ->getJson('/users/'.$this->users[1]->id)
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJsonFragment([
                 'handle' => $this->users[1]->handle,
             ])
@@ -31,7 +31,7 @@ class UsersTest extends TestCase
     public function testShowUserAsGuest()
     {
         $this->getJson('/users/'.$this->users[1]->id)
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJsonFragment([
                 'handle' => $this->users[1]->handle,
             ])

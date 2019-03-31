@@ -32,13 +32,8 @@ class StoreTest extends TestCase
             'op_id' => $this->users[1]->id,
         ]);
         $this->question->setRelation('op', $this->users[1]);
-        $this->sides = factory(Side::class, 2)->create([
-            'op_id' => $this->users[2]->id,
-        ]);
+        $this->sides = factory(Side::class, 2)->create();
 
-        foreach($this->sides as $side) {
-            $side->setRelation('op', $this->users[2]);
-        }
         $this->allowedquestionsides = $this->sides->map(function (Side $side) {
             return $this->allowedquestionsides = factory(Allowedquestionside::class)->make([
                 'op_id' => $this->users[0]->id,

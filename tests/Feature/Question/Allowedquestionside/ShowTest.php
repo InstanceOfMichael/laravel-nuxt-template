@@ -23,9 +23,7 @@ class ShowTest extends TestCase
         parent::setUp();
 
         $this->users = factory(User::class, 3)->create();
-        $this->side = factory(Side::class)->create([
-            'op_id' => $this->users[2]->id,
-        ]);
+        $this->side = factory(Side::class)->create();
         $this->question = factory(Question::class)->create([
             'op_id' => $this->users[1]->id,
         ]);
@@ -41,7 +39,7 @@ class ShowTest extends TestCase
         $allowedquestionside = $this->allowedquestionside;
         $this->actingAs($this->users[0])
             ->getJson('/questions/'.$this->question->id.'/allowedquestionsides/'.$this->allowedquestionside->id)
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'id' => $allowedquestionside->id,
                 'op_id' => $allowedquestionside->op->id,
@@ -54,22 +52,12 @@ class ShowTest extends TestCase
                     'id' => $allowedquestionside->side->id,
                     'name' => $allowedquestionside->side->name,
                     'text'  => $allowedquestionside->side->text,
-                    'op_id' => $allowedquestionside->side->op->id,
-                    'op' => [
-                        'id'     => $allowedquestionside->side->op->id,
-                        'handle' => $allowedquestionside->side->op->handle,
-                    ],
                 ],
                 'question_id' => $allowedquestionside->question_id,
                 'question' => [
                     'id' => $allowedquestionside->question->id,
                     'title' => $allowedquestionside->question->title,
                     'text'  => $allowedquestionside->question->text,
-                    'op_id' => $allowedquestionside->question->op->id,
-                    'op' => [
-                        'id'     => $allowedquestionside->question->op->id,
-                        'handle' => $allowedquestionside->question->op->handle,
-                    ],
                 ],
             ])
             ->assertDontExposeUserEmails($this->users);
@@ -79,7 +67,7 @@ class ShowTest extends TestCase
     {
         $allowedquestionside = $this->allowedquestionside;
         $this->getJson('/questions/'.$this->question->id.'/allowedquestionsides/'.$this->allowedquestionside->id)
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'id' => $allowedquestionside->id,
                 'op_id' => $allowedquestionside->op->id,
@@ -92,11 +80,6 @@ class ShowTest extends TestCase
                     'id' => $allowedquestionside->side->id,
                     'name' => $allowedquestionside->side->name,
                     'text'  => $allowedquestionside->side->text,
-                    'op_id' => $allowedquestionside->side->op->id,
-                    'op' => [
-                        'id'     => $allowedquestionside->side->op->id,
-                        'handle' => $allowedquestionside->side->op->handle,
-                    ],
                 ],
                 'question_id' => $allowedquestionside->question_id,
                 'question' => [

@@ -48,7 +48,7 @@ class ShowTest extends TestCase
         foreach ($this->comments as $comment) {
             $this->actingAs($this->users[0])
                 ->getJson('/comments/'.$comment->id)
-                ->assertSuccessful()
+                ->assertStatus(200)
                 ->assertJson([
                     'text'  => $comment->text,
                     'pc_id' => $comment->pc_id,
@@ -66,7 +66,7 @@ class ShowTest extends TestCase
     {
         foreach ($this->comments as $comment) {
             $this->getJson('/comments/'.$comment->id)
-                ->assertSuccessful()
+                ->assertStatus(200)
                 ->assertJson([
                     'text'  => $comment->text,
                     'pc_id' => $comment->pc_id,

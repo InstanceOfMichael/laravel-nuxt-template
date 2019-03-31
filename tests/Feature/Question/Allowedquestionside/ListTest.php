@@ -28,11 +28,13 @@ class ListTest extends TestCase
 
         $this->users = factory(User::class, 9)->create();
         $this->sides = collect([
-            factory(Side::class)->create([ 'op_id' => $this->users[0]->id ]),
-            factory(Side::class)->create([ 'op_id' => $this->users[1]->id ]),
-            factory(Side::class)->create([ 'op_id' => $this->users[2]->id ]),
+            factory(Side::class)->create(),
+            factory(Side::class)->create(),
+            factory(Side::class)->create(),
         ]);
-        $this->question = factory(Question::class)->create([ 'op_id' => $this->users[3]->id ]);
+        $this->question = factory(Question::class)->create([
+            'op_id' => $this->users[3]->id,
+        ]);
         $this->allowedquestionsides = collect([
             factory(Allowedquestionside::class)->create([
                 'op_id' => $this->users[6]->id,
@@ -65,7 +67,7 @@ class ListTest extends TestCase
     {
         $this->actingAs($this->users[0])
             ->getJson('/questions/'.$this->question->id.'/allowedquestionsides')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson($this->allowedquestionsides->map(function (Allowedquestionside $allowedquestionside):array {
                 return [
                     'id' => $allowedquestionside->id,
@@ -79,11 +81,6 @@ class ListTest extends TestCase
                         'id' => $allowedquestionside->side->id,
                         'name' => $allowedquestionside->side->name,
                         'text'  => $allowedquestionside->side->text,
-                        'op_id' => $allowedquestionside->side->op->id,
-                        'op' => [
-                            'id'     => $allowedquestionside->side->op->id,
-                            'handle' => $allowedquestionside->side->op->handle,
-                        ],
                     ],
                     'question_id' => $allowedquestionside->question_id,
                 ];
@@ -94,7 +91,7 @@ class ListTest extends TestCase
     public function testListAllowedquestionsideAsGuest()
     {
         $this->getJson('/questions/'.$this->question->id.'/allowedquestionsides')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson($this->allowedquestionsides->map(function (Allowedquestionside $allowedquestionside):array {
                 return [
                     'id' => $allowedquestionside->id,
@@ -108,11 +105,6 @@ class ListTest extends TestCase
                         'id' => $allowedquestionside->side->id,
                         'name' => $allowedquestionside->side->name,
                         'text'  => $allowedquestionside->side->text,
-                        'op_id' => $allowedquestionside->side->op->id,
-                        'op' => [
-                            'id'     => $allowedquestionside->side->op->id,
-                            'handle' => $allowedquestionside->side->op->handle,
-                        ],
                     ],
                     'question_id' => $allowedquestionside->question_id,
                 ];

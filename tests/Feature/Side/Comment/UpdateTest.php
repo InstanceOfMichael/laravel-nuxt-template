@@ -26,9 +26,7 @@ class UpdateTest extends TestCase
         parent::setUp();
 
         $this->users = factory(User::class, 4)->create();
-        $this->side = factory(Side::class)->create([
-            'op_id' => $this->users[1]->id,
-        ]);
+        $this->side = factory(Side::class)->create();
         $this->claim = factory(Claim::class)->create([
             'op_id' => $this->users[2]->id,
         ]);
@@ -38,7 +36,6 @@ class UpdateTest extends TestCase
         $this->claim->comments()->create(factory(Comment::class)->raw([
             'op_id' => $this->users[0]->id,
         ]));
-        $this->side->comments[0]->setRelation('op', $this->users[0]);
         $this->claim->comments[0]->setRelation('op', $this->users[0]);
         $this->updatedComment = factory(Comment::class)->make();
     }

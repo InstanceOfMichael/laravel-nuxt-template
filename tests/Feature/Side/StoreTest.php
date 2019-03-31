@@ -23,10 +23,7 @@ class StoreTest extends TestCase
         parent::setUp();
 
         $this->user = factory(User::class)->create();
-        $this->side = factory(Side::class)->make([
-            'op_id' => $this->user->id,
-        ]);
-        $this->side->setRelation('op', $this->user);
+        $this->side = factory(Side::class)->make();
     }
 
     protected function getPayload(): array {
@@ -46,7 +43,6 @@ class StoreTest extends TestCase
                 // 'id'    => $side->id,
                 'name'  => $side->name,
                 'text'  => $side->text,
-                'op_id' => $side->op_id,
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }
@@ -66,7 +62,6 @@ class StoreTest extends TestCase
                 // 'id'    => $side->id,
                 'name'  => $side->name,
                 'text'  => $side->text,
-                'op_id' => $side->op_id,
             ])
             ->assertDontExposeUserEmails($this->user->email);
         $r2 = $this->actingAs($this->user)
@@ -78,7 +73,6 @@ class StoreTest extends TestCase
                 // 'id'    => $side->id,
                 'name'  => $side->name,
                 'text'  => $side->text,
-                'op_id' => $side->op_id,
             ])
             ->assertDontExposeUserEmails($this->user->email);
         $r3 = $this->actingAs($this->user)
@@ -103,7 +97,6 @@ class StoreTest extends TestCase
         $preexistingSide = factory(Side::class)->create([
             // same domain
             'text' => $side->text.'but-its-technically-different',
-            'op_id' => factory(User::class)->create()->id,
         ]);
         $this->actingAs($this->user)
             ->postJson('/sides', $this->getPayload())
@@ -112,7 +105,6 @@ class StoreTest extends TestCase
                 'id'    => Side::all()->last()->id,
                 'name'  => $side->name,
                 'text'  => $side->text,
-                'op_id' => $side->op_id,
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }

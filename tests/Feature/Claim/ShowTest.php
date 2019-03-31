@@ -30,7 +30,7 @@ class ShowTest extends TestCase
     {
         $this->actingAs($this->user)
             ->getJson('/claims/'.$this->claim->id)
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'title' => $this->claim->title,
                 'text'  => $this->claim->text,
@@ -46,7 +46,7 @@ class ShowTest extends TestCase
     public function testShowClaimAsGuest()
     {
         $this->getJson('/claims/'.$this->claim->id)
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'title' => $this->claim->title,
                 'text'  => $this->claim->text,

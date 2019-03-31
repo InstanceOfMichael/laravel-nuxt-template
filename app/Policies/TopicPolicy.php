@@ -42,7 +42,8 @@ class TopicPolicy
      */
     public function update(User $user, Topic $topic)
     {
-        return $topic->op_id === $user->id;
+        // @todo check other permission
+        return true;
     }
 
     /**

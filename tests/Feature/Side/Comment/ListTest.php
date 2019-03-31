@@ -30,9 +30,9 @@ class ListTest extends TestCase
         $this->users = factory(User::class, 9)->create();
 
         $this->commentables = collect([
-            $this->side = factory(Side::class)->create([ 'op_id' => factory(User::class)->create()->id ]),
+            $this->side = factory(Side::class)->create(),
             $this->claim = factory(Claim::class)->create([ 'op_id' => factory(User::class)->create()->id ]),
-            factory(Side::class)->create([ 'op_id' => factory(User::class)->create()->id ]),
+            factory(Side::class)->create(),
         ]);
 
         $this->commentables->each(function ($commentable) {
@@ -65,7 +65,7 @@ class ListTest extends TestCase
             ->values();
         $this->actingAs($this->users[0])
             ->getJson('/sides/'.$this->side->id.'/comments')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'data' => $comments->map(function (Comment $c):array {
                     return [
@@ -92,7 +92,7 @@ class ListTest extends TestCase
             ->sortByDesc('id')
             ->values();
         $this->getJson('/sides/'.$this->side->id.'/comments')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'data' => $comments->map(function (Comment $c):array {
                     return [

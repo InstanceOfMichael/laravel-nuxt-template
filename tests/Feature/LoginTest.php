@@ -24,7 +24,7 @@ class LoginTest extends TestCase
             'email' => $this->user->email,
             'password' => 'secret',
         ])
-        ->assertSuccessful()
+        ->assertStatus(200)
         ->assertJsonStructure(['token', 'expires_in'])
         ->assertJson(['token_type' => 'bearer']);
     }
@@ -34,7 +34,7 @@ class LoginTest extends TestCase
     {
         $this->actingAs($this->user)
             ->getJson('/user')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJsonStructure(['id', 'name', 'email']);
     }
 
@@ -47,7 +47,7 @@ class LoginTest extends TestCase
         ])->json()['token'];
 
         $this->postJson("/logout?token=$token")
-            ->assertSuccessful();
+            ->assertStatus(200);
 
         $this->getJson("/user?token=$token")
             ->assertStatus(401);

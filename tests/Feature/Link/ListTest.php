@@ -32,7 +32,7 @@ class ListTest extends TestCase
     {
         $this->actingAs($this->users[0])
             ->getJson('/links')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'data' => $this->links->map(function (Link $link):array {
                     return [
@@ -60,7 +60,7 @@ class ListTest extends TestCase
     public function testListLinkAsGuest()
     {
         $this->getJson('/links')
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJson([
                 'data' => $this->links->map(function (Link $link):array {
                     return [

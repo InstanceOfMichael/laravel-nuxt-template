@@ -27,9 +27,7 @@ class UpdateTest extends TestCase
         parent::setUp();
 
         $this->users = factory(User::class, 3)->create();
-        $this->side = factory(Side::class)->create([
-            'op_id' => $this->users[1]->id,
-        ]);
+        $this->side = factory(Side::class)->create();
         $this->claim = factory(Claim::class)->create([
             'op_id' => $this->users[2]->id,
         ]);

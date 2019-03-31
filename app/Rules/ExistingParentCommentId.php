@@ -3,11 +3,11 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use App\Contracts\Commentable;
+use App\Contracts\HasComments;
 
 class ExistingParentCommentId implements Rule
 {
-    /** @var \App\Commentable */
+    /** @var \App\HasComments */
     protected $context;
 
     /**
@@ -15,7 +15,7 @@ class ExistingParentCommentId implements Rule
      *
      * @return void
      */
-    public function __construct(Commentable $context)
+    public function __construct(HasComments $context)
     {
         $this->context = $context;
     }
