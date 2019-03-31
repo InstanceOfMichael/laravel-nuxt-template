@@ -14,8 +14,21 @@ class CreateGroupsubscriptionsTable extends Migration
     public function up()
     {
         Schema::create('groupsubscriptions', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('group_id')->index();
+            $table->unsignedBigInteger('user_id')->index();
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+            $table->foreign('group_id')
+                ->references('id')
+                ->on('groups')
+                ->onDelete('cascade');
+
+            $table->unique(['user_id', 'group_id']);
         });
     }
 

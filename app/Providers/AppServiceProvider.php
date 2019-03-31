@@ -32,6 +32,9 @@ class AppServiceProvider extends ServiceProvider
             10 => \App\Side::class,
             11 => \App\Allowedquestionside::class,
             12 => \App\Claimside::class,
+            13 => \App\Group::class,
+            13 => \App\Groupsmembership::class,
+            13 => \App\Groupsubscription::class,
         ]);
         Carbon::serializeUsing(function ($carbon) {
             return $carbon->format('U');

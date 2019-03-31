@@ -5,7 +5,6 @@ namespace Tests\Feature\Group\Groupsubscription;
 use App\Groupsubscription;
 use App\Http\Middleware\Idempotency;
 use App\User;
-use App\Side;
 use App\Group;
 use Tests\TestCase;
 
@@ -16,8 +15,8 @@ class StoreTest extends TestCase
 {
     /** @var \App\User[] */
     protected $users;
-    /** @var \App\Side */
-    protected $side;
+    /** @var \App\User */
+    protected $user;
     /** @var \App\Group */
     protected $group;
     /** @var \App\Groupsubscription */
@@ -32,34 +31,21 @@ class StoreTest extends TestCase
             'op_id' => $this->users[1]->id,
         ]);
         $this->group->setRelation('op', $this->users[1]);
-        $this->sides = factory(Side::class, 2)->create([
-            'op_id' => $this->users[2]->id,
-        ]);
+        $this->users = factory(User::class, 2)->create();
 
-        foreach($this->sides as $side) {
-            $side->setRelation('op', $this->users[2]);
-        }
-        $this->groupsubscriptions = $this->sides->map(function (Side $side) {
+        $this->groupsubscriptions = $this->users->map(function (User $user) {
             return $this->groupsubscriptions = factory(Groupsubscription::class)->make([
-                'op_id' => $this->users[0]->id,
-                'side_id' => $side->id,
+                'user_id' => $user->id,
                 'group_id' => $this->group->id,
             ])
-            ->setRelation('op', $this->users[0])
             ->setRelation('group', $this->group)
-            ->setRelation('side', $side);
+            ->setRelation('user', $user);
         });
     }
 
     protected function getPayload(): array {
         return [
-            'side_id' => $this->groupsubscriptions[0]->side_id,
-        ];
-    }
-
-    protected function getBulkPayload(): array {
-        return [
-            'side_id_list' => $this->groupsubscriptions->pluck('side_id')->values()->all(),
+            'user_id' => $this->groupsubscriptions[0]->user_id,
         ];
     }
 
@@ -71,8 +57,7 @@ class StoreTest extends TestCase
             ->assertStatus(201)
             ->assertJson([
                 // 'id' => $groupsubscription->id,
-                'op_id' => $groupsubscription->op->id,
-                'side_id' => $groupsubscription->side_id,
+                'user_id' => $groupsubscription->user_id,
                 'group_id' => $groupsubscription->group_id,
             ])
             ->assertDontExposeUserEmails($this->users[0]->email);
@@ -91,8 +76,7 @@ class StoreTest extends TestCase
             // ->assertStatus(201)
             ->assertJson([
                 // 'id' => $groupsubscription->id,
-                'op_id' => $groupsubscription->op->id,
-                'side_id' => $groupsubscription->side_id,
+                'user_id' => $groupsubscription->user_id,
                 'group_id' => $groupsubscription->group_id,
             ])
             ->assertDontExposeUserEmails($this->users[0]->email);
@@ -103,8 +87,7 @@ class StoreTest extends TestCase
             ->assertStatus(201)
             ->assertJson([
                 // 'id' => $groupsubscription->id,
-                'op_id' => $groupsubscription->op->id,
-                'side_id' => $groupsubscription->side_id,
+                'user_id' => $groupsubscription->user_id,
                 'group_id' => $groupsubscription->group_id,
             ])
             ->assertDontExposeUserEmails($this->users[0]->email);
@@ -113,7 +96,7 @@ class StoreTest extends TestCase
             ->assertStatus(422)
             ->assertExactJson([
                 "errors" => [
-                    "side_id" => ["This side is already associated with this group."],
+                    "user_id" => ["This user is already subscribed to this group."],
                 ],
                 "message" => "The given data was invalid.",
             ])
@@ -121,22 +104,6 @@ class StoreTest extends TestCase
         $this->assertEquals($r1->json('id'), $r2->json('id'));
         $this->assertNotEquals($r1->json('id'), $r3->json('id'));
         $this->assertNull($r3->json('id'));
-    }
-
-    public function testStoreBulkGroupsubscriptionAsUser()
-    {
-        $this->actingAs($this->users[0])
-            ->postJson('/groups/'.$this->group->id.'/groupsubscriptions', $this->getBulkPayload())
-            ->assertStatus(201)
-            ->assertJson($this->groupsubscriptions->map(function (Groupsubscription $groupsubscription) {
-                return [
-                    // 'id' => $groupsubscription->id,
-                    'op_id' => $groupsubscription->op->id,
-                    'side_id' => $groupsubscription->side_id,
-                    'group_id' => $groupsubscription->group_id,
-                ];
-            })->values()->all())
-            ->assertDontExposeUserEmails($this->users[0]->email);
     }
 
     public function testStoreGroupsubscriptionAsGuest()
@@ -152,8 +119,7 @@ class StoreTest extends TestCase
             ->assertStatus(422)
             ->assertExactJson([
                 "errors" => [
-                    "side_id" => ["The side id field is required when side id list is not present."],
-                    "side_id_list" => ["The side id list field is required when side id is not present."],
+                    "user_id" => ["The user id field is required."],
                 ],
                 "message" => "The given data was invalid.",
             ])
@@ -164,14 +130,12 @@ class StoreTest extends TestCase
     {
         $this->actingAs($this->users[0])
             ->postJson('/groups/'.$this->group->id.'/groupsubscriptions', [
-                "side_id" => null,
-                "side_id_list" => null,
+                "user_id" => null,
             ])
             ->assertStatus(422)
             ->assertExactJson([
                 "errors" => [
-                    "side_id" => ["The side id field is required when side id list is not present."],
-                    "side_id_list" => ["The side id list field is required when side id is not present."],
+                    "user_id" => ["The user id field is required."],
                 ],
                 "message" => "The given data was invalid.",
             ])
@@ -182,17 +146,9 @@ class StoreTest extends TestCase
     {
         $this->actingAs($this->users[0])
             ->postJson('/groups/'.$this->group->id.'/groupsubscriptions', [
-                "side_id" => 0,
+                "user_id" => 0,
             ])
             ->assertStatus(422);
     }
 
-    public function testStoreGroupsubscriptionEmptyZeroBulkPayload()
-    {
-        $this->actingAs($this->users[0])
-            ->postJson('/groups/'.$this->group->id.'/groupsubscriptions', [
-                "side_id_list" => [0],
-            ])
-            ->assertStatus(404);
-    }
 }

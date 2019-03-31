@@ -66,6 +66,12 @@ Route::group([], function () {
         Route::resource('comments', 'Question\CommentController');
     });
 
+    Route::resource('groups', 'GroupController');
+    Route::group([ 'prefix' => 'groups/{group}' ], function () {
+        Route::resource('groupmemberships', 'Group\GroupmembershipController');
+        Route::resource('groupsubscriptions', 'Group\GroupsubscriptionController');
+    });
+
     Route::resource('links', 'LinkController');
     Route::group([ 'prefix' => 'links/{link}' ], function () {
         Route::resource('comments', 'Link\CommentController');
@@ -80,6 +86,8 @@ Route::group([], function () {
     Route::group([ 'prefix' => 'sides/{side}' ], function () {
         Route::resource('comments', 'Side\CommentController');
     });
+
+    Route::resource('topics', 'TopicController');
 
     Route::resource('users', 'UserController');
     Route::group([ 'prefix' => 'users/{user}' ], function () {

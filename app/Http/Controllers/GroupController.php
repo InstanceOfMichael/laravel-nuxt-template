@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\Http\Requests\StoreGroup;
+use App\Http\Requests\UpdateGroup;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth')->except(['index', 'show']);
+        $this->middleware('transaction')->only(['update', 'store']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,10 @@ class GroupController extends Controller
      */
     public function index()
     {
-        //
+        return Group::query()
+            ->with('op')
+            ->orderby('groups.id', 'desc')
+            ->paginate();
     }
 
     /**
@@ -33,9 +42,11 @@ class GroupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreGroup $request)
     {
-        //
+        return $request->user()
+            ->groups()
+            ->create($request->all());
     }
 
     /**
@@ -46,7 +57,8 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        //
+        $group->load('op');
+        return $group;
     }
 
     /**
@@ -57,7 +69,9 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
-        //
+        return [
+            'group' => $group,
+        ];
     }
 
     /**
@@ -67,9 +81,11 @@ class GroupController extends Controller
      * @param  \App\Group  $group
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Group $group)
+    public function update(UpdateGroup $request, Group $group)
     {
-        //
+        $group->update($request->all());
+        $group->load('op');
+        return $group;
     }
 
     /**
@@ -80,6 +96,8 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        //
+        $this->authorize($group);
+        $group->delete();
+        return $group;
     }
 }

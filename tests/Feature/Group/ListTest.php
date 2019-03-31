@@ -37,9 +37,8 @@ class ListTest extends TestCase
                 'data' => $this->groups->reverse()->map(function (Group $q):array {
                     return [
                         'id'    => $q->id,
-                        'title'  => $q->title,
+                        'name'  => $q->name,
                         'text'  => $q->text,
-                        'sides_type'  => $q->sides_type,
                         'op_id' => $q->op_id,
                         'op' => [
                             'id'     => $q->op->id,
@@ -60,9 +59,8 @@ class ListTest extends TestCase
                 'data' => $this->groups->reverse()->map(function (Group $q):array {
                     return [
                         'id'    => $q->id,
-                        'title'  => $q->title,
+                        'name'  => $q->name,
                         'text'  => $q->text,
-                        'sides_type'  => $q->sides_type,
                         'op_id' => $q->op_id,
                         'op' => [
                             'id'     => $q->op->id,

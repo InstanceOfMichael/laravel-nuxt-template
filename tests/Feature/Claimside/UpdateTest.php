@@ -50,7 +50,7 @@ class UpdateTest extends TestCase
         ];
     }
 
-    public function testUpdateAllowedquestionsideAsUser()
+    public function testUpdateClaimsideAsUser()
     {
         $this->markTestSkipped();
         $this->actingAs($this->users[0])
@@ -65,19 +65,19 @@ class UpdateTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
-    public function testUpdateAllowedquestionsidePatchWithoutId()
+    public function testUpdateClaimsidePatchWithoutId()
     {
         $this->patchJson('/claims/'.$this->claim->id.'/claimsides', $this->getPayload())
             ->assertStatus(405);
     }
 
-    public function testUpdateAllowedquestionsideAsGuest()
+    public function testUpdateClaimsideAsGuest()
     {
         $this->patchJson('/claims/'.$this->claim->id.'/claimsides/'.$this->claimside->id, $this->getPayload())
             ->assertStatus(401);
     }
 
-    public function testUpdateAllowedquestionsideEmptyPayload()
+    public function testUpdateClaimsideEmptyPayload()
     {
         $this->actingAs($this->users[0])
             ->patchJson('/claims/'.$this->claim->id.'/claimsides/'.$this->claimside->id, [])
@@ -91,7 +91,7 @@ class UpdateTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
-    public function testUpdateAllowedquestionsideEmptyNullPayload()
+    public function testUpdateClaimsideEmptyNullPayload()
     {
         $this->markTestSkipped();
         $this->actingAs($this->users[0])

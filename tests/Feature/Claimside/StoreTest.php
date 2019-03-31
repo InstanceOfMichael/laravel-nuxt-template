@@ -57,7 +57,7 @@ class StoreTest extends TestCase
         ];
     }
 
-    public function testStoreAllowedquestionsideAsUser()
+    public function testStoreClaimsideAsUser()
     {
         $claimside = $this->claimsides[0];
         $this->actingAs($this->users[0])
@@ -75,7 +75,7 @@ class StoreTest extends TestCase
     /**
      * @group idempotency
      */
-    public function testStoreAllowedquestionsideAsUserIdempotent()
+    public function testStoreClaimsideAsUserIdempotent()
     {
         $claimside = $this->claimsides[0];
         $r1 = $this->actingAs($this->users[0])
@@ -116,13 +116,13 @@ class StoreTest extends TestCase
         $this->assertNotEquals($r1->json('id'), $r3->json('id'));
     }
 
-    public function testStoreAllowedquestionsideAsGuest()
+    public function testStoreClaimsideAsGuest()
     {
         $this->postJson('/claims/'.$this->claim->id.'/claimsides', $this->getPayload())
             ->assertStatus(401);
     }
 
-    public function testStoreAllowedquestionsideEmptyPayload()
+    public function testStoreClaimsideEmptyPayload()
     {
         $this->actingAs($this->users[0])
             ->postJson('/claims/'.$this->claim->id.'/claimsides', [])
@@ -136,7 +136,7 @@ class StoreTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
-    public function testStoreAllowedquestionsideEmptyNullPayload()
+    public function testStoreClaimsideEmptyNullPayload()
     {
         $this->actingAs($this->users[0])
             ->postJson('/claims/'.$this->claim->id.'/claimsides', [
@@ -152,7 +152,7 @@ class StoreTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
-    public function testStoreAllowedquestionsideEmptyZeroPayload()
+    public function testStoreClaimsideEmptyZeroPayload()
     {
         $this->actingAs($this->users[0])
             ->postJson('/claims/'.$this->claim->id.'/claimsides', [

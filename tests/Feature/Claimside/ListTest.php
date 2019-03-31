@@ -61,7 +61,7 @@ class ListTest extends TestCase
         ])->sortByDesc('id')->values();
     }
 
-    public function testListAllowedquestionsideAsUser()
+    public function testListClaimsideAsUser()
     {
         $this->actingAs($this->users[0])
             ->getJson('/claims/'.$this->claim->id.'/claimsides')
@@ -91,7 +91,7 @@ class ListTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
-    public function testListAllowedquestionsideAsGuest()
+    public function testListClaimsideAsGuest()
     {
         $this->getJson('/claims/'.$this->claim->id.'/claimsides')
             ->assertSuccessful()

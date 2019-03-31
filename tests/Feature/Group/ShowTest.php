@@ -32,9 +32,9 @@ class ShowTest extends TestCase
             ->getJson('/groups/'.$this->group->id)
             ->assertSuccessful()
             ->assertJson([
-                'title' => $this->group->title,
-                'text'  => $this->group->text,
-                'sides_type'  => $this->group->sides_type,
+                'id' => $this->group->id,
+                'text' => $this->group->text,
+                'name'  => $this->group->name,
                 'op_id' => $this->group->op_id,
                 'op' => [
                     'id'     => $this->group->op->id,
@@ -50,9 +50,9 @@ class ShowTest extends TestCase
         $this->getJson('/groups/'.$this->group->id)
             ->assertSuccessful()
             ->assertJson([
-                'title' => $this->group->title,
-                'text'  => $this->group->text,
-                'sides_type'  => $this->group->sides_type,
+                'id' => $this->group->id,
+                'text' => $this->group->text,
+                'name'  => $this->group->name,
                 'op_id' => $this->group->op_id,
                 'op' => [
                     'id'     => $this->group->op->id,

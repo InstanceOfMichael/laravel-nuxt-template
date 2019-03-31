@@ -4,7 +4,6 @@ namespace Tests\Feature\Group\Groupsubscription;
 
 use App\Groupsubscription;
 use App\User;
-use App\Side;
 use App\Group;
 use Tests\TestCase;
 
@@ -15,8 +14,6 @@ class UpdateTest extends TestCase
 {
     /** @var \App\User[] */
     protected $users;
-    /** @var \App\Side */
-    protected $side;
     /** @var \App\Groupsubscription */
     protected $groupsubscription;
     /** @var \App\Groupsubscription */
@@ -27,20 +24,14 @@ class UpdateTest extends TestCase
         parent::setUp();
 
         $this->users = factory(User::class, 3)->create();
-        $this->side = factory(Side::class)->create([
-            'op_id' => $this->users[1]->id,
-        ]);
         $this->group = factory(Group::class)->create([
             'op_id' => $this->users[2]->id,
         ]);
         $this->groupsubscription = factory(Groupsubscription::class)->create([
-            'op_id' => $this->users[0]->id,
-            'side_id' => $this->side->id,
+            'user_id' => $this->users[0]->id,
             'group_id' => $this->group->id,
         ]);
-        $this->updatedGroupsubscription = factory(Groupsubscription::class)->make([
-            'op_id' => $this->users[0]->id,
-        ]);
+        $this->updatedGroupsubscription = factory(Groupsubscription::class)->make();
     }
 
     protected function getPayload(): array {
@@ -57,8 +48,7 @@ class UpdateTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'id' => $this->groupsubscription->id,
-                'op_id' => $this->groupsubscription->op->id,
-                'side_id' => $this->groupsubscription->side_id,
+                'user_id' => $this->groupsubscription->user_id,
                 'group_id' => $this->groupsubscription->group->id,
             ])
             ->assertDontExposeUserEmails($this->users);
@@ -83,8 +73,7 @@ class UpdateTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'id' => $this->groupsubscription->id,
-                'op_id' => $this->groupsubscription->op->id,
-                'side_id' => $this->groupsubscription->side_id,
+                'user_id' => $this->groupsubscription->user_id,
                 'group_id' => $this->groupsubscription->group->id,
             ])
             ->assertDontExposeUserEmails($this->users);
@@ -95,13 +84,13 @@ class UpdateTest extends TestCase
         $this->markTestSkipped();
         $this->actingAs($this->users[0])
             ->patchJson('/groups/'.$this->group->id.'/groupsubscriptions/'.$this->groupsubscription->id, [
-                'side_id' => null,
+                'user_id' => null,
                 'group_id' => null,
             ])
             ->assertStatus(422)
             ->assertExactJson([
                 "errors" => [
-                    "side_id" => ["The side id field is required."],
+                    "user_id" => ["The user id field is required."],
                     "group_id" => ["The group id field is required."]
                 ],
                 "message" => "The given data was invalid.",

@@ -36,7 +36,7 @@ class ShowTest extends TestCase
         ]);
     }
 
-    public function testShowSideAsUser()
+    public function testShowAllowedquestionsideAsUser()
     {
         $allowedquestionside = $this->allowedquestionside;
         $this->actingAs($this->users[0])
@@ -75,7 +75,7 @@ class ShowTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
-    public function testShowSideAsGuest()
+    public function testShowAllowedquestionsideAsGuest()
     {
         $allowedquestionside = $this->allowedquestionside;
         $this->getJson('/questions/'.$this->question->id.'/allowedquestionsides/'.$this->allowedquestionside->id)

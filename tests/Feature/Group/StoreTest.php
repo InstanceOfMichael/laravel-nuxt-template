@@ -30,9 +30,8 @@ class StoreTest extends TestCase
 
     protected function getPayload(): array {
         return [
-            'title' => $this->group->title,
+            'name' => $this->group->name,
             'text'  => $this->group->text,
-            'sides_type' => $this->group->sides_type,
         ];
     }
 
@@ -42,9 +41,8 @@ class StoreTest extends TestCase
             ->postJson('/groups', $this->getPayload())
             ->assertStatus(201)
             ->assertJson([
-                'title' => $this->group->title,
+                'name' => $this->group->name,
                 'text'  => $this->group->text,
-                'sides_type' => $this->group->sides_type,
                 'op_id' => $this->group->op->id,
             ])
             ->assertDontExposeUserEmails($this->user->email);
@@ -62,9 +60,8 @@ class StoreTest extends TestCase
             ])
             ->assertStatus(201)
             ->assertJson([
-                'title' => $this->group->title,
+                'name' => $this->group->name,
                 'text'  => $this->group->text,
-                'sides_type' => $this->group->sides_type,
                 'op_id' => $this->group->op->id,
             ])
             ->assertDontExposeUserEmails($this->user->email);
@@ -74,9 +71,8 @@ class StoreTest extends TestCase
             ])
             ->assertStatus(201)
             ->assertJson([
-                'title' => $this->group->title,
+                'name' => $this->group->name,
                 'text'  => $this->group->text,
-                'sides_type' => $this->group->sides_type,
                 'op_id' => $this->group->op->id,
             ])
             ->assertDontExposeUserEmails($this->user->email);
@@ -84,9 +80,8 @@ class StoreTest extends TestCase
             ->postJson('/groups', $this->getPayload())
             ->assertStatus(201)
             ->assertJson([
-                'title' => $this->group->title,
+                'name' => $this->group->name,
                 'text'  => $this->group->text,
-                'sides_type' => $this->group->sides_type,
                 'op_id' => $this->group->op->id,
             ])
             ->assertDontExposeUserEmails($this->user->email);
@@ -107,9 +102,8 @@ class StoreTest extends TestCase
             ->assertStatus(422)
             ->assertExactJson([
                 "errors" => [
-                    "sides_type" => ["The sides type field is required."],
                     // "text" => ["The text field is required."],
-                    "title" => ["The title field is required."],
+                    "name" => ["The name field is required."],
                 ],
                 "message" => "The given data was invalid.",
             ])
@@ -121,32 +115,13 @@ class StoreTest extends TestCase
         $this->actingAs($this->user)
             ->postJson('/groups', [
                 'text' => null,
-                'title' => null,
+                'name' => null,
             ])
             ->assertStatus(422)
             ->assertExactJson([
                 "errors" => [
-                    "sides_type" => ["The sides type field is required."],
                     "text" => ["The text must be a string."],
-                    "title" => ["The title field is required."]
-                ],
-                "message" => "The given data was invalid.",
-            ])
-            ->assertDontExposeUserEmails($this->user->email);
-    }
-
-    public function testStoreGroupTitleRequiresGroupMark()
-    {
-        $this->actingAs($this->user)
-            ->postJson('/groups', [
-                'title' => 'string without group mark',
-            ]+$this->getPayload())
-            ->assertStatus(422)
-            ->assertExactJson([
-                "errors" => [
-                    "title" => [
-                        "The title has to end with: ?",
-                    ],
+                    "name" => ["The name field is required."]
                 ],
                 "message" => "The given data was invalid.",
             ])

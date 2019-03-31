@@ -4,7 +4,6 @@ namespace Tests\Feature\Group\Groupsubscription;
 
 use App\Groupsubscription;
 use App\User;
-use App\Side;
 use App\Group;
 use Tests\TestCase;
 
@@ -15,10 +14,8 @@ class ListTest extends TestCase
 {
     /** @var \App\User[] */
     protected $users;
-    /** @var \App\Side[] */
-    protected $groups;
     /** @var \App\Group[] */
-    protected $sides;
+    protected $groups;
     /** @var \App\Groupsubscription[] */
     protected $groupsubscriptions;
 
@@ -27,36 +24,25 @@ class ListTest extends TestCase
         parent::setUp();
 
         $this->users = factory(User::class, 9)->create();
-        $this->sides = collect([
-            factory(Side::class)->create([ 'op_id' => $this->users[0]->id ]),
-            factory(Side::class)->create([ 'op_id' => $this->users[1]->id ]),
-            factory(Side::class)->create([ 'op_id' => $this->users[2]->id ]),
-        ]);
         $this->group = factory(Group::class)->create([ 'op_id' => $this->users[3]->id ]);
         $this->groupsubscriptions = collect([
             factory(Groupsubscription::class)->create([
-                'op_id' => $this->users[6]->id,
-                'side_id' => $this->sides[0]->id,
+                'user_id' => $this->users[0]->id,
                 'group_id' => $this->group->id,
             ])
-            ->setRelation('op', $this->users[6])
-            ->setRelation('side', $this->sides[0])
+            ->setRelation('user', $this->users[0])
             ->setRelation('group', $this->group),
             factory(Groupsubscription::class)->create([
-                'op_id' => $this->users[7]->id,
-                'side_id' => $this->sides[1]->id,
+                'user_id' => $this->users[1]->id,
                 'group_id' => $this->group->id,
             ])
-            ->setRelation('op', $this->users[7])
-            ->setRelation('side', $this->sides[1])
+            ->setRelation('user', $this->users[1])
             ->setRelation('group', $this->group),
             factory(Groupsubscription::class)->create([
-                'op_id' => $this->users[8]->id,
-                'side_id' => $this->sides[2]->id,
+                'user_id' => $this->users[2]->id,
                 'group_id' => $this->group->id,
             ])
-            ->setRelation('op', $this->users[8])
-            ->setRelation('side', $this->sides[2])
+            ->setRelation('user', $this->users[2])
             ->setRelation('group', $this->group),
         ])->sortByDesc('id')->values();
     }
@@ -69,23 +55,18 @@ class ListTest extends TestCase
             ->assertJson($this->groupsubscriptions->map(function (Groupsubscription $groupsubscription):array {
                 return [
                     'id' => $groupsubscription->id,
-                    'op_id' => $groupsubscription->op->id,
-                    'op' => [
-                        'id'     => $groupsubscription->op->id,
-                        'handle' => $groupsubscription->op->handle,
-                    ],
-                    'side_id' => $groupsubscription->side_id,
-                    'side' => [
-                        'id' => $groupsubscription->side->id,
-                        'name' => $groupsubscription->side->name,
-                        'text'  => $groupsubscription->side->text,
-                        'op_id' => $groupsubscription->side->op->id,
-                        'op' => [
-                            'id'     => $groupsubscription->side->op->id,
-                            'handle' => $groupsubscription->side->op->handle,
-                        ],
+                    'user_id' => $groupsubscription->user_id,
+                    'user' => [
+                        'id' => $groupsubscription->user->id,
+                        'handle' => $groupsubscription->user->handle,
+                        'name' => $groupsubscription->user->name,
                     ],
                     'group_id' => $groupsubscription->group_id,
+                    'group' => [
+                        'id' => $groupsubscription->group->id,
+                        'name' => $groupsubscription->group->name,
+                        'text' => $groupsubscription->group->text,
+                    ],
                 ];
             })->all())
             ->assertDontExposeUserEmails($this->users);
@@ -98,23 +79,18 @@ class ListTest extends TestCase
             ->assertJson($this->groupsubscriptions->map(function (Groupsubscription $groupsubscription):array {
                 return [
                     'id' => $groupsubscription->id,
-                    'op_id' => $groupsubscription->op->id,
-                    'op' => [
-                        'id'     => $groupsubscription->op->id,
-                        'handle' => $groupsubscription->op->handle,
-                    ],
-                    'side_id' => $groupsubscription->side_id,
-                    'side' => [
-                        'id' => $groupsubscription->side->id,
-                        'name' => $groupsubscription->side->name,
-                        'text'  => $groupsubscription->side->text,
-                        'op_id' => $groupsubscription->side->op->id,
-                        'op' => [
-                            'id'     => $groupsubscription->side->op->id,
-                            'handle' => $groupsubscription->side->op->handle,
-                        ],
+                    'user_id' => $groupsubscription->user_id,
+                    'user' => [
+                        'id' => $groupsubscription->user->id,
+                        'handle' => $groupsubscription->user->handle,
+                        'name' => $groupsubscription->user->name,
                     ],
                     'group_id' => $groupsubscription->group_id,
+                    'group' => [
+                        'id' => $groupsubscription->group->id,
+                        'name' => $groupsubscription->group->name,
+                        'text' => $groupsubscription->group->text,
+                    ],
                 ];
             })->all())
             ->assertDontExposeUserEmails($this->users);

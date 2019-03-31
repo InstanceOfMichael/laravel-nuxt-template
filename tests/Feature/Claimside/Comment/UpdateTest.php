@@ -89,7 +89,7 @@ class UpdateTest extends TestCase
             ->assertStatus(403);
     }
 
-    public function testUpdateSideCommentAsUserWithCommentableEndpoint()
+    public function testUpdateClaimsideCommentAsUserWithCommentableEndpoint()
     {
         $this->actingAs($this->users[0])
             ->patchJson('/claimsides/'.$this->claimside->id.'/comments/'.$this->question->comments[0]->id, $this->getPayload())

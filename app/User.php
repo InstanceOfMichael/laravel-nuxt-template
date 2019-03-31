@@ -103,7 +103,15 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the answers associated with the user.
+     * Get the groups created by this user.
+     */
+    public function groups()
+    {
+        return $this->hasMany(Group::class, 'op_id');
+    }
+
+    /**
+     * Get the answers created by this user.
      */
     public function answers()
     {
@@ -111,7 +119,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the questions associated with the user.
+     * Get the questions created by this user.
      */
     public function questions()
     {
@@ -119,7 +127,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the questions associated with the user.
+     * Get the comments created by this user.
      */
     public function comments()
     {
@@ -127,7 +135,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the questions associated with the user.
+     * Get the claims created by this user.
      */
     public function claims()
     {
@@ -135,7 +143,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the claimrelations associated with the user.
+     * Get the claimrelations created by this user.
      */
     public function claimrelations()
     {
@@ -143,7 +151,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the links associated with the user.
+     * Get the links created by this user.
      */
     public function links()
     {
@@ -151,7 +159,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the links associated with the user.
+     * Get the sides created by this user.
      */
     public function sides()
     {

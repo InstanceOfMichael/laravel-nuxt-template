@@ -9,16 +9,16 @@ trait HasQuestionId {
     /**
      * Get the question associated with this object
      */
-    public function question()
+    public function question ()
     {
         return $this->belongsTo(Question::class);
     }
 
     public function scopeWhereQuestionId ($query, $value) {
         if (is_array($value)) {
-            $query->whereIn($this->qualifyColumn('question_id'), $value);
+            $query->whereIn($this->question()->getQualifiedForeignKey(), $value);
         } elseif ($value) {
-            $query->where($this->qualifyColumn('question_id'), $value);
+            $query->where($this->question()->getQualifiedForeignKey(), $value);
         }
     }
 }

@@ -32,9 +32,8 @@ class UpdateTest extends TestCase
 
     protected function getPayload(): array {
         return [
-            'title' => $this->updatedGroup->title,
+            'name' => $this->updatedGroup->name,
             'text'  => $this->updatedGroup->text,
-            'sides_type'  => $this->updatedGroup->sides_type,
         ];
     }
 
@@ -44,9 +43,8 @@ class UpdateTest extends TestCase
             ->patchJson('/groups/'.$this->group->id, $this->getPayload())
             ->assertStatus(200)
             ->assertJson([
-                'title' => $this->updatedGroup->title,
+                'name' => $this->updatedGroup->name,
                 'text'  => $this->updatedGroup->text,
-                'sides_type'  => $this->updatedGroup->sides_type,
                 'op_id' => $this->group->op->id,
                 'op' => [
                     'id'     => $this->group->op->id,
@@ -75,9 +73,8 @@ class UpdateTest extends TestCase
             ->patchJson('/groups/'.$this->group->id, [])
             ->assertStatus(200)
             ->assertJson([
-                'title' => $this->group->title,
+                'name' => $this->group->name,
                 'text'  => $this->group->text,
-                'sides_type'  => $this->group->sides_type,
                 'op_id' => $this->group->op->id,
                 'op' => [
                     'id'     => $this->group->op->id,
@@ -91,37 +88,16 @@ class UpdateTest extends TestCase
     {
         $this->actingAs($this->user)
             ->patchJson('/groups/'.$this->group->id, [
-                'title' => null,
+                'name' => null,
                 'text' => null,
-                'sides_type' => null,
             ])
             ->assertStatus(422)
             ->assertExactJson([
                 "errors" => [
                     "text" => ["The text must be a string."],
-                    "title" => [
-                        "The title must be a string.",
-                        "The title has to end with: ?",
-                        "The title must be at least 9 characters.",
-                    ],
-                    "sides_type" => ["The selected sides type is invalid."],
-                ],
-                "message" => "The given data was invalid.",
-            ])
-            ->assertDontExposeUserEmails($this->user->email);
-    }
-
-    public function testUpdateGroupTitleRequiresGroupMark()
-    {
-        $this->actingAs($this->user)
-            ->patchJson('/groups/'.$this->group->id, [
-                'title' => 'string without group mark',
-            ])
-            ->assertStatus(422)
-            ->assertExactJson([
-                "errors" => [
-                    "title" => [
-                        "The title has to end with: ?",
+                    "name" => [
+                        "The name must be a string.",
+                        "The name must be at least 3 characters.",
                     ],
                 ],
                 "message" => "The given data was invalid.",

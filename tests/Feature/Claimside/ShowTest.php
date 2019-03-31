@@ -36,7 +36,7 @@ class ShowTest extends TestCase
         ]);
     }
 
-    public function testShowSideAsUser()
+    public function testShowClaimsideAsUser()
     {
         $claimside = $this->claimside;
         $this->actingAs($this->users[0])
@@ -75,7 +75,7 @@ class ShowTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
-    public function testShowSideAsGuest()
+    public function testShowClaimsideAsGuest()
     {
         $claimside = $this->claimside;
         $this->getJson('/claims/'.$this->claim->id.'/claimsides/'.$this->claimside->id)
