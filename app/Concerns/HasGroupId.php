@@ -7,7 +7,7 @@ use App\Group;
 trait HasGroupId {
 
     /**
-     * Get the user associated with this object
+     * Get the group associated with this object
      */
     public function group ()
     {

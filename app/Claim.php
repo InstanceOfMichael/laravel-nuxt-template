@@ -28,7 +28,7 @@ class Claim extends Model
     }
 
     /**
-     * Get the question associated with this answer
+     * Get the replyclaims associated with this claim
      */
     public function replyclaims()
     {
@@ -36,7 +36,7 @@ class Claim extends Model
     }
 
     /**
-     * Get the claim associated with this answer
+     * Get the parentclaims associated with this answer
      */
     public function parentclaims()
     {
@@ -44,10 +44,18 @@ class Claim extends Model
     }
 
     /**
-     * Get the allowedsides associated with the question.
+     * Get the claimsides associated with the claim.
      */
     public function claimsides()
     {
         return $this->hasMany(Claimside::class);
+    }
+
+    /**
+     * Get the claimtopics associated with the claim.
+     */
+    public function claimtopics()
+    {
+        return $this->hasMany(Claimtopic::class);
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClaimsideTable extends Migration
+class CreateQuestiontopicsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateClaimsideTable extends Migration
      */
     public function up()
     {
-        Schema::create('claimsides', function (Blueprint $table) {
+        Schema::create('questiontopics', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('side_id')->index();
-            $table->unsignedBigInteger('claim_id')->index();
+            $table->unsignedBigInteger('topic_id')->index();
+            $table->unsignedBigInteger('question_id')->index();
             $table->unsignedBigInteger('op_id')->index();
             $table->timestamps();
 
@@ -24,16 +24,16 @@ class CreateClaimsideTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-            $table->foreign('side_id')
+            $table->foreign('topic_id')
                 ->references('id')
-                ->on('sides')
+                ->on('topics')
                 ->onDelete('cascade');
-            $table->foreign('claim_id')
+            $table->foreign('question_id')
                 ->references('id')
-                ->on('claims')
+                ->on('questions')
                 ->onDelete('cascade');
 
-            $table->unique(['side_id', 'claim_id']);
+            $table->unique(['topic_id', 'question_id']);
         });
     }
 
@@ -44,6 +44,6 @@ class CreateClaimsideTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('claimsides');
+        Schema::dropIfExists('questiontopics');
     }
 }

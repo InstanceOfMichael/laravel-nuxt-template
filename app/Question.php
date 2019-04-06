@@ -47,4 +47,12 @@ class Question extends Model
     {
         return $this->hasMany(Allowedquestionside::class);
     }
+
+    /**
+     * Get the questiontopics associated with the question.
+     */
+    public function questiontopics()
+    {
+        return $this->hasMany(Questiontopic::class);
+    }
 }
