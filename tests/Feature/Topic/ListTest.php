@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Feature\Topic;
+namespace Tests\Feature\Definition;
 
 use App\User;
-use App\Topic;
+use App\Definition;
 use Tests\TestCase;
 
 /**
@@ -13,52 +13,52 @@ class ListTest extends TestCase
 {
     /** @var \App\User[] */
     protected $users;
-    /** @var \App\Topic[] */
-    protected $topics;
+    /** @var \App\Definition[] */
+    protected $definitions;
 
     public function setUp()
     {
         parent::setUp();
 
         $this->users = factory(User::class, 3)->create();
-        $this->topics = collect([
-            factory(Topic::class)->create(),
-            factory(Topic::class)->create(),
-            factory(Topic::class)->create(),
+        $this->definitions = collect([
+            factory(Definition::class)->create(),
+            factory(Definition::class)->create(),
+            factory(Definition::class)->create(),
         ])->sortByDesc('id')->values();
     }
 
-    public function testListTopicAsUser()
+    public function testListDefinitionAsUser()
     {
         $this->actingAs($this->users[0])
-            ->getJson('/topics')
+            ->getJson('/definitions')
             ->assertStatus(200)
             ->assertJson([
-                'data' => $this->topics->map(function (Topic $topic):array {
+                'data' => $this->definitions->map(function (Definition $definition):array {
                     return [
-                        'id'    => $topic->id,
-                        'name'  => $topic->name,
-                        'text'  => $topic->text,
+                        'id'    => $definition->id,
+                        'name'  => $definition->name,
+                        'text'  => $definition->text,
                     ];
                 })->all(),
-                'total' => $this->topics->count(),
+                'total' => $this->definitions->count(),
             ])
             ->assertDontExposeUserEmails($this->users);
     }
 
-    public function testListTopicAsGuest()
+    public function testListDefinitionAsGuest()
     {
-        $this->getJson('/topics')
+        $this->getJson('/definitions')
             ->assertStatus(200)
             ->assertJson([
-                'data' => $this->topics->map(function (Topic $topic):array {
+                'data' => $this->definitions->map(function (Definition $definition):array {
                     return [
-                        'id'    => $topic->id,
-                        'name'  => $topic->name,
-                        'text'  => $topic->text,
+                        'id'    => $definition->id,
+                        'name'  => $definition->name,
+                        'text'  => $definition->text,
                     ];
                 })->all(),
-                'total' => $this->topics->count(),
+                'total' => $this->definitions->count(),
             ])
             ->assertDontExposeUserEmails($this->users);
     }

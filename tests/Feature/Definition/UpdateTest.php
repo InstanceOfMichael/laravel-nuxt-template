@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Feature\Definition;
+namespace Tests\Feature\Topic;
 
 use App\User;
-use App\Definition;
+use App\Topic;
 use Tests\TestCase;
 
 /**
@@ -13,69 +13,69 @@ class UpdateTest extends TestCase
 {
     /** @var \App\User */
     protected $user;
-    /** @var \App\Definition */
-    protected $definition;
-    /** @var \App\Definition */
-    protected $updatedDefinition;
+    /** @var \App\Topic */
+    protected $topic;
+    /** @var \App\Topic */
+    protected $updatedTopic;
 
     public function setUp()
     {
         parent::setUp();
 
         $this->user = factory(User::class)->create();
-        $this->definition = factory(Definition::class)->create();
-        $q = factory(Definition::class)->make();
-        $this->updatedDefinition = factory(Definition::class)->make();
+        $this->topic = factory(Topic::class)->create();
+        $q = factory(Topic::class)->make();
+        $this->updatedTopic = factory(Topic::class)->make();
     }
 
     protected function getPayload(): array {
         return [
-            // 'name' => $this->updatedDefinition->name,
-            'text'  => $this->updatedDefinition->text,
+            // 'name' => $this->updatedTopic->name,
+            'text'  => $this->updatedTopic->text,
         ];
     }
 
-    public function testUpdateDefinitionAsUser()
+    public function testUpdateTopicAsUser()
     {
         $this->actingAs($this->user)
-            ->patchJson('/definitions/'.$this->definition->id, $this->getPayload())
+            ->patchJson('/topics/'.$this->topic->id, $this->getPayload())
             ->assertStatus(200)
             ->assertJson([
-                'name' => $this->definition->name,
-                'text'  => $this->updatedDefinition->text,
+                'name' => $this->topic->name,
+                'text'  => $this->updatedTopic->text,
             ])
             ->assertDontSeeText($this->user->email)
             ->assertJsonMissing(['email']);
     }
 
-    public function testUpdateDefinitionPatchWithoutId()
+    public function testUpdateTopicPatchWithoutId()
     {
-        $this->patchJson('/definitions', $this->getPayload())
+        $this->patchJson('/topics', $this->getPayload())
             ->assertStatus(405);
     }
 
-    public function testUpdateDefinitionAsGuest()
+    public function testUpdateTopicAsGuest()
     {
-        $this->patchJson('/definitions/'.$this->definition->id, $this->getPayload())
+        $this->patchJson('/topics/'.$this->topic->id, $this->getPayload())
             ->assertStatus(401);
     }
 
-    public function testUpdateDefinitionEmptyPayload()
+    public function testUpdateTopicEmptyPayload()
     {
         $this->actingAs($this->user)
-            ->patchJson('/definitions/'.$this->definition->id, [])
+            ->patchJson('/topics/'.$this->topic->id, [])
             ->assertStatus(200)
             ->assertJson([
-                'name' => $this->definition->name,
-                'text'  => $this->definition->text,
+                'name' => $this->topic->name,
+                'text'  => $this->topic->text,
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }
 
-    public function testUpdateDefinitionEmptyNullPayload()
+    public function testUpdateTopicEmptyNullPayload()
     {
         $this->actingAs($this->user)
-            ->patchJson('/definitions/'.$this->definition->id, [
+            ->patchJson('/topics/'.$this->topic->id, [
                 'name' => null,
                 'text' => null,
             ])
@@ -94,10 +94,10 @@ class UpdateTest extends TestCase
             ->assertDontExposeUserEmails($this->user->email);
     }
 
-    public function testUpdateDefinitionEmptyNameString()
+    public function testUpdateTopicEmptyNameString()
     {
         $this->actingAs($this->user)
-            ->patchJson('/definitions/'.$this->definition->id, [
+            ->patchJson('/topics/'.$this->topic->id, [
                 'name' => '',
             ])
             ->assertStatus(422)
@@ -114,11 +114,11 @@ class UpdateTest extends TestCase
             ->assertDontExposeUserEmails($this->user->email);
     }
 
-    public function testUpdateDefinitionNameChangedPrefixOneLetter()
+    public function testUpdateTopicNameChangedPrefixOneLetter()
     {
         $this->actingAs($this->user)
-            ->patchJson('/definitions/'.$this->definition->id, [
-                'name' => 'a'.$this->definition->name,
+            ->patchJson('/topics/'.$this->topic->id, [
+                'name' => 'a'.$this->topic->name,
             ])
             ->assertStatus(422)
             ->assertExactJson([
@@ -132,44 +132,44 @@ class UpdateTest extends TestCase
             ->assertDontExposeUserEmails($this->user->email);
     }
 
-    public function testUpdateDefinitionNameChangedOnlyUppercase()
+    public function testUpdateTopicNameChangedOnlyUppercase()
     {
         $this->actingAs($this->user)
-            ->patchJson('/definitions/'.$this->definition->id, [
-                'name' => strtoupper($this->definition->name),
+            ->patchJson('/topics/'.$this->topic->id, [
+                'name' => strtoupper($this->topic->name),
             ])
             ->assertStatus(200)
             ->assertJson([
-                'name' => strtoupper($this->definition->name),
-                'text'  => $this->definition->text,
+                'name' => strtoupper($this->topic->name),
+                'text'  => $this->topic->text,
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }
 
-    public function testUpdateDefinitionNameChangedOnlyLowercase()
+    public function testUpdateTopicNameChangedOnlyLowercase()
     {
         $this->actingAs($this->user)
-            ->patchJson('/definitions/'.$this->definition->id, [
-                'name' => strtolower($this->definition->name),
+            ->patchJson('/topics/'.$this->topic->id, [
+                'name' => strtolower($this->topic->name),
             ])
             ->assertStatus(200)
             ->assertJson([
-                'name' => strtolower($this->definition->name),
-                'text'  => $this->definition->text,
+                'name' => strtolower($this->topic->name),
+                'text'  => $this->topic->text,
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }
 
-    public function testUpdateDefinitionNameNoChanged()
+    public function testUpdateTopicNameNoChanged()
     {
         $this->actingAs($this->user)
-            ->patchJson('/definitions/'.$this->definition->id, [
-                'name' => $this->definition->name,
+            ->patchJson('/topics/'.$this->topic->id, [
+                'name' => $this->topic->name,
             ])
             ->assertStatus(200)
             ->assertJson([
-                'name' => $this->definition->name,
-                'text'  => $this->definition->text,
+                'name' => $this->topic->name,
+                'text'  => $this->topic->text,
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }

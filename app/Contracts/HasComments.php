@@ -4,6 +4,6 @@ namespace App\Contracts;
 
 interface HasComments {
 
-    public function comments();
+    public function comments ();
 
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Feature\Definition\Comment;
+namespace Tests\Feature\Topic\Comment;
 
 use App\User;
 use App\Comment;
-use App\Definition;
+use App\Topic;
 use App\Claim;
 use Tests\TestCase;
 
@@ -16,10 +16,10 @@ class ListTest extends TestCase
 {
     /** @var \App\User[] */
     protected $users;
-    /** @var \App\CommentDefinition[] */
+    /** @var \App\CommentTopic[] */
     protected $commentables;
-    /** @var \App\Definition */
-    protected $definition;
+    /** @var \App\Topic */
+    protected $topic;
     /** @var \App\Claim */
     protected $claim;
 
@@ -30,11 +30,11 @@ class ListTest extends TestCase
         $this->users = factory(User::class, 9)->create();
 
         $this->commentables = collect([
-            $this->definition = factory(Definition::class)->create(),
+            $this->topic = factory(Topic::class)->create(),
             $this->claim = factory(Claim::class)->create([
                 'op_id' => factory(User::class)->create()->id,
             ]),
-            factory(Definition::class)->create(),
+            factory(Topic::class)->create(),
         ]);
 
         $this->commentables->each(function ($commentable) {
@@ -58,15 +58,15 @@ class ListTest extends TestCase
         $this->assertEquals(9, Comment::query()->count());
     }
 
-    public function testListDefinitionCommentsAsUser()
+    public function testListTopicCommentsAsUser()
     {
         $comments = $this->comments
-            ->where('context_type', $this->definition->getMorphClass())
-            ->where('context_id', $this->definition->id)
+            ->where('context_type', $this->topic->getMorphClass())
+            ->where('context_id', $this->topic->id)
             ->sortByDesc('id')
             ->values();
         $this->actingAs($this->users[0])
-            ->getJson('/definitions/'.$this->definition->id.'/comments')
+            ->getJson('/topics/'.$this->topic->id.'/comments')
             ->assertStatus(200)
             ->assertJson([
                 'data' => $comments->map(function (Comment $c):array {
@@ -86,14 +86,14 @@ class ListTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
-    public function testListDefinitionCommentsAsGuest()
+    public function testListTopicCommentsAsGuest()
     {
         $comments = $this->comments
-            ->where('context_type', $this->definition->getMorphClass())
-            ->where('context_id', $this->definition->id)
+            ->where('context_type', $this->topic->getMorphClass())
+            ->where('context_id', $this->topic->id)
             ->sortByDesc('id')
             ->values();
-        $this->getJson('/definitions/'.$this->definition->id.'/comments')
+        $this->getJson('/topics/'.$this->topic->id.'/comments')
             ->assertStatus(200)
             ->assertJson([
                 'data' => $comments->map(function (Comment $c):array {

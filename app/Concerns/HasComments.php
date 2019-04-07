@@ -9,7 +9,7 @@ trait HasComments {
     /**
      * Get the comments associated with this model.
      */
-    public function comments()
+    public function comments ()
     {
         return $this->morphMany(Comment::class, 'context');
     }

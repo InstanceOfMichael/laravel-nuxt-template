@@ -19,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Claimside' => 'App\Policies\ClaimsidePolicy',
         'App\Claimtopic' => 'App\Policies\ClaimtopicPolicy',
         'App\Comment' => 'App\Policies\CommentPolicy',
+        'App\Definition' => 'App\Policies\DefinitionPolicy',
         'App\Group' => 'App\Policies\GroupPolicy',
         'App\Groupmembership' => 'App\Policies\GroupmembershipPolicy',
         'App\Groupsubscription' => 'App\Policies\GroupsubscriptionPolicy',

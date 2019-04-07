@@ -61,6 +61,11 @@ Route::group([], function () {
         Route::resource('comments', 'Claimrelation\CommentController');
     });
 
+    Route::resource('definitions', 'DefinitionController');
+    Route::group([ 'prefix' => 'definitions/{definition}' ], function () {
+        Route::resource('comments', 'Definition\CommentController');
+    });
+
     Route::resource('questions', 'QuestionController');
     Route::group([ 'prefix' => 'questions/{question}' ], function () {
         Route::resource('allowedquestionsides', 'Question\AllowedquestionsideController');
