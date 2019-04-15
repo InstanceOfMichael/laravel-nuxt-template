@@ -29,6 +29,6 @@ class Topic extends Model
      */
     public function questiontopics()
     {
-        return $this->hasMany(Auestiontopic::class);
+        return $this->hasMany(Questiontopic::class);
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature\Topic\Comment;
+namespace Tests\Feature\Definition\Comment;
 
 use App\User;
 use App\Comment;
 use App\Claim;
-use App\Topic;
+use App\Definition;
 use Tests\TestCase;
 
 /**
@@ -26,17 +26,17 @@ class UpdateTest extends TestCase
         parent::setUp();
 
         $this->users = factory(User::class, 4)->create();
-        $this->topic = factory(Topic::class)->create();
+        $this->definition = factory(Definition::class)->create();
         $this->claim = factory(Claim::class)->create([
             'op_id' => $this->users[2]->id,
         ]);
-        $this->topic->comments()->create(factory(Comment::class)->raw([
+        $this->definition->comments()->create(factory(Comment::class)->raw([
             'op_id' => $this->users[0]->id,
         ]));
         $this->claim->comments()->create(factory(Comment::class)->raw([
             'op_id' => $this->users[0]->id,
         ]));
-        $this->topic->comments[0]->setRelation('op', $this->users[0]);
+        $this->definition->comments[0]->setRelation('op', $this->users[0]);
         $this->claim->comments[0]->setRelation('op', $this->users[0]);
         $this->updatedComment = factory(Comment::class)->make();
     }
@@ -48,40 +48,40 @@ class UpdateTest extends TestCase
         ];
     }
 
-    public function testUpdateTopicCommentAsUser()
+    public function testUpdateDefinitionCommentAsUser()
     {
         $this->actingAs($this->users[0])
-            ->patchJson('/comments/'.$this->topic->comments[0]->id, $this->getPayload())
+            ->patchJson('/comments/'.$this->definition->comments[0]->id, $this->getPayload())
             ->assertStatus(200)
             ->assertJson([
                 'text'  => $this->updatedComment->text,
-                'op_id' => $this->topic->comments[0]->op->id,
+                'op_id' => $this->definition->comments[0]->op->id,
                 'op' => [
-                    'id'     => $this->topic->comments[0]->op->id,
-                    'handle' => $this->topic->comments[0]->op->handle,
+                    'id'     => $this->definition->comments[0]->op->id,
+                    'handle' => $this->definition->comments[0]->op->handle,
                 ],
             ])
             ->assertDontSeeText($this->users[0]->email)
             ->assertJsonMissing(['email']);
     }
 
-    public function testUpdateTopicCommentAsUserWhoIsNotOp()
+    public function testUpdateDefinitionCommentAsUserWhoIsNotOp()
     {
         $this->actingAs($this->users[3])
-            ->patchJson('/topics/'.$this->topic->id.'/comments/'.$this->topic->comments[0]->id, $this->getPayload())
+            ->patchJson('/definitions/'.$this->definition->id.'/comments/'.$this->definition->comments[0]->id, $this->getPayload())
             ->assertStatus(403);
     }
 
-    public function testUpdateTopicCommentAsUserWithCommentableEndpoint()
+    public function testUpdateDefinitionCommentAsUserWithCommentableEndpoint()
     {
         $this->actingAs($this->users[0])
-            ->patchJson('/topics/'.$this->topic->id.'/comments/'.$this->topic->comments[0]->id, $this->getPayload())
+            ->patchJson('/definitions/'.$this->definition->id.'/comments/'.$this->definition->comments[0]->id, $this->getPayload())
             ->assertStatus(405);
     }
 
-    public function testUpdateTopicCommentAsGuest()
+    public function testUpdateDefinitionCommentAsGuest()
     {
-        $this->patchJson('/comments/'.$this->topic->comments[0]->id, $this->getPayload())
+        $this->patchJson('/comments/'.$this->definition->comments[0]->id, $this->getPayload())
             ->assertStatus(401);
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Feature\Definition;
+namespace Tests\Feature\Topic;
 
 use App\User;
-use App\Definition;
+use App\Topic;
 use Tests\TestCase;
 
 /**
@@ -13,40 +13,40 @@ class ShowTest extends TestCase
 {
     /** @var \App\User */
     protected $user;
-    /** @var \App\Definition */
-    protected $definition;
+    /** @var \App\Topic */
+    protected $topic;
 
     public function setUp()
     {
         parent::setUp();
 
         $this->user = factory(User::class)->create();
-        $this->definition = factory(Definition::class)->create();
+        $this->topic = factory(Topic::class)->create();
     }
 
-    public function testShowDefinitionAsUser()
+    public function testShowTopicAsUser()
     {
-        $definition = $this->definition;
+        $topic = $this->topic;
         $this->actingAs($this->user)
-            ->getJson('/definitions/'.$this->definition->id)
+            ->getJson('/topics/'.$this->topic->id)
             ->assertStatus(200)
             ->assertJson([
-                'id'    => $definition->id,
-                'name'  => $definition->name,
-                'text'  => $definition->text,
+                'id'    => $topic->id,
+                'name'  => $topic->name,
+                'text'  => $topic->text,
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }
 
-    public function testShowDefinitionAsGuest()
+    public function testShowTopicAsGuest()
     {
-        $definition = $this->definition;
-        $this->getJson('/definitions/'.$this->definition->id)
+        $topic = $this->topic;
+        $this->getJson('/topics/'.$this->topic->id)
             ->assertStatus(200)
             ->assertJson([
-                'id'    => $definition->id,
-                'name'  => $definition->name,
-                'text'  => $definition->text,
+                'id'    => $topic->id,
+                'name'  => $topic->name,
+                'text'  => $topic->text,
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }

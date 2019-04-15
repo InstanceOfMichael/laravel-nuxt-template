@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature\Topic\Comment;
+namespace Tests\Feature\Definition\Comment;
 
 use App\User;
 use App\Claim;
 use App\Comment;
-use App\Topic;
+use App\Definition;
 use Tests\TestCase;
 
 /**
@@ -20,20 +20,20 @@ class ShowTest extends TestCase
     protected $comments;
     /** @var \App\Claim */
     protected $claim;
-    /** @var \App\Topic */
-    protected $topic;
+    /** @var \App\Definition */
+    protected $definition;
 
     public function setUp()
     {
         parent::setUp();
 
         $this->users = factory(User::class, 4)->create();
-        $this->topic = factory(Topic::class)->create();
+        $this->definition = factory(Definition::class)->create();
         $this->claim = factory(Claim::class)->create([
             'op_id' => $this->users[1]->id,
         ]);
         $this->comments = collect([
-            $this->topic->comments()->create(factory(Comment::class)->raw([
+            $this->definition->comments()->create(factory(Comment::class)->raw([
                 'op_id' => $this->users[2]->id,
             ])),
             $this->claim->comments()->create(factory(Comment::class)->raw([
@@ -42,19 +42,19 @@ class ShowTest extends TestCase
         ]);
     }
 
-    public function testShowTopicCommentAsUser()
+    public function testShowDefinitionCommentAsUser()
     {
         foreach ($this->comments as $comment) {
             $this->actingAs($this->users[0])
-                ->getJson('/topics/'.$this->topic->id.'/comments/'.$comment->id)
+                ->getJson('/definitions/'.$this->definition->id.'/comments/'.$comment->id)
                 ->assertStatus(405);
         }
     }
 
-    public function testShowTopicCommentAsGuest()
+    public function testShowDefinitionCommentAsGuest()
     {
         foreach ($this->comments as $comment) {
-            $this->getJson('/topics/'.$this->topic->id.'/comments/'.$comment->id)
+            $this->getJson('/definitions/'.$this->definition->id.'/comments/'.$comment->id)
                 ->assertStatus(405);
         }
     }

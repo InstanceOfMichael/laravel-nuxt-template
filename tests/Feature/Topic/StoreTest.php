@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature\Definition;
+namespace Tests\Feature\Topic;
 
 use App\Http\Middleware\Idempotency;
 use App\User;
-use App\Definition;
-use App\Definitiondomain;
+use App\Topic;
+use App\Topicdomain;
 use Tests\TestCase;
 
 /**
@@ -15,35 +15,35 @@ class StoreTest extends TestCase
 {
     /** @var \App\User */
     protected $user;
-    /** @var \App\Definition */
-    protected $definition;
+    /** @var \App\Topic */
+    protected $topic;
 
     public function setUp()
     {
         parent::setUp();
 
         $this->user = factory(User::class)->create();
-        $this->definition = factory(Definition::class)->make();
-        $this->definition->setRelation('op', $this->user);
+        $this->topic = factory(Topic::class)->make();
+        $this->topic->setRelation('op', $this->user);
     }
 
     protected function getPayload(): array {
         return [
-            'name' => $this->definition->name,
-            'text'  => $this->definition->text,
+            'name' => $this->topic->name,
+            'text'  => $this->topic->text,
         ];
     }
 
-    public function testStoreDefinitionAsUser()
+    public function testStoreTopicAsUser()
     {
-        $definition = $this->definition;
+        $topic = $this->topic;
         $this->actingAs($this->user)
-            ->postJson('/definitions', $this->getPayload())
+            ->postJson('/topics', $this->getPayload())
             ->assertStatus(201)
             ->assertJson([
-                // 'id'    => $definition->id,
-                'name'  => $definition->name,
-                'text'  => $definition->text,
+                // 'id'    => $topic->id,
+                'name'  => $topic->name,
+                'text'  => $topic->text,
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }
@@ -51,33 +51,33 @@ class StoreTest extends TestCase
     /**
      * @group idempotency
      */
-    public function testStoreDefinitionAsUserIdempotent()
+    public function testStoreTopicAsUserIdempotent()
     {
-        $definition = $this->definition;
+        $topic = $this->topic;
         $r1 = $this->actingAs($this->user)
-            ->postJson('/definitions', $this->getPayload(), [
+            ->postJson('/topics', $this->getPayload(), [
                 Idempotency::HEADER => base64_encode(__CLASS__),
             ])
             ->assertStatus(201)
             ->assertJson([
-                // 'id'    => $definition->id,
-                'name'  => $definition->name,
-                'text'  => $definition->text,
+                // 'id'    => $topic->id,
+                'name'  => $topic->name,
+                'text'  => $topic->text,
             ])
             ->assertDontExposeUserEmails($this->user->email);
         $r2 = $this->actingAs($this->user)
-            ->postJson('/definitions', $this->getPayload(), [
+            ->postJson('/topics', $this->getPayload(), [
                 Idempotency::HEADER => base64_encode(__CLASS__),
             ])
             ->assertStatus(201)
             ->assertJson([
-                // 'id'    => $definition->id,
-                'name'  => $definition->name,
-                'text'  => $definition->text,
+                // 'id'    => $topic->id,
+                'name'  => $topic->name,
+                'text'  => $topic->text,
             ])
             ->assertDontExposeUserEmails($this->user->email);
         $r3 = $this->actingAs($this->user)
-            ->postJson('/definitions', $this->getPayload())
+            ->postJson('/topics', $this->getPayload())
             ->assertStatus(422)
             ->assertExactJson([
                 "errors" => [
@@ -92,34 +92,34 @@ class StoreTest extends TestCase
         $this->assertNull($r3->json('id'));
     }
 
-    public function testStoreDefinitionIfDefinitionDomainAlreadyExistsAsUser()
+    public function testStoreTopicIfTopicDomainAlreadyExistsAsUser()
     {
-        $definition = $this->definition;
-        $preexistingDefinition = factory(Definition::class)->create([
+        $topic = $this->topic;
+        $preexistingTopic = factory(Topic::class)->create([
             // same text
-            'text' => $definition->text.'but-its-technically-different',
+            'text' => $topic->text.'but-its-technically-different',
         ]);
         $this->actingAs($this->user)
-            ->postJson('/definitions', $this->getPayload())
+            ->postJson('/topics', $this->getPayload())
             ->assertStatus(201)
             ->assertJson([
-                'id'    => Definition::all()->last()->id,
-                'name'  => $definition->name,
-                'text'  => $definition->text,
+                'id'    => Topic::all()->last()->id,
+                'name'  => $topic->name,
+                'text'  => $topic->text,
             ])
             ->assertDontExposeUserEmails($this->user->email);
     }
 
-    public function testStoreDefinitionAsGuest()
+    public function testStoreTopicAsGuest()
     {
-        $this->postJson('/definitions', $this->getPayload())
+        $this->postJson('/topics', $this->getPayload())
             ->assertStatus(401);
     }
 
-    public function testStoreDefinitionEmptyPayload()
+    public function testStoreTopicEmptyPayload()
     {
         $this->actingAs($this->user)
-            ->postJson('/definitions', [])
+            ->postJson('/topics', [])
             ->assertStatus(422)
             ->assertExactJson([
                 "errors" => [
@@ -131,10 +131,10 @@ class StoreTest extends TestCase
             ->assertDontExposeUserEmails($this->user->email);
     }
 
-    public function testStoreDefinitionEmptyNullPayload()
+    public function testStoreTopicEmptyNullPayload()
     {
         $this->actingAs($this->user)
-            ->postJson('/definitions', [
+            ->postJson('/topics', [
                 'text' => null,
                 'name' => null,
             ])

@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature\Definition\Comment;
+namespace Tests\Feature\Topic\Comment;
 
 use App\Claim;
 use App\Comment;
 use App\Http\Middleware\Idempotency;
-use App\Definition;
+use App\Topic;
 use App\User;
 use Tests\TestCase;
 
@@ -19,8 +19,8 @@ class StoreTest extends TestCase
     protected $users;
     /** @var \App\Claim */
     protected $claim;
-    /** @var \App\Definition */
-    protected $definition;
+    /** @var \App\Topic */
+    protected $topic;
     /** @var \App\Comment */
     protected $comment;
 
@@ -28,7 +28,7 @@ class StoreTest extends TestCase
     {
         parent::setUp();
         $this->users = factory(User::class, 4)->create();
-        $this->definition = factory(Definition::class)->create();
+        $this->topic = factory(Topic::class)->create();
         $this->claim = factory(Claim::class)->create([
             'op_id' => $this->users[1]->id,
         ]);
@@ -46,10 +46,10 @@ class StoreTest extends TestCase
         ]);
     }
 
-    public function testStoreDefinitionCommentAsUserAndReplyAsOtherUser()
+    public function testStoreTopicCommentAsUserAndReplyAsOtherUser()
     {
         $r = $this->actingAs($this->users[0])
-            ->postJson('/definitions/'.$this->definition->id.'/comments', $this->getPayload())
+            ->postJson('/topics/'.$this->topic->id.'/comments', $this->getPayload())
             ->assertStatus(201)
             ->assertJson([
                 'text'  => $this->comment->text,
@@ -67,7 +67,7 @@ class StoreTest extends TestCase
         $nextComment->setRelation('op', $this->users[1]);
 
         $this->actingAs($this->users[1])
-            ->postJson('/definitions/'.$this->definition->id.'/comments', $this->getPayload($nextComment))
+            ->postJson('/topics/'.$this->topic->id.'/comments', $this->getPayload($nextComment))
             ->assertStatus(201)
             ->assertJson([
                 'text'  => $nextComment->text,
@@ -81,10 +81,10 @@ class StoreTest extends TestCase
      * @group comment
      * @group idempotency
      */
-    public function testStoreDefinitionCommentAsUserIdempotent()
+    public function testStoreTopicCommentAsUserIdempotent()
     {
         $r1 = $this->actingAs($this->users[0])
-            ->postJson('/definitions/'.$this->definition->id.'/comments', $this->getPayload(), [
+            ->postJson('/topics/'.$this->topic->id.'/comments', $this->getPayload(), [
                 Idempotency::HEADER => base64_encode(__CLASS__),
             ])
             ->assertStatus(201)
@@ -95,7 +95,7 @@ class StoreTest extends TestCase
             ])
             ->assertDontExposeUserEmails($this->users);
         $r2 = $this->actingAs($this->users[0])
-            ->postJson('/definitions/'.$this->definition->id.'/comments', $this->getPayload(), [
+            ->postJson('/topics/'.$this->topic->id.'/comments', $this->getPayload(), [
                 Idempotency::HEADER => base64_encode(__CLASS__),
             ])
             ->assertStatus(201)
@@ -106,7 +106,7 @@ class StoreTest extends TestCase
             ])
             ->assertDontExposeUserEmails($this->users);
         $r3 = $this->actingAs($this->users[0])
-            ->postJson('/definitions/'.$this->definition->id.'/comments', $this->getPayload())
+            ->postJson('/topics/'.$this->topic->id.'/comments', $this->getPayload())
             ->assertStatus(201)
             ->assertJson([
                 'text'  => $this->comment->text,
@@ -118,10 +118,10 @@ class StoreTest extends TestCase
         $this->assertNotEquals($r1->json('id'), $r3->json('id'));
     }
 
-    public function testStoreDefinitionCommentAsUserAndReplyAsOtherUserWithInvalidParentCommentId()
+    public function testStoreTopicCommentAsUserAndReplyAsOtherUserWithInvalidParentCommentId()
     {
         $r = $this->actingAs($this->users[0])
-            ->postJson('/definitions/'.$this->definition->id.'/comments', $this->getPayload())
+            ->postJson('/topics/'.$this->topic->id.'/comments', $this->getPayload())
             ->assertStatus(201)
             ->assertJson([
                 'text'  => $this->comment->text,
@@ -138,7 +138,7 @@ class StoreTest extends TestCase
         ]);
         $nextComment->setRelation('op', $this->users[1]);
 
-        // you can't make a "definition comment" reply to a comment on a non-definition
+        // you can't make a "topic comment" reply to a comment on a non-topic
         $this->actingAs($this->users[1])
             ->postJson('/claims/'.$this->claim->id.'/comments', $this->getPayload($nextComment))
             ->assertStatus(422)
@@ -150,16 +150,16 @@ class StoreTest extends TestCase
             ]);
     }
 
-    public function testStoreDefinitionCommentAsGuest()
+    public function testStoreTopicCommentAsGuest()
     {
-        $this->postJson('/definitions/'.$this->definition->id.'/comments', $this->getPayload())
+        $this->postJson('/topics/'.$this->topic->id.'/comments', $this->getPayload())
             ->assertStatus(401);
     }
 
     public function testStoreCommentEmptyPayload()
     {
         $this->actingAs($this->users[0])
-            ->postJson('/definitions/'.$this->definition->id.'/comments', [])
+            ->postJson('/topics/'.$this->topic->id.'/comments', [])
             ->assertStatus(422)
             ->assertExactJson([
                 "errors" => [
