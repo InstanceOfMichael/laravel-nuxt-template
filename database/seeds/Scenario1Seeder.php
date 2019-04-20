@@ -8,8 +8,10 @@ use App\Claim;
 use App\Claimrelation;
 use App\Claimside;
 use App\Comment;
+use App\Link;
 use App\Question;
 use App\Side;
+use App\Topic;
 use App\User;
 
 class Scenario1Seeder extends Seeder
@@ -81,9 +83,7 @@ class Scenario1Seeder extends Seeder
         $this->questions[3]->update([
             'sides_type' => Side::TYPE_ALLOW,
         ]);
-        factory(Side::class, 3)->create([
-            'op_id' => $this->randomUsers(1)->first()->id,
-        ])->map(function (Side $side) {
+        factory(Side::class, 3)->create()->map(function (Side $side) {
             Allowedquestionside::create([
                 'question_id' => $this->questions[3]->id,
                 'side_id' => $side->id,
@@ -137,6 +137,12 @@ class Scenario1Seeder extends Seeder
                     'rc_id' => $rclaim->id,
                 ]);
             });
+        });
+
+        $this->randomUsers(15)->map(function (User $user) {
+            $link = factory(Link::class)->create([
+                'op_id' => $user->id,
+            ]);
         });
 
         $this->randomCommentTree($this->questions[0], 16);

@@ -15,7 +15,7 @@ dotenv.config()
 // ]
 
 module.exports = {
-  // mode: 'spa',
+  mode: 'spa',
 
   srcDir: __dirname,
 

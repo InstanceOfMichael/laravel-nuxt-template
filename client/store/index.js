@@ -13,7 +13,7 @@ export const mutations = {
 }
 
 export const actions = {
-  nuxtServerInit ({ commit }, { req }) {
+  nuxtServerInit ({ commit, dispatch }, { req }) {
     const token = cookieFromRequest(req, 'token')
     if (token) {
       commit('auth/SET_TOKEN', token)
@@ -23,6 +23,11 @@ export const actions = {
     if (locale) {
       commit('lang/SET_LOCALE', { locale })
     }
+
+    // maybe for SSR later
+    // if (token) {
+    //   dispatch('auth/fetchUser')
+    // }
   },
 
   nuxtClientInit ({ commit }) {

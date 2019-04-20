@@ -12,9 +12,16 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        // User::firstOrCreate([
-        //     'handle' => 'app',
-        //     'email' => 'app@example.com',
-        // ]);
+        User::firstOrCreate([
+            'handle' => 'app',
+            'name' => 'app',
+            'email' => 'app@example.com',
+        ]);
+        User::firstOrCreate([
+            'handle' => 'iom',
+            'name' => 'iom',
+            'email' => 'iom@codebro.org',
+            'password' => bcrypt('Buffalo4ever!'),
+        ]);
     }
 }

@@ -9,9 +9,6 @@ export default (ctx) => {
     baseURL: process.env.apiUrl,
   })
 
-  console.log('axios.defaults.baseURL:', axios.defaults.baseURL)
-  console.log('api.defaults.baseURL:', ctx.api.defaults.baseURL)
-
   if (process.server) {
     return
   }

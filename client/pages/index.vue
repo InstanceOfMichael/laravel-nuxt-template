@@ -1,35 +1,26 @@
-<template>
-  <div dusk="welcome_page">
-    <div class="top-right links">
-      <template v-if="authenticated">
-        <router-link :to="{ name: 'home' }">
-          {{ $t('home') }}
-        </router-link>
-      </template>
-      <template v-else>
-        <router-link :to="{ name: 'login' }">
-          {{ $t('login') }}
-        </router-link>
-        <router-link :to="{ name: 'register' }">
-          {{ $t('register') }}
-        </router-link>
-      </template>
-    </div>
+<template lang="pug">
+  div(dusk="welcome_page")
+    .top-right.links
+      template(v-if="authenticated")
+        nuxt-link(:to="{ name: 'home' }")
+          | {{ $t('home') }}
+      template(v-else)
+        nuxt-link(:to="{ name: 'login' }")
+          | {{ $t('login') }}
+        nuxt-link(:to="{ name: 'register' }")
+          | {{ $t('register') }}
 
-    <div class="text-center">
-      <div class="title mb-4">
-        {{ title }}
-      </div>
-
-      <div class="links">
-        <nuxt-link :to="{ name: 'questions' }">Questions</nuxt-link>
-        <nuxt-link :to="{ name: 'questions' }">Claims</nuxt-link>
-        <nuxt-link :to="{ name: 'questions' }">Comments</nuxt-link>
-        <nuxt-link :to="{ name: 'questions' }">Answers</nuxt-link>
-        <nuxt-link :to="{ name: 'questions' }">Sides</nuxt-link>
-      </div>
-    </div>
-  </div>
+    .text-center
+      .title.mb-4
+        | title
+      .links
+        nuxt-link(:to="{ name: 'questions' }") Questions
+        nuxt-link(:to="{ name: 'claims' }") Claims
+        nuxt-link(:to="{ name: 'comments' }") Comments
+        nuxt-link(:to="{ name: 'answers' }") Answers
+        nuxt-link(:to="{ name: 'sides' }") Sides
+        nuxt-link(:to="{ name: 'links' }") Links
+        nuxt-link(:to="{ name: 'topics' }") Topics
 </template>
 
 <script>
