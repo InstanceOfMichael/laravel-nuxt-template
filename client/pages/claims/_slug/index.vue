@@ -1,12 +1,12 @@
 <template lang="pug">
   div
-    | default question show
+    | default claim show
 </template>
 
 <script>
 export default {
   props: {
-    question: {
+    claim: {
       type: Object,
       required: true,
     },

@@ -72,6 +72,12 @@ class UpdateQuestionStats implements ShouldQueue
             $updates[] = 'answers_count = ('.$query->toSql().')';
             $bindings = array_merge($bindings, $query->getBindings());
         }
+        if (is_null($this->stats) || in_array('topics_count', $this->stats)) {
+            $query = $this->question->topics()->getQuery()->getQuery()
+                ->selectRaw('count(*) as aggregate');
+            $updates[] = 'topics_count = ('.$query->toSql().')';
+            $bindings = array_merge($bindings, $query->getBindings());
+        }
         if (count($updates)) {
             $bindings = array_merge($bindings, [$this->question->id]);
             DB::update('UPDATE questions'

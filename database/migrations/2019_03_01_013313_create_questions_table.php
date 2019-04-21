@@ -23,6 +23,7 @@ class CreateQuestionsTable extends Migration
             $table->unsignedSmallInteger('comments_count')->index()->default(0);
             $table->unsignedSmallInteger('answers_count')->index()->default(0);
             $table->unsignedSmallInteger('sides_count')->index()->default(0);
+            $table->unsignedSmallInteger('topics_count')->index()->default(0);
 
             $table->foreign('op_id')
                 ->references('id')

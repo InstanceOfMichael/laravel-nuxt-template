@@ -1,27 +1,27 @@
 <template lang="pug">
-  .questions-list
+  .claims-list
     LengthAwarePaginator(
-      :pagination="questions"
+      :pagination="claims"
     )
-    QuestionCardRow(
-      v-for="question in questions.data"
-      :key="question.id"
-      :item="question"
+    ClaimCardRow(
+      v-for="claim in claims.data"
+      :key="claim.id"
+      :item="claim"
     )
     LengthAwarePaginator(
-      v-if="questions.data.length > 2"
-      :pagination="questions"
+      v-if="claims.data.length > 2"
+      :pagination="claims"
     )
     br
     br
 </template>
 
 <script>
-import QuestionCardRow from '~/components/Question/CardRow'
+import ClaimCardRow from '~/components/Claim/CardRow'
 
 export default {
   components: {
-    QuestionCardRow,
+    ClaimCardRow,
   },
 
   // these 2 lines are required for query+pagination to apply
@@ -31,7 +31,7 @@ export default {
 
   async asyncData ({ api, route }) {
     return {
-      questions: (await api.get('/questions', {
+      claims: (await api.get('/claims', {
         params: {
           page: route.query.page || 1,
         },
@@ -42,7 +42,7 @@ export default {
 </script>
 
 <style lang="sass">
-.questions-list
-  .card.card-question
+.claims-list
+  .card.card-claim
     margin-bottom: 15px
 </style>

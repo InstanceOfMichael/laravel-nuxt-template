@@ -1,6 +1,6 @@
 <template lang="pug">
   .layout-error(dusk="layout_error")
-    navbar
+    //- navbar
     .container.mt-4
       h1.status-code(
         v-if="error.statusCode"
@@ -17,6 +17,7 @@ import Navbar from '~/components/Navbar'
 
 export default {
   name: 'NuxtError',
+  layout: 'simple',
   components: {
     Navbar,
   },
