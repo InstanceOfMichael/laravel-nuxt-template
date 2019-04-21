@@ -53,4 +53,8 @@ class Comment extends Model
         return $this->morphTo();
     }
 
+    public function scopeWherePcId ($query, $value) {
+        return $query->whereRelationSearch($this->parentComment(), $value);
+    }
+
 }

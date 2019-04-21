@@ -73,7 +73,7 @@ class UpdateQuestionStats implements ShouldQueue
             $bindings = array_merge($bindings, $query->getBindings());
         }
         if (is_null($this->stats) || in_array('topics_count', $this->stats)) {
-            $query = $this->question->topics()->getQuery()->getQuery()
+            $query = $this->question->questiontopics()->getQuery()->getQuery()
                 ->selectRaw('count(*) as aggregate');
             $updates[] = 'topics_count = ('.$query->toSql().')';
             $bindings = array_merge($bindings, $query->getBindings());

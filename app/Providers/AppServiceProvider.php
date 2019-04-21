@@ -58,5 +58,6 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(DuskServiceProvider::class);
             \Illuminate\Foundation\Testing\TestResponse::mixin(new \Tests\TestResponseMacros);
         }
+        \Illuminate\Database\Query\Builder::mixin(new \App\Mixins\QueryBuilder);
     }
 }

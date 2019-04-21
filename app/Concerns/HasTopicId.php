@@ -15,10 +15,6 @@ trait HasTopicId {
     }
 
     public function scopeWhereTopicId ($query, $value) {
-        if (is_array($value)) {
-            $query->whereIn($this->topic()->getQualifiedForeignKey(), $value);
-        } elseif ($value) {
-            $query->where($this->topic()->getQualifiedForeignKey(), $value);
-        }
+        return $query->whereRelationSearch($this->topic(), $value);
     }
 }

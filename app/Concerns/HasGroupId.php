@@ -15,10 +15,6 @@ trait HasGroupId {
     }
 
     public function scopeWhereGroupId ($query, $value) {
-        if (is_array($value)) {
-            $query->whereIn($this->group()->getQualifiedForeignKey(), $value);
-        } elseif ($value) {
-            $query->where($this->group()->getQualifiedForeignKey(), $value);
-        }
+        return $query->whereRelationSearch($this->group(), $value);
     }
 }

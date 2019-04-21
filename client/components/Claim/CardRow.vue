@@ -9,7 +9,7 @@
     nuxt-link(
       :to="{ name: 'claims-slug', params: { slug: $slug(item) } }"
     )
-      | asked&#32;
+      | made&#32;
       TimeAgo(:value="item.created_at")
     | &#32;
     | &#32;|&#32;

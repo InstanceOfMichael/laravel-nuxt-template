@@ -30,6 +30,12 @@
         fa(icon="list" fixed-width)
         | &#32;
         | {{ claim.sides_count }} Sides
+      b-nav-item(
+        :to="{ name: 'claims-slug-topics', params: { slug: $slug(claim) } }"
+      )
+        fa(icon="list" fixed-width)
+        | &#32;
+        | {{ claim.topics_count }} Topics
     nuxt-child(:claim="claim")
 </template>
 

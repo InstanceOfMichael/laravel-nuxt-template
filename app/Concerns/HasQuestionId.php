@@ -15,10 +15,6 @@ trait HasQuestionId {
     }
 
     public function scopeWhereQuestionId ($query, $value) {
-        if (is_array($value)) {
-            $query->whereIn($this->question()->getQualifiedForeignKey(), $value);
-        } elseif ($value) {
-            $query->where($this->question()->getQualifiedForeignKey(), $value);
-        }
+        return $query->whereRelationSearch($this->question(), $value);
     }
 }

@@ -15,10 +15,6 @@ trait HasDefinitionId {
     }
 
     public function scopeWhereDefinitionId ($query, $value) {
-        if (is_array($value)) {
-            $query->whereIn($this->definition()->getQualifiedForeignKey(), $value);
-        } elseif ($value) {
-            $query->where($this->definition()->getQualifiedForeignKey(), $value);
-        }
+        return $query->whereRelationSearch($this->definition(), $value);
     }
 }

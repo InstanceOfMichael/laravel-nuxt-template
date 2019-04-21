@@ -15,10 +15,6 @@ trait HasSideId {
     }
 
     public function scopeWhereTopicId ($query, $value) {
-        if (is_array($value)) {
-            $query->whereIn($this->side()->getQualifiedForeignKey(), $value);
-        } elseif ($value) {
-            $query->where($this->side()->getQualifiedForeignKey(), $value);
-        }
+        return $query->whereRelationSearch($this->side(), $value);
     }
 }

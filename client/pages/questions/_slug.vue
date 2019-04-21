@@ -30,6 +30,12 @@
         fa(icon="list" fixed-width)
         | &#32;
         | {{ question.sides_count }} Sides
+      b-nav-item(
+        :to="{ name: 'answers-slug-topics', params: { slug: $slug(questions) } }"
+      )
+        fa(icon="list" fixed-width)
+        | &#32;
+        | {{ question.topics_count }} Topics
     nuxt-child(:question="question")
 </template>
 

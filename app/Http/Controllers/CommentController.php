@@ -18,9 +18,15 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Comment::query()
+        $query = Comment::query();
+
+        if ($request->has('pc_id')) {
+            $query->wherePcId($request->get('pc_id'));
+        }
+
+        return $query
             ->with('op')
             ->orderBy('comments.id', 'desc')
             ->paginate();

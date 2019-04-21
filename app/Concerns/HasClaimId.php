@@ -15,10 +15,6 @@ trait HasClaimId {
     }
 
     public function scopeWhereClaimId ($query, $value) {
-        if (is_array($value)) {
-            $query->whereIn($this->claim()->getQualifiedForeignKey(), $value);
-        } elseif ($value) {
-            $query->where($this->claim()->getQualifiedForeignKey(), $value);
-        }
+        return $query->whereRelationSearch($this->claim(), $value);
     }
 }

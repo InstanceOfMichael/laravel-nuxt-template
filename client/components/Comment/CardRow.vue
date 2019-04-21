@@ -9,7 +9,7 @@
     nuxt-link(
       :to="{ name: 'comments-slug', params: { slug: $slug(item) } }"
     )
-      | asked&#32;
+      | commented&#32;
       TimeAgo(:value="item.created_at")
     | &#32;
     template(
@@ -19,7 +19,7 @@
       nuxt-link(
         :to="{ name: 'comments-slug', params: { slug: $slug(item.pc || { id: item.pc_id }) } }"
       ) parent
-  .card-body.small: tt: pre {{ {item} }}
+  //- .card-body.small: tt: pre {{ {item} }}
 </template>
 
 <script>

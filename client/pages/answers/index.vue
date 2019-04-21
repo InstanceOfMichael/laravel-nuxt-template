@@ -1,28 +1,28 @@
 <template lang="pug">
-  .questions-list
+  .answers-list
     LengthAwarePaginator(
-      :pagination="questions"
+      :pagination="answers"
     )
-    QuestionCardRow(
-      v-for="question in questions.data"
-      :key="question.id"
-      :item="question"
+    AnswerCardRow(
+      v-for="answer in answers.data"
+      :key="answer.id"
+      :item="answer"
     )
     LengthAwarePaginator(
-      v-if="questions.data.length > 2"
-      :pagination="questions"
+      v-if="answers.data.length > 2"
+      :pagination="answers"
     )
-    .empty-page.text-center(v-else-if="claims.data.length === 0") No questions
+    .empty-page.text-center(v-else-if="answers.data.length === 0") No answers
     br
     br
 </template>
 
 <script>
-import QuestionCardRow from '~/components/Question/CardRow'
+import AnswerCardRow from '~/components/Answer/CardRow'
 
 export default {
   components: {
-    QuestionCardRow,
+    AnswerCardRow,
   },
 
   // these 2 lines are required for query+pagination to apply
@@ -32,7 +32,7 @@ export default {
 
   async asyncData ({ api, route }) {
     return {
-      questions: (await api.get('/questions', {
+      answers: (await api.get('/answers', {
         params: {
           page: route.query.page || 1,
         },
@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style lang="sass">
-.questions-list
-  .card.card-question
+.answers-list
+  .card.card-answer
     margin-bottom: 15px
 </style>

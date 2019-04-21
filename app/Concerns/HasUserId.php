@@ -15,10 +15,6 @@ trait HasUserId {
     }
 
     public function scopeWhereUserId ($query, $value) {
-        if (is_array($value)) {
-            $query->whereIn($this->user()->getQualifiedForeignKey(), $value);
-        } elseif ($value) {
-            $query->where($this->user()->getQualifiedForeignKey(), $value);
-        }
+        return $query->whereRelationSearch($this->user(), $value);
     }
 }

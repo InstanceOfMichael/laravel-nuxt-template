@@ -20,6 +20,7 @@ class UpdateQuestionStatsTest extends TestCase
             'answers_count' => $question->answers_count,
             'comments_count' => $question->comments_count,
             'sides_count' => $question->sides_count,
+            'topics_count' => $question->topics_count,
         ];
     }
 
@@ -41,6 +42,7 @@ class UpdateQuestionStatsTest extends TestCase
             'answers_count' => 0,
             'comments_count' => 0,
             'sides_count' => 0,
+            'topics_count' => 0,
         ], $this->stats($question->fresh()));
     }
 
@@ -61,9 +63,7 @@ class UpdateQuestionStatsTest extends TestCase
             'op_id' => $user->id,
         ]));
 
-        $sides = factory(Side::class, 3)->create([
-            'op_id' => $user->id,
-        ]);
+        $sides = factory(Side::class, 3)->create();
         foreach($sides as $side) {
             $allowedquestionsides = factory(Allowedquestionside::class)->create([
                 'op_id' => $user->id,
@@ -88,6 +88,7 @@ class UpdateQuestionStatsTest extends TestCase
             'answers_count' => 6,
             'comments_count' => 1,
             'sides_count' => 3,
+            'topics_count' => 0,
         ], $this->stats($question->fresh()));
     }
 
@@ -108,9 +109,7 @@ class UpdateQuestionStatsTest extends TestCase
             'op_id' => $user->id,
         ]));
 
-        $sides = factory(Side::class, 3)->create([
-            'op_id' => $user->id,
-        ]);
+        $sides = factory(Side::class, 3)->create();
         foreach($sides as $side) {
             $allowedquestionsides = factory(Allowedquestionside::class)->create([
                 'op_id' => $user->id,
@@ -135,6 +134,7 @@ class UpdateQuestionStatsTest extends TestCase
             'answers_count' => 6,
             'comments_count' => 1,
             'sides_count' => 3,
+            'topics_count' => 0,
         ], $this->stats($question->fresh()));
     }
 }

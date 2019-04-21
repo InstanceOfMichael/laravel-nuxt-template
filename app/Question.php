@@ -25,6 +25,7 @@ class Question extends Model
         'comments_count' => 0,
         'answers_count' => 0,
         'sides_count' => 0,
+        'topics_count' => 0,
     ];
 
     public static function boot() {

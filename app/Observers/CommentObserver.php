@@ -6,6 +6,7 @@ use App\Comment;
 use App\Jobs\UpdateClaimStats;
 use App\Jobs\UpdateQuestionStats;
 use App\Jobs\UpdateCommentStats;
+use App\Claim;
 use App\Question;
 
 class CommentObserver

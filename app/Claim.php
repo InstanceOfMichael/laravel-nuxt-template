@@ -19,6 +19,13 @@ class Claim extends Model
         'op_id',
     ];
 
+    protected $attributes = [
+        'comments_count' => 0,
+        'answers_count' => 0,
+        'sides_count' => 0,
+        'topics_count' => 0,
+    ];
+
     /**
      * Get the answers associated with the claim.
      */

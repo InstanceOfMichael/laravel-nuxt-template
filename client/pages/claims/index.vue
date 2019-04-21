@@ -12,6 +12,7 @@
       v-if="claims.data.length > 2"
       :pagination="claims"
     )
+    .empty-page.text-center(v-else-if="claims.data.length === 0") No claims
     br
     br
 </template>
