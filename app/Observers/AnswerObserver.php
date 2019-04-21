@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Answer;
+use App\Jobs\UpdateClaimStats;
 use App\Jobs\UpdateQuestionStats;
 use App\Question;
 
@@ -17,6 +18,9 @@ class AnswerObserver
     public function created(Answer $answer)
     {
         dispatch_now(new UpdateQuestionStats($answer->question, [
+            'answers_count',
+        ]));
+        dispatch_now(new UpdateClaimStats($answer->claim, [
             'answers_count',
         ]));
     }
@@ -43,6 +47,9 @@ class AnswerObserver
         dispatch_now(new UpdateQuestionStats($answer->question, [
             'answers_count',
         ]));
+        dispatch_now(new UpdateClaimStats($answer->claim, [
+            'answers_count',
+        ]));
     }
 
     /**
@@ -56,6 +63,9 @@ class AnswerObserver
         dispatch_now(new UpdateQuestionStats($answer->question, [
             'answers_count',
         ]));
+        dispatch_now(new UpdateClaimStats($answer->claim, [
+            'answers_count',
+        ]));
     }
 
     /**
@@ -67,6 +77,9 @@ class AnswerObserver
     public function forceDeleted(Answer $answer)
     {
         dispatch_now(new UpdateQuestionStats($answer->question, [
+            'answers_count',
+        ]));
+        dispatch_now(new UpdateClaimStats($answer->claim, [
             'answers_count',
         ]));
     }

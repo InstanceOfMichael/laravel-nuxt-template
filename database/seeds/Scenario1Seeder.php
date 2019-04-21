@@ -25,6 +25,18 @@ class Scenario1Seeder extends Seeder
     {
         DB::statement('TRUNCATE users, password_resets, oauth_providers, questions, comments, answers, claims, claimrelations, links, linkdomains CASCADE;');
 
+        User::firstOrCreate([
+            'handle' => 'app',
+            'name' => 'app',
+            'email' => 'app@example.com',
+        ]);
+        User::firstOrCreate([
+            'handle' => 'iom',
+            'name' => 'iom',
+            'email' => 'iom@codebro.org',
+            'password' => bcrypt('Buffalo4ever!'),
+        ]);
+
         $this->faker = app(\Faker\Generator::class);
         $this->faker->seed(get_class($this));
 

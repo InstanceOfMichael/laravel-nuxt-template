@@ -12,7 +12,7 @@
 
     .text-center
       .title.mb-4
-        | title
+        | {{ title }}
       .links
         nuxt-link(:to="{ name: 'questions' }") Questions
         nuxt-link(:to="{ name: 'claims' }") Claims

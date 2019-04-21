@@ -15,10 +15,17 @@ class CreateClaimsTable extends Migration
     {
         Schema::create('claims', function (Blueprint $table) {
             $table->bigIncrements('id');
+
             $table->unsignedBigInteger('op_id')->index();
-            $table->timestamps();
             $table->string('title');
             $table->text('text');
+
+            $table->timestamps();
+
+            $table->unsignedSmallInteger('comments_count')->index()->default(0);
+            $table->unsignedSmallInteger('answers_count')->index()->default(0);
+            $table->unsignedSmallInteger('sides_count')->index()->default(0);
+            $table->unsignedSmallInteger('topics_count')->index()->default(0);
 
             $table->foreign('op_id')
                 ->references('id')

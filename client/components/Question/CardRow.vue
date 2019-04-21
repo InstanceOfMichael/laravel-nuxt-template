@@ -24,7 +24,7 @@
       | &#32;|&#32;
       nuxt-link(
         :to="{ name: 'questions-slug-sides', params: { slug: $slug(item) } }"
-      ) {{ item.answers_count }} Sides
+      ) {{ item.sides_count }} Sides
     | &#32;|&#32;
     QuestionSidesFlair(:item="item")
   //- .card-body.small: tt: pre {{ {item} }}

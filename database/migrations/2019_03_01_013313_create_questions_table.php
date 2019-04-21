@@ -15,11 +15,14 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->bigIncrements('id');
+
             $table->unsignedBigInteger('op_id')->index();
             $table->unsignedTinyInteger('sides_type')->index();
             $table->string('title');
             $table->text('text');
+
             $table->timestamps();
+
             $table->unsignedSmallInteger('comments_count')->index()->default(0);
             $table->unsignedSmallInteger('answers_count')->index()->default(0);
             $table->unsignedSmallInteger('sides_count')->index()->default(0);
