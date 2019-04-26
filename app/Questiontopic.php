@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Observers\QuestiontopicObserver;
 
 class Questiontopic extends Model
     implements
@@ -20,4 +21,9 @@ class Questiontopic extends Model
         'question_id',
         'op_id',
     ];
+
+    public static function boot() {
+        parent::boot();
+        static::observe(new QuestiontopicObserver());
+    }
 }

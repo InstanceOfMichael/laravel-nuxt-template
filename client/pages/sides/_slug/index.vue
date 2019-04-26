@@ -1,10 +1,9 @@
 <template lang="pug">
   div
-    | Claim Sides
+    | default claim show
 </template>
 
 <script>
-
 export default {
   props: {
     claim: {

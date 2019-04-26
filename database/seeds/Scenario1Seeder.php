@@ -156,17 +156,35 @@ class Scenario1Seeder extends Seeder
                 'op_id' => $user->id,
             ]);
         });
+        $this->topics = factory(Topic::class, 15)->create();
 
         $this->randomCommentTree($this->questions[0], 16);
         $this->randomCommentTree($this->questions[1], 12);
         $this->randomCommentTree($this->questions[2], 8);
         $this->randomCommentTree($this->questions[3], 6);
         $this->randomCommentTree($this->questions[4], 4);
+        foreach(Question::all() as $x) {
+            $this->randomCommentTree($x, $this->faker->numberBetween(1, 5));
+            foreach($this->randomTopics($this->faker->numberBetween(0, 3)) as $topic) {
+                $x->questiontopics()->create([
+                    'op_id' => $this->randomUsers(1)->first()->id,
+                    'question_id' => $x->id,
+                    'topic_id' => $topic->id,
+                ]);
+            }
+        }
         foreach(Answer::all() as $x) {
             $this->randomCommentTree($x, $this->faker->numberBetween(1, 5));
         }
         foreach(Claim::all() as $x) {
             $this->randomCommentTree($x, $this->faker->numberBetween(1, 5));
+            foreach($this->randomTopics($this->faker->numberBetween(0, 3)) as $topic) {
+                $x->claimtopics()->create([
+                    'op_id' => $this->randomUsers(1)->first()->id,
+                    'claim_id' => $x->id,
+                    'topic_id' => $topic->id,
+                ]);
+            }
         }
         foreach(Side::all() as $x) {
             $this->randomCommentTree($x, $this->faker->numberBetween(1, 5));
@@ -178,6 +196,10 @@ class Scenario1Seeder extends Seeder
 
     protected function randomUsers(int $num) {
         return $this->randomElements('users', $num);
+    }
+
+    protected function randomTopics(int $num) {
+        return $this->randomElements('topics', $num);
     }
 
     protected function randomCommentTree(object $parent, int $num) {

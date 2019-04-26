@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import slugify from 'slugify'
+import isObject from 'lodash/isObject'
 
 const RADIX = 36
 
@@ -19,6 +20,8 @@ export default (ctx) => {
         output = slugify(`reply-${value.text.slice(0, 32)}`)
       } else if (value.text) {
         output = slugify(value.text.slice(0, 32))
+      } else if (value.claim && isObject(value.claim) && value.claim.title) {
+        output = slugify(value.claim.title)
       }
       if (output && output.toLowerCase) {
         output = output.toLowerCase()

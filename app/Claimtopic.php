@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Observers\ClaimtopicObserver;
 
 class Claimtopic extends Model
     implements
@@ -20,4 +21,9 @@ class Claimtopic extends Model
         'claim_id',
         'op_id',
     ];
+
+    public static function boot() {
+        parent::boot();
+        static::observe(new ClaimtopicObserver());
+    }
 }

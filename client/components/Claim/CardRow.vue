@@ -26,6 +26,10 @@
         :to="{ name: 'claims-slug-sides', params: { slug: $slug(item) } }"
       ) {{ item.sides_count }} Sides
     | &#32;|&#32;
+    nuxt-link(
+      :to="{ name: 'claims-slug-topics', params: { slug: $slug(item) } }"
+    ) {{ item.topics_count }} Topics
+    | &#32;|&#32;
   //- .card-body.small: tt: pre {{ {item} }}
 </template>
 

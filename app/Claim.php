@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Observers\ClaimObserver;
 
 class Claim extends Model
     implements
@@ -25,6 +26,11 @@ class Claim extends Model
         'sides_count' => 0,
         'topics_count' => 0,
     ];
+
+    public static function boot() {
+        parent::boot();
+        static::observe(new ClaimObserver());
+    }
 
     /**
      * Get the answers associated with the claim.

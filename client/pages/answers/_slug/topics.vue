@@ -1,9 +1,9 @@
 <template lang="pug">
-  .claims-answers-list
-    AnswerCardRow(
-      v-for="answer in answers.data"
-      :key="answer.id"
-      :item="answer"
+  .answers-topics-list
+    TopicCardRow(
+      v-for="topic in topics.data"
+      :key="topic.id"
+      :item="topic"
     )
 </template>
 
@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style lang="sass">
-.claims-answers-list
-  .card.card-answer
+.answers-topics-list
+  .card.card-topic
     margin-bottom: 15px
 </style>

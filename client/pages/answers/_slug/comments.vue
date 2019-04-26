@@ -1,5 +1,5 @@
 <template lang="pug">
-  .claims-comments-list
+  .answer-comments-list
     LengthAwarePaginator(
       :pagination="comments"
     )
@@ -22,7 +22,7 @@ export default {
     CommentCardRow,
   },
   props: {
-    claim: {
+    answer: {
       type: Object,
       required: true,
     },
@@ -31,7 +31,7 @@ export default {
     return {
       comments: (await api.get('/comments', {
         params: {
-          claim_id: deslug(route.params.slug),
+          answer_id: deslug(route.params.slug),
         },
       })).data,
     }
@@ -40,7 +40,7 @@ export default {
 </script>
 
 <style lang="sass">
-.claims-comments-list
+.answers-comments-list
   .card.card-comment
     margin-bottom: 15px
 </style>

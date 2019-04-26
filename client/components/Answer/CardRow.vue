@@ -14,8 +14,14 @@
     | &#32;
     | &#32;|&#32;
     nuxt-link(
-      :to="{ name: 'answers-slug-answers', params: { slug: $slug(item) } }"
-    ) {{ item.answers_count }} Answers
+      v-if="item.question"
+      :to="{ name: 'questions-slug', params: { slug: $slug(item.question) } }"
+    ) Question
+    | &#32;|&#32;
+    nuxt-link(
+      v-if="item.claim"
+      :to="{ name: 'claims-slug', params: { slug: $slug(item.claim) } }"
+    ) Claim
     | &#32;|&#32;
     nuxt-link(
       :to="{ name: 'answers-slug-comments', params: { slug: $slug(item) } }"

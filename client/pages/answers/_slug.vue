@@ -12,24 +12,11 @@
         | &#32;
         | Index
       b-nav-item(
-        :to="{ name: 'answers-slug-answers', params: { slug: $slug(answer) } }"
-      )
-        fa(icon="list" fixed-width)
-        | &#32;
-        | {{ answer.answers_count }} Answers
-      b-nav-item(
         :to="{ name: 'answers-slug-comments', params: { slug: $slug(answer) } }"
       )
         fa(icon="list" fixed-width)
         | &#32;
         | {{ answer.comments_count }} Comments
-      b-nav-item(
-        v-if="answer.question.sides_type !== 0"
-        :to="{ name: 'answers-slug-sides', params: { slug: $slug(answer) } }"
-      )
-        fa(icon="list" fixed-width)
-        | &#32;
-        | {{ answer.sides_count }} Sides
       b-nav-item(
         :to="{ name: 'answers-slug-topics', params: { slug: $slug(answer) } }"
       )
