@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import slugify from 'slugify'
 import isObject from 'lodash/isObject'
+import { queryToApiParams } from '~/lib/queryToApiParams'
 
 const RADIX = 36
 
@@ -36,6 +37,9 @@ export default (ctx) => {
       return parseInt(value, RADIX)
     }
   }
+
+  console.log(queryToApiParams)
+  queryToApiParams(ctx)
 }
 
 Vue.prototype.$mergeRouteQuery = function (object) {

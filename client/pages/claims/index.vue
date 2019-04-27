@@ -30,12 +30,10 @@ export default {
   watchQuery: ['page'],
   key: (to) => to.fullPath,
 
-  async asyncData ({ api, route }) {
+  async asyncData ({ api, route, queryToApiParams }) {
     return {
       claims: (await api.get('/claims', {
-        params: {
-          page: route.query.page || 1,
-        },
+        params: queryToApiParams(route),
       })).data,
     }
   },
