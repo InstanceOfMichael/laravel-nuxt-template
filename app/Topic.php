@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Topic extends Model
     implements
@@ -30,5 +32,12 @@ class Topic extends Model
     public function questiontopics()
     {
         return $this->hasMany(Questiontopic::class);
+    }
+
+    public function scopeWhereFromRequest ($query, Request $request) {
+        if ($request->topic_id) {
+
+        }
+        return $query;
     }
 }

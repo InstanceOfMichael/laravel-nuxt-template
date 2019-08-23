@@ -30,6 +30,7 @@ abstract class DuskTestCase extends BaseTestCase
 
         DuskBrowser::$apiBaseUrl = $this->apiUrl();
 
+        app(\Illuminate\Contracts\Hashing\Hasher::class)->setRounds(4);
         DB::statement('TRUNCATE users, password_resets, oauth_providers, questions, comments, answers, claims, claimrelations, links, linkdomains CASCADE;');
         $this->faker = app(\Faker\Generator::class);
         $this->faker->seed(get_class($this));
