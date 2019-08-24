@@ -14,13 +14,8 @@
       .title.mb-4
         | {{ title }}
       .links
-        nuxt-link(:to="{ name: 'questions' }") Questions
-        nuxt-link(:to="{ name: 'claims' }") Claims
         nuxt-link(:to="{ name: 'comments' }") Comments
-        nuxt-link(:to="{ name: 'answers' }") Answers
-        nuxt-link(:to="{ name: 'sides' }") Sides
-        nuxt-link(:to="{ name: 'links' }") Links
-        nuxt-link(:to="{ name: 'topics' }") Topics
+        nuxt-link(:to="{ name: 'users' }") User
 </template>
 
 <script>

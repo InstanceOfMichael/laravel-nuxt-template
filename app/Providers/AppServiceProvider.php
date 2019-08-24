@@ -20,28 +20,11 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->runningUnitTests()) {
             Schema::defaultStringLength(191);
         }
-        Relation::morphMap([
-            2 => \App\User::class,
-            3 => \App\Comment::class,
-            4 => \App\Question::class,
-            5 => \App\Claim::class,
-            6 => \App\Answer::class,
-            7 => \App\Claimrelation::class,
-            8 => \App\Link::class,
-            9 => \App\Linkdomain::class,
-            10 => \App\Side::class,
-            11 => \App\Allowedquestionside::class,
-            12 => \App\Claimside::class,
-            13 => \App\Group::class,
-            14 => \App\Groupsmembership::class,
-            15 => \App\Groupsubscription::class,
-            16 => \App\Topic::class,
-            17 => \App\Questiontopic::class,
-            18 => \App\Claimtopic::class,
-            19 => \App\Definition::class,
-            20 => \App\Definitiontopic::class,
-            21 => \App\Definitiontopic::class,
-        ]);
+        // if you wanted to use ints instead of strings for context_type
+        // Relation::morphMap([
+        //     2 => \App\User::class,
+        //     3 => \App\Comment::class,
+        // ]);
         Carbon::serializeUsing(function ($carbon) {
             return $carbon->format('U');
         });

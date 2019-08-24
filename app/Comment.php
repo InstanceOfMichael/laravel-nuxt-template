@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use App\Observers\CommentObserver;
+
 class Comment extends Model
     implements
         Contracts\HasOp

@@ -48,9 +48,11 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(/*StoreComment $request*/)
+    public function store(StoreComment $request)
     {
-        abort(405, 'Use with commentable content: POST /:commentable/:id/comments');
+        return $request->user()
+            ->comments()
+            ->create($request->all());
     }
 
     /**
@@ -61,7 +63,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        $comment->load('op', 'context');
+        $comment->load('op');
         return $comment;
     }
 
@@ -73,7 +75,9 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-        abort(405, 'Use with commentable content: GET /:commentable/:id/comments/edit');
+        return [
+            'comment' => $comment,
+        ];
     }
 
     /**

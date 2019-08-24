@@ -103,59 +103,10 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the groups created by this user.
-     */
-    public function groups()
-    {
-        return $this->hasMany(Group::class, 'op_id');
-    }
-
-    /**
-     * Get the answers created by this user.
-     */
-    public function answers()
-    {
-        return $this->hasMany(Answer::class, 'op_id');
-    }
-
-    /**
-     * Get the questions created by this user.
-     */
-    public function questions()
-    {
-        return $this->hasMany(Question::class, 'op_id');
-    }
-
-    /**
      * Get the comments created by this user.
      */
     public function comments()
     {
         return $this->hasMany(Comment::class, 'op_id');
     }
-
-    /**
-     * Get the claims created by this user.
-     */
-    public function claims()
-    {
-        return $this->hasMany(Claim::class, 'op_id');
-    }
-
-    /**
-     * Get the claimrelations created by this user.
-     */
-    public function claimrelations()
-    {
-        return $this->hasMany(Claimrelation::class, 'op_id');
-    }
-
-    /**
-     * Get the links created by this user.
-     */
-    public function links()
-    {
-        return $this->hasMany(Link::class, 'op_id');
-    }
-
 }

@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Jobs;
 
-use App\Claim;
 use App\Comment;
 use App\Jobs\UpdateCommentStats;
 use App\User;
@@ -25,12 +24,7 @@ class UpdateCommentStatsTest extends TestCase
     public function testCommentWithNoRelations()
     {
         $user = factory(User::class)->create();
-        $context = factory(Claim::class)->create([
-            'op_id' => $user->id,
-        ]);
-        $comment = $context->comments()->create(factory(Comment::class)->raw([
-            'op_id' => $user->id,
-        ]));
+        $comment = $user->comments()->create(factory(Comment::class)->raw());
 
         dispatch_now(new UpdateCommentStats($comment));
 
@@ -47,37 +41,29 @@ class UpdateCommentStatsTest extends TestCase
     public function testCommentWithTwoChildComments()
     {
         $user = factory(User::class)->create();
-        $context = factory(Claim::class)->create([
-            'op_id' => $user->id,
-        ]);
-        $comment = $context->comments()->create(factory(Comment::class)->raw([
-            'op_id' => $user->id,
-        ]));
+        $comment = $user->comments()->create(factory(Comment::class)->raw());
 
-        $otherComments = collect(factory(Comment::class, 3)->raw([
-            'op_id' => $user->id,
-        ]))->map(function (array $raw) use ($context):Comment {
-            return $context->comments()->create($raw);
+        $otherComments = collect(
+            factory(Comment::class, 3)->raw()
+        )->map(function (array $raw) use ($user):Comment {
+            return $user->comments()->create($raw);
         });
         $replies = collect(factory(Comment::class, 3)->raw([
-            'op_id' => $user->id,
             'pc_id' => $comment->first()->id,
-        ]))->map(function (array $raw) use ($context):Comment {
-            return $context->comments()->create($raw);
+        ]))->map(function (array $raw) use ($user):Comment {
+            return $user->comments()->create($raw);
         });
         $otherReplies = collect(factory(Comment::class, 3)->raw([
-            'op_id' => $user->id,
             'pc_id' => $otherComments->first()->id,
-        ]))->map(function (array $raw) use ($context):Comment {
-            return $context->comments()->create($raw);
+        ]))->map(function (array $raw) use ($user):Comment {
+            return $user->comments()->create($raw);
         });
 
         // non-direct replies are not counted
         $replyReplies = collect(factory(Comment::class, 3)->raw([
-            'op_id' => $user->id,
             'pc_id' => $replies->first()->id,
-        ]))->map(function (array $raw) use ($context):Comment {
-            return $context->comments()->create($raw);
+        ]))->map(function (array $raw) use ($user):Comment {
+            return $user->comments()->create($raw);
         });
 
         dispatch_now(new UpdateCommentStats($comment));

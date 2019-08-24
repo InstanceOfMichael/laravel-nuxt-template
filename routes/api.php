@@ -39,66 +39,6 @@ Route::group(['middleware' => 'guest:api'], function () {
 Route::group([], function () {
     Route::resource('comments', 'CommentController');
 
-    Route::resource('answers', 'AnswerController');
-    Route::group([ 'prefix' => 'answers/{answer}' ], function () {
-        Route::resource('comments', 'Answer\CommentController');
-    });
-
-    Route::resource('claims', 'ClaimController');
-    Route::group([ 'prefix' => 'claims/{claim}' ], function () {
-        Route::resource('claimsides', 'Claim\ClaimsideController');
-        Route::resource('claimtopics', 'Claim\ClaimtopicController');
-        Route::resource('comments', 'Claim\CommentController');
-    });
-
-    Route::resource('claimsides', 'ClaimsideController');
-    Route::group([ 'prefix' => 'claimsides/{claimside}' ], function () {
-        Route::resource('comments', 'Claimside\CommentController');
-    });
-
-    Route::resource('claimrelations', 'ClaimrelationController');
-    Route::group([ 'prefix' => 'claimrelations/{claimrelation}' ], function () {
-        Route::resource('comments', 'Claimrelation\CommentController');
-    });
-
-    Route::resource('definitions', 'DefinitionController');
-    Route::group([ 'prefix' => 'definitions/{definition}' ], function () {
-        Route::resource('comments', 'Definition\CommentController');
-    });
-
-    Route::resource('questions', 'QuestionController');
-    Route::group([ 'prefix' => 'questions/{question}' ], function () {
-        Route::resource('allowedquestionsides', 'Question\AllowedquestionsideController');
-        Route::resource('questiontopics', 'Question\QuestiontopicController');
-        Route::resource('comments', 'Question\CommentController');
-    });
-
-    Route::resource('groups', 'GroupController');
-    Route::group([ 'prefix' => 'groups/{group}' ], function () {
-        Route::resource('groupmemberships', 'Group\GroupmembershipController');
-        Route::resource('groupsubscriptions', 'Group\GroupsubscriptionController');
-    });
-
-    Route::resource('links', 'LinkController');
-    Route::group([ 'prefix' => 'links/{link}' ], function () {
-        Route::resource('comments', 'Link\CommentController');
-    });
-
-    Route::resource('linkdomains', 'LinkdomainController');
-    Route::group([ 'prefix' => 'linkdomains/{linkdomain}' ], function () {
-        Route::resource('comments', 'Linkdomain\CommentController');
-    });
-
-    Route::resource('sides', 'SideController');
-    Route::group([ 'prefix' => 'sides/{side}' ], function () {
-        Route::resource('comments', 'Side\CommentController');
-    });
-
-    Route::resource('topics', 'TopicController');
-    Route::group([ 'prefix' => 'topics/{topic}' ], function () {
-        Route::resource('comments', 'Topic\CommentController');
-    });
-
     Route::resource('users', 'UserController');
     Route::group([ 'prefix' => 'users/{user}' ], function () {
         Route::resource('comments', 'User\CommentController', [ 'only' => 'index' ]);

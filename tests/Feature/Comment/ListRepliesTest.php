@@ -4,8 +4,6 @@ namespace Tests\Feature\Comment;
 
 use App\User;
 use App\Comment;
-use App\Question;
-use App\Claim;
 use Tests\TestCase;
 
 /**
@@ -15,12 +13,8 @@ class ListRepliesTest extends TestCase
 {
     /** @var \App\User[] */
     protected $users;
-    /** @var \App\CommentTopic[] */
-    protected $commentables;
-    /** @var \App\Question */
-    protected $question;
-    /** @var \App\Claim */
-    protected $claim;
+    /** @var \App\Comments[] */
+    protected $parentcomments;
 
     public function setUp()
     {
@@ -28,21 +22,15 @@ class ListRepliesTest extends TestCase
 
         $this->users = factory(User::class, 9)->create();
 
-        $this->commentables = collect([
-            $this->question = factory(Question::class)->create([ 'op_id' => factory(User::class)->create()->id ]),
-            $this->claim = factory(Claim::class)->create([ 'op_id' => factory(User::class)->create()->id ]),
-            factory(Question::class)->create([ 'op_id' => factory(User::class)->create()->id ]),
+        $this->parentcomments = collect([
+            $this->users[0]->comments()->create(factory(Comment::class)->raw([ 'op_id' => factory(User::class)->create()->id ])),
+            $this->users[0]->comments()->create(factory(Comment::class)->raw([ 'op_id' => factory(User::class)->create()->id ])),
+            $this->users[0]->comments()->create(factory(Comment::class)->raw([ 'op_id' => factory(User::class)->create()->id ])),
         ]);
-
-        $this->commentables->each(function ($commentable) {
-            $commentable->comments()->create(factory(Comment::class)->raw([ 'op_id' => factory(User::class)->create()->id ]));
-            $commentable->comments()->create(factory(Comment::class)->raw([ 'op_id' => factory(User::class)->create()->id ]));
-        });
-
-        $this->commentables->map(function ($commentable) {
-            $commentable->comments()->create(factory(Comment::class)->raw([
+        $this->parentcomments->each(function ($parentcomment) {
+            Comment::create(factory(Comment::class)->raw([
                 'op_id' => factory(User::class)->create()->id,
-                'pc_id' => $commentable->comments()->first()->id,
+                'pc_id' => $parentcomment->id,
             ]));
         });
 

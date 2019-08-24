@@ -19,8 +19,9 @@ class CreateCommentsTable extends Migration
             $table->unsignedBigInteger('pc_id')->index()->default(0);
             // original poster id
             $table->unsignedBigInteger('op_id')->index();
-            $table->unsignedBigInteger('context_id');
-            $table->unsignedTinyInteger('context_type');
+            // $table->unsignedBigInteger('context_id');
+            // $table->text('context_type');
+            // $table->unsignedTinyInteger('context_type');
 
             // if it is a reply
             $table->unsignedSmallInteger('depth')->default(0);
@@ -29,7 +30,7 @@ class CreateCommentsTable extends Migration
             $table->timestamps();
             $table->text('text');
 
-            $table->index(['context_type', 'context_id']);
+            // $table->index(['context_type', 'context_id']);
 
             $table->foreign('op_id')
                 ->references('id')

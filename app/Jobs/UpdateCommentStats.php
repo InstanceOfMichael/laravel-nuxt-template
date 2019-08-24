@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Comment;
-use App\Side;
 use DB;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;

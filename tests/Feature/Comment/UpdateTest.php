@@ -4,8 +4,6 @@ namespace Tests\Feature\Comment;
 
 use App\User;
 use App\Comment;
-use App\Claim;
-use App\Question;
 use Tests\TestCase;
 
 /**
@@ -25,20 +23,11 @@ class UpdateTest extends TestCase
         parent::setUp();
 
         $this->users = factory(User::class, 4)->create();
-        $this->question = factory(Question::class)->create([
-            'op_id' => $this->users[1]->id,
-        ]);
-        $this->claim = factory(Claim::class)->create([
-            'op_id' => $this->users[2]->id,
-        ]);
-        $this->question->comments()->create(factory(Comment::class)->raw([
-            'op_id' => $this->users[0]->id,
-        ]));
-        $this->claim->comments()->create(factory(Comment::class)->raw([
-            'op_id' => $this->users[0]->id,
-        ]));
-        $this->question->comments[0]->setRelation('op', $this->users[0]);
-        $this->claim->comments[0]->setRelation('op', $this->users[0]);
+        $this->users[0]->comments()->create(factory(Comment::class)->raw());
+        $this->users[0]->comments()->create(factory(Comment::class)->raw());
+        $this->users[0]->comments[0]->setRelation('op', $this->users[0]);
+        $this->users[0]->comments[1]->setRelation('op', $this->users[0]);
+
         $this->updatedComment = factory(Comment::class)->make();
     }
 
@@ -49,49 +38,26 @@ class UpdateTest extends TestCase
         ];
     }
 
-    public function testUpdateQuestionCommentAsUser()
+    public function testUpdateCommentAsUser()
     {
         $this->actingAs($this->users[0])
-            ->patchJson('/comments/'.$this->question->comments[0]->id, $this->getPayload())
+            ->patchJson('/comments/'.$this->users[0]->comments[0]->id, $this->getPayload())
             ->assertStatus(200)
             ->assertJson([
                 'text'  => $this->updatedComment->text,
-                'op_id' => $this->question->comments[0]->op->id,
+                'op_id' => $this->users[0]->comments[0]->op->id,
                 'op' => [
-                    'id'     => $this->question->comments[0]->op->id,
-                    'handle' => $this->question->comments[0]->op->handle,
+                    'id'     => $this->users[0]->comments[0]->op->id,
+                    'handle' => $this->users[0]->comments[0]->op->handle,
                 ],
             ])
             ->assertDontExposeUserEmails($this->users);
     }
 
-    public function testUpdateClaimCommentAsUser()
-    {
-        $this->actingAs($this->users[0])
-            ->patchJson('/comments/'.$this->claim->comments[0]->id, $this->getPayload())
-            ->assertStatus(200)
-            ->assertJson([
-                'text'  => $this->updatedComment->text,
-                'op_id' => $this->claim->comments[0]->op->id,
-                'op' => [
-                    'id'     => $this->claim->comments[0]->op->id,
-                    'handle' => $this->claim->comments[0]->op->handle,
-                ],
-            ])
-            ->assertDontExposeUserEmails($this->users);
-    }
-
-    public function testUpdateQuestionCommentAsUserWhoIsNotOp()
+    public function testUpdateCommentAsUserWhoIsNotOp()
     {
         $this->actingAs($this->users[3])
-            ->patchJson('/comments/'.$this->question->comments[0]->id, $this->getPayload())
-            ->assertStatus(403);
-    }
-
-    public function testUpdateClaimCommentAsUserWhoIsNotOp()
-    {
-        $this->actingAs($this->users[3])
-            ->patchJson('/comments/'.$this->claim->comments[0]->id, $this->getPayload())
+            ->patchJson('/comments/'.$this->users[0]->comments[0]->id, $this->getPayload())
             ->assertStatus(403);
     }
 
@@ -101,29 +67,24 @@ class UpdateTest extends TestCase
             ->assertStatus(405);
     }
 
-    public function testUpdateClaimCommentAsGuest()
+    public function testUpdateCommentAsGuest()
     {
-        $this->patchJson('/comments/'.$this->claim->comments[0]->id, $this->getPayload())
+        $this->patchJson('/comments/'.$this->users[0]->comments[0]->id, $this->getPayload())
             ->assertStatus(401);
     }
 
-    public function testUpdateQuestionCommentAsGuest()
-    {
-        $this->patchJson('/comments/'.$this->question->comments[0]->id, $this->getPayload())
-            ->assertStatus(401);
-    }
 
     public function testUpdateCommentEmptyPayload()
     {
         $this->actingAs($this->users[0])
-            ->patchJson('/comments/'.$this->claim->comments[0]->id, [])
+            ->patchJson('/comments/'.$this->users[0]->comments[0]->id, [])
             ->assertStatus(200)
             ->assertJson([
-                'text'  => $this->claim->comments[0]->text,
-                'op_id' => $this->claim->comments[0]->op->id,
+                'text'  => $this->users[0]->comments[0]->text,
+                'op_id' => $this->users[0]->comments[0]->op->id,
                 'op' => [
-                    'id'     => $this->claim->comments[0]->op->id,
-                    'handle' => $this->claim->comments[0]->op->handle,
+                    'id'     => $this->users[0]->comments[0]->op->id,
+                    'handle' => $this->users[0]->comments[0]->op->handle,
                 ],
             ])
             ->assertDontExposeUserEmails($this->users);
@@ -132,7 +93,7 @@ class UpdateTest extends TestCase
     public function testUpdateCommentEmptyNullPayload()
     {
         $this->actingAs($this->users[0])
-            ->patchJson('/comments/'.$this->question->comments[0]->id, [
+            ->patchJson('/comments/'.$this->users[0]->comments[0]->id, [
                 'text' => null,
             ])
             ->assertStatus(422)

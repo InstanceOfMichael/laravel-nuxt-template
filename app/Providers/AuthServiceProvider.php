@@ -12,23 +12,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Allowedquestionside' => 'App\Policies\AllowedquestionsidePolicy',
-        'App\Answer' => 'App\Policies\AnswerPolicy',
-        'App\Claim' => 'App\Policies\ClaimPolicy',
-        'App\Claimrelation' => 'App\Policies\ClaimrelationPolicy',
-        'App\Claimside' => 'App\Policies\ClaimsidePolicy',
-        'App\Claimtopic' => 'App\Policies\ClaimtopicPolicy',
         'App\Comment' => 'App\Policies\CommentPolicy',
-        'App\Definition' => 'App\Policies\DefinitionPolicy',
-        'App\Group' => 'App\Policies\GroupPolicy',
-        'App\Groupmembership' => 'App\Policies\GroupmembershipPolicy',
-        'App\Groupsubscription' => 'App\Policies\GroupsubscriptionPolicy',
-        'App\Link' => 'App\Policies\LinkPolicy',
-        'App\Linkdomain' => 'App\Policies\LinkdomainPolicy',
-        'App\Question' => 'App\Policies\QuestionPolicy',
-        'App\Questiontopic' => 'App\Policies\QuestiontopicPolicy',
-        'App\Side' => 'App\Policies\SidePolicy',
-        'App\Topic' => 'App\Policies\TopicPolicy',
         'App\User' => 'App\Policies\UserPolicy',
     ];
 

@@ -2,11 +2,9 @@
 
 namespace Tests\Feature\User\Comment;
 
-use App\Claim;
 use App\Comment;
 use App\Http\Middleware\Idempotency;
 use App\User;
-use App\Question;
 use Tests\TestCase;
 
 /**
@@ -17,10 +15,6 @@ class StoreTest extends TestCase
 {
     /** @var \App\User[] */
     protected $users;
-    /** @var \App\Claim */
-    protected $claim;
-    /** @var \App\Question */
-    protected $question;
     /** @var \App\Comment */
     protected $comment;
 
@@ -28,12 +22,6 @@ class StoreTest extends TestCase
     {
         parent::setUp();
         $this->users = factory(User::class, 4)->create();
-        $this->question = factory(Question::class)->create([
-            'op_id' => $this->users[0]->id,
-        ]);
-        $this->claim = factory(Claim::class)->create([
-            'op_id' => $this->users[1]->id,
-        ]);
         $this->comment = factory(Comment::class)->make();
         $this->comment->setRelation('op', $this->users[0]);
     }
@@ -48,7 +36,7 @@ class StoreTest extends TestCase
         ]);
     }
 
-    public function testStoreClaimCommentAsUserAndReplyAsOtherUser()
+    public function testStoreCommentAsUserAndReplyAsOtherUser()
     {
         $r = $this->actingAs($this->users[0])
             ->postJson('/users/'.$this->users[0]->id.'/comments', $this->getPayload())
@@ -56,7 +44,7 @@ class StoreTest extends TestCase
             ->assertDontExposeUserEmails($this->users);
     }
 
-    public function testStoreClaimCommentAsGuest()
+    public function testStoreCommentAsGuest()
     {
         $this->postJson('/users/'.$this->users[0]->id.'/comments', $this->getPayload())
             ->assertStatus(405);

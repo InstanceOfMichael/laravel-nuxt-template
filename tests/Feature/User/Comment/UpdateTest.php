@@ -4,8 +4,6 @@ namespace Tests\Feature\User\Comment;
 
 use App\User;
 use App\Comment;
-use App\Claim;
-use App\Question;
 use Tests\TestCase;
 
 /**
@@ -26,20 +24,16 @@ class UpdateTest extends TestCase
         parent::setUp();
 
         $this->users = factory(User::class, 4)->create();
-        $this->question = factory(Question::class)->create([
-            'op_id' => $this->users[1]->id,
+        $this->comments = collect([
+            factory(Comment::class)->create([
+                'op_id' => $this->users[0]->id,
+            ]),
+            factory(Comment::class)->create([
+                'op_id' => $this->users[0]->id,
+            ]),
         ]);
-        $this->claim = factory(Claim::class)->create([
-            'op_id' => $this->users[2]->id,
-        ]);
-        $this->question->comments()->create(factory(Comment::class)->raw([
-            'op_id' => $this->users[0]->id,
-        ]));
-        $this->claim->comments()->create(factory(Comment::class)->raw([
-            'op_id' => $this->users[0]->id,
-        ]));
-        $this->question->comments[0]->setRelation('op', $this->users[0]);
-        $this->claim->comments[0]->setRelation('op', $this->users[0]);
+        $this->comments[0]->setRelation('op', $this->users[0]);
+        $this->comments[0]->setRelation('op', $this->users[0]);
         $this->updatedComment = factory(Comment::class)->make();
     }
 
@@ -50,10 +44,10 @@ class UpdateTest extends TestCase
         ];
     }
 
-    public function testUpdateQuestionCommentAsUserWithCommentableEndpoint()
+    public function testUpdateCommentAsUserWithCommentableEndpoint()
     {
         $this->actingAs($this->users[0])
-            ->patchJson('/users/'.$this->users[0]->id.'/comments/'.$this->question->comments[0]->id, $this->getPayload())
+            ->patchJson('/users/'.$this->users[0]->id.'/comments/'.$this->comments[0]->id, $this->getPayload())
             ->assertStatus(404);
     }
 }

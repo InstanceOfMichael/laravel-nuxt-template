@@ -4,6 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use App\Contracts\HasComments;
+use App\Comment;
 
 class ExistingParentCommentId implements Rule
 {
@@ -15,9 +16,9 @@ class ExistingParentCommentId implements Rule
      *
      * @return void
      */
-    public function __construct(HasComments $context)
+    public function __construct(/*HasComments $context*/)
     {
-        $this->context = $context;
+        // $this->context = $context;
     }
 
     /**
@@ -34,7 +35,10 @@ class ExistingParentCommentId implements Rule
             // because it indicates no parent
             return true;
         }
-        return $this->context->comments()->where('comments.id', $value)->take(1)->get()->count() > 0;
+        // return $this->context->comments()
+        return Comment::query()
+            ->where('comments.id', $value)
+            ->take(1)->get()->count() > 0;
     }
 
     /**

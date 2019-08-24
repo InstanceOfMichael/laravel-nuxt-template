@@ -29,25 +29,23 @@ class StoreComment extends FormRequest
     {
         return [
             'text' => 'required|string',
-            'pc_id' => $this->commentable() ? new ExistingParentCommentId($this->commentable()) : '',
+            'pc_id' => [
+                new ExistingParentCommentId(/*$this->commentable()*/),
+                'nullable',
+            ],
         ];
     }
 
-    public function commentable(): HasComments {
-        foreach([
-            'question',
-            'claim',
-            'claimside',
-            'answer',
-            'side',
-            'claimrelation',
-            'link',
-            'linkdomain',
-            'topic',
-        ] as $key) {
-            if ($this->{$key} instanceof HasComments) {
-                return $this->{$key};
-            }
-        }
-    }
+    // public function commentable(): HasComments {
+    //     foreach([
+    //         // 'question',
+    //         // 'answer',
+    //         // 'link',
+    //         'users',
+    //     ] as $key) {
+    //         if ($this->{$key} instanceof HasComments) {
+    //             return $this->{$key};
+    //         }
+    //     }
+    // }
 }
