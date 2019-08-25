@@ -18,5 +18,11 @@ export default {
   head () {
     return { title: this.$t('home') }
   },
+
+  data () {
+    return {
+      title: this.$t('home'),
+    }
+  },
 }
 </script>

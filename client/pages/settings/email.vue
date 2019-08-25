@@ -21,11 +21,9 @@
       </div>
 
       <div v-if="isEmailVerified" class="alert alert-info">
-        sssss
+        Verfied Email: Yes
       </div>
       <ResendEmailVerifyAlert v-else/>
-
-      | {{ {isEmailVerified} }}
     </form>
   </card>
 </template>
