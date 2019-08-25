@@ -4,7 +4,7 @@ dist: trusty
 
 php:
   - 7.2
-  - 7.3
+#  - 7.3
 
 install:
   - travis_retry composer install --no-interaction --prefer-dist --no-suggest
@@ -14,8 +14,8 @@ before_script:
   - sh -e /etc/init.d/xvfb start
   - ./vendor/laravel/dusk/bin/chromedriver-linux &
   - cp .env.testing .env
-  - yarn run lint
-  - yarn run generate
+  - npm run lint
+  - npm run generate
 
 script:
   - vendor/bin/phpunit tests/Unit
