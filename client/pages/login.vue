@@ -30,9 +30,13 @@
                 | {{ $t('login') }}
               // GitHub Login Button
               login-with-github
+          .form-group.row
+            .col
+              .alert.alert-danger(v-if="error" v-text="error")
 </template>
 
 <script>
+import get from 'lodash/get'
 import Form from 'vform'
 
 export default {
@@ -41,29 +45,48 @@ export default {
   },
 
   data: () => ({
+    error: null,
     form: new Form({
-      email: '',
-      password: '',
+      email: 'dlfjsdlfkjdsk@sldkfjslkf.com',
+      password: 'sdfdsfsdf',
     }),
     remember: false,
   }),
 
   methods: {
     async login () {
-      // Submit the form.
-      const { data } = await this.form.post('/login')
+      this.error = null
+      this.form.clear()
+      if (!this.form.email) {
+        this.form.errors.set('email', 'Email required')
+      }
+      if (!this.form.password) {
+        this.form.errors.set('password', 'Password required')
+      }
+      if (this.form.errors.any()) {
+        return false
+      }
 
-      // Save the token.
-      this.$store.dispatch('auth/saveToken', {
-        token: data.token,
-        remember: this.remember,
-      })
+      try {
+        // Submit the form.
+        const { data } = await this.form.post('/login')
 
-      // Fetch the user.
-      await this.$store.dispatch('auth/fetchUser')
+        // Save the token.
+        this.$store.dispatch('auth/saveToken', {
+          token: data.token,
+          remember: this.remember,
+        })
 
-      // Redirect home.
-      this.$router.push({ name: 'home' })
+        // Fetch the user.
+        await this.$store.dispatch('auth/fetchUser')
+
+        // Redirect home.
+        this.$router.push({ name: 'home' })
+      } catch (err) {
+        if (get(err, 'response.status') !== 422 && !this.form.errors.any()) {
+          this.error = err
+        }
+      }
     },
   },
 }

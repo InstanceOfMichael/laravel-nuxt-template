@@ -16,6 +16,7 @@
       .links
         nuxt-link(:to="{ name: 'comments' }") Comments
         nuxt-link(:to="{ name: 'users' }") User
+        | AAABBBCCC
 </template>
 
 <script>

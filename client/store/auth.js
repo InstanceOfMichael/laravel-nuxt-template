@@ -50,7 +50,10 @@ export const actions = {
     try {
       const { data } = await axios.get('/user')
 
-      console.log({data})
+      if (!(data.id && data.email && data.created_at)) {
+        console.log({ data })
+        throw new Error('Invalid User Data')
+      }
 
       commit('FETCH_USER_SUCCESS', data)
     } catch (e) {
