@@ -37,6 +37,7 @@
 
 <script>
 import get from 'lodash/get'
+import isObject from 'lodash/isObject'
 import Form from 'vform'
 
 export default {
@@ -47,8 +48,8 @@ export default {
   data: () => ({
     error: null,
     form: new Form({
-      email: 'dlfjsdlfkjdsk@sldkfjslkf.com',
-      password: 'sdfdsfsdf',
+      email: '',
+      password: '',
     }),
     remember: false,
   }),
@@ -71,6 +72,19 @@ export default {
         // Submit the form.
         const { data } = await this.form.post('/login')
 
+        if (data && !isObject(data)) {
+          // You probably recieved the nuxt generate pre-rendered index.html,
+          // an apache/nginx message
+          // or an intercepted file
+          throw new Error('Invalid login response! (no json object)')
+        }
+        const { expires_in, token, token_type } = data
+        if (!(expires_in && token && token_type)) {
+          // You probably recieved the nuxt generate pre-rendered index.html,
+          // an apache/nginx message
+          // or an intercepted file
+          throw new Error('Invalid login response (missing {expires_in, token, token_type})!')
+        }
         // Save the token.
         this.$store.dispatch('auth/saveToken', {
           token: data.token,
@@ -84,6 +98,7 @@ export default {
         this.$router.push({ name: 'home' })
       } catch (err) {
         if (get(err, 'response.status') !== 422 && !this.form.errors.any()) {
+          console.error(err)
           this.error = err
         }
       }
