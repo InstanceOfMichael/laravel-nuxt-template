@@ -1,6 +1,8 @@
 sudo: required
 language: php
 dist: trusty
+node_js:
+  - "10"
 
 php:
   - 7.2
@@ -8,6 +10,7 @@ php:
 
 install:
   - travis_retry composer install --no-interaction --prefer-dist --no-suggest
+  - yarn install
 
 before_script:
   - export DISPLAY=:99.0
