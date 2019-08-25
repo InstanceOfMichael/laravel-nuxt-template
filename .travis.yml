@@ -13,7 +13,7 @@ before_script:
   - sh -e /etc/init.d/xvfb start
   - ./vendor/laravel/dusk/bin/chromedriver-linux &
   - cp .env.testing .env
-  - yarn run dev &
+  - yarn run generate
 
 script:
   - vendor/bin/phpunit tests/Unit
