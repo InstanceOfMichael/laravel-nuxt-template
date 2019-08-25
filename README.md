@@ -12,7 +12,7 @@
 
 ## Features
 
-- Laravel 5.6
+- Laravel 5.8
 - Nuxt 1.4
 - VueI18n
 - SSR or SPA
@@ -20,6 +20,7 @@
 - Socialite integration
 - Bootstrap 4 + Font Awesome 5
 - Login, register, password reset and profile pages
+- Dusk Tests
 
 ## Installation
 
