@@ -14,8 +14,8 @@ before_script:
   - sh -e /etc/init.d/xvfb start
   - ./vendor/laravel/dusk/bin/chromedriver-linux &
   - cp .env.testing .env
-  - npm run lint
-  - npm run generate
+  - yarn run lint
+  - yarn run generate
 
 script:
   - vendor/bin/phpunit tests/Unit

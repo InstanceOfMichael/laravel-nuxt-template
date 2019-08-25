@@ -107,7 +107,7 @@ module.exports = {
 
   proxy: {
     '/api': {
-      pathRewrite: { '^/api' : '' },
+      pathRewrite: { '^/api': '' },
       target: process.env.APP_URL || 'http://api.ln.d',
       ws: false,
     },
