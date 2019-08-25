@@ -10,6 +10,7 @@ php:
 
 install:
   - travis_retry composer install --no-interaction --prefer-dist --no-suggest
+  - node -v
   - yarn install
 
 before_script:
@@ -27,3 +28,7 @@ script:
 
 notifications:
   email: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
