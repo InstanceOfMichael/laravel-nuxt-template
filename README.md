@@ -31,11 +31,13 @@
 - sudo -i -u postgres
 
 ```
-createuser lndebate
-createdb lndebate --owner=lndebate
-createdb test_lndebate --owner=lndebate
+createuser ln
+createuser test_ln
+createdb ln --owner=ln
+createdb test_ln --owner=test_ln
 psql
-alter user lndebate with encrypted password 'lndebate';
+alter user ln with encrypted password 'ln';
+alter user test_ln with encrypted password 'test_ln';
 ```
 
 ## Usage

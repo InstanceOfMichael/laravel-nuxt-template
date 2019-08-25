@@ -20,8 +20,9 @@ module.exports = {
   srcDir: __dirname,
 
   env: {
-    apiUrl: process.env.APP_URL || 'http://api.lndebate.test',
-    appName: process.env.APP_NAME || 'lndebate',
+    apiUrl: `${(process.env.CLIENT_URL || 'http://ln.test:3000')}`,
+    // apiUrl: process.env.APP_URL || 'http://api.ln.test',
+    appName: process.env.APP_NAME || 'ln',
     appLocale: process.env.APP_LOCALE || 'en',
     githubAuth: !!process.env.GITHUB_CLIENT_ID,
   },
@@ -103,12 +104,12 @@ module.exports = {
     },
   },
 
-  // proxy: {
-  //   '/api': {
-  //     pathRewrite: { '^/api' : '' },
-  //     target: process.env.APP_URL || 'http://api.lndebate.test',
-  //     ws: false,
-  //   },
-  // },
+  proxy: {
+    '/api': {
+      pathRewrite: { '^/api' : '' },
+      target: process.env.APP_URL || 'http://api.ln.test',
+      ws: false,
+    },
+  },
 
 }

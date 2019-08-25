@@ -1,14 +1,24 @@
+sudo: required
 language: php
+dist: trusty
 
 php:
-  - 7.1
   - 7.2
 
 install:
   - travis_retry composer install --no-interaction --prefer-dist --no-suggest
 
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - ./vendor/laravel/dusk/bin/chromedriver-linux &
+  - cp .env.testing .env
+  - yarn run dev &
+
 script:
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit tests/Unit
+  - vendor/bin/phpunit tests/Feature
+  - php artisan dusk
 
 notifications:
   email: false

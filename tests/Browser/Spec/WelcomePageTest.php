@@ -19,7 +19,7 @@ class WelcomePageTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit(new WelcomePage);
-            $browser->assertSee('lndebate');
+            $browser->assertSee('ln');
             $browser->assertNotPresent((new Navbar)->selector());
         });
     }

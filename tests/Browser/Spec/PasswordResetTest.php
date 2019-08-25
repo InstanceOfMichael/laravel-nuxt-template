@@ -97,7 +97,7 @@ class PasswordResetTest extends DuskTestCase
         $result = trim($result[0]);
         $result = strstr($result, 'http');
 
-        // @example: http://lndebate.test:3000/password/reset/d829cb7be164c835c3764e3c74935d9ed90eb1b16ab135755776be380668d425?email=yprice%40example.net
+        // @example: http://ln.test:3000/password/reset/d829cb7be164c835c3764e3c74935d9ed90eb1b16ab135755776be380668d425?email=yprice%40example.net
 
         return $result;
     }

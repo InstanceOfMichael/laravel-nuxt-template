@@ -50,6 +50,8 @@ export const actions = {
     try {
       const { data } = await axios.get('/user')
 
+      console.log({data})
+
       commit('FETCH_USER_SUCCESS', data)
     } catch (e) {
       Cookies.remove('token')

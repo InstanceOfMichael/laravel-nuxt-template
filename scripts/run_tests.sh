@@ -3,9 +3,9 @@
 STARTTIME=$(date +%s)
 APP_ENV=testing
 DB_CONNECTION=test_pgsql
-DB_DATABASE=test_lndebate
-DB_USERNAME=test_lndebate
-DB_PASSWORD=test_lndebate
+DB_DATABASE=test_ln
+DB_USERNAME=test_ln
+DB_PASSWORD=test_ln
 APP_DEBUG=true
 APP_LOG_LEVEL=debug
 
@@ -41,6 +41,8 @@ RUN_TESTS () {
 
     DEL_CONFIG_CACHE;
     php artisan migrate:fresh --seed
+
+    return;
 
     DEL_CONFIG_CACHE;
     ./vendor/bin/phpunit tests/Unit/
