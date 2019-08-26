@@ -24,8 +24,8 @@ before_script:
   - sudo -iu postgres sh -c "createuser test_ln; createdb test_ln --owner=test_ln; psql -c \"alter user test_ln with encrypted password 'test_ln';\""
   - cp .env.testing.travis .env
   - php artisan migrate:fresh --seed
-  - NUXT_PORT=4000 yarn run dev &
-  - php artisan serve --port=3000 &
+  # - NUXT_PORT=4000 yarn run dev &
+  # - php artisan serve --port=3000 &
 
 script:
   - yarn run lint
@@ -33,7 +33,7 @@ script:
   - yarn run generate
   - vendor/bin/phpunit tests/Unit
   - vendor/bin/phpunit tests/Feature
-  - php artisan dusk
+  # - php artisan dusk
 
 notifications:
   email: false
