@@ -1,22 +1,22 @@
 sudo: required
 language: php
-dist: trusty
+dist: bionic
 node_js:
- - "8"
+ - "10"
 
 php:
   - 7.2
 #  - 7.3
 
 install:
-  - travis_retry composer install --no-interaction --prefer-dist --no-suggest
   - node -v
+  - travis_retry composer install --no-interaction --prefer-dist --no-suggest
   - yarn install
 
 before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - ./vendor/laravel/dusk/bin/chromedriver-linux &
+  # - export DISPLAY=:99.0
+  # - sh -e /etc/init.d/xvfb start
+  # - ./vendor/laravel/dusk/bin/chromedriver-linux &
   - cp .env.testing .env
   - yarn run lint
   - yarn run generate
@@ -24,7 +24,7 @@ before_script:
 script:
   - vendor/bin/phpunit tests/Unit
   - vendor/bin/phpunit tests/Feature
-  - php artisan dusk
+  # - php artisan dusk
 
 notifications:
   email: false

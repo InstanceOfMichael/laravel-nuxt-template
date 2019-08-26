@@ -10,7 +10,7 @@
     "demo:deploy": "npm run lint && npm run demo:build && netlify deploy --prod --dir=dist --site=389dda0f-ea92-4010-a274-99d4b188d264"
   },
   "engines": {
-    "node": ">= 8",
+    "node": ">= 10",
     "yarn": ">= 0.27.0"
   },
   "browserslist": [
