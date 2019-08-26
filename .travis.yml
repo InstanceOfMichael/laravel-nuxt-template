@@ -23,9 +23,11 @@ before_script:
   - ./vendor/laravel/dusk/bin/chromedriver-linux &
   - sudo -iu postgres sh -c "createuser test_ln; createdb test_ln --owner=test_ln; psql -c \"alter user test_ln with encrypted password 'test_ln';\""
   - cp .env.testing .env
+  - php artisan migrate:fresh --seed
 
 script:
   - yarn run lint
+  - find ./{app,bootstrap,database,config,resources/views,routes,tests}/ -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected")
   - yarn run generate
   - vendor/bin/phpunit tests/Unit
   - vendor/bin/phpunit tests/Feature
