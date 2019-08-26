@@ -1,8 +1,10 @@
 sudo: required
 services:
   - xvfb
+  - postgresql
 addons:
     chrome: stable
+    postgresql: "10"
 language: php
 dist: bionic
 node_js:
@@ -13,7 +15,6 @@ php:
 #  - 7.3
 
 install:
-  - node -v
   - travis_retry composer install --no-interaction --prefer-dist --no-suggest
   - yarn install --no-progress
 
@@ -21,10 +22,10 @@ before_script:
   - export DISPLAY=:99.0
   - ./vendor/laravel/dusk/bin/chromedriver-linux &
   - cp .env.testing .env
-  - yarn run lint
-  - yarn run generate
 
 script:
+  - yarn run lint
+  - yarn run generate
   - vendor/bin/phpunit tests/Unit
   - vendor/bin/phpunit tests/Feature
   - php artisan dusk
