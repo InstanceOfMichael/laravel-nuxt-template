@@ -1,5 +1,7 @@
 # Laravel-Nuxt
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/InstanceOfMichael/laravel-nuxt-template.svg)](https://greenkeeper.io/)
+
 <a href="https://travis-ci.org/InstanceOfMichael/laravel-nuxt-template"><img src="https://travis-ci.org/InstanceOfMichael/laravel-nuxt-template.svg?branch=master" alt="Build Status"></a>
 
 > A Laravel-Nuxt starter project template.
